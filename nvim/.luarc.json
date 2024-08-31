@@ -1,0 +1,8 @@
+{
+  "diagnostics": {
+    "globals": ["vim",
+            "nvim",
+            "ghq_list_telescope"]
+  }
+}
+
