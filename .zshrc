@@ -57,8 +57,8 @@ export PATH="/Users/kaito/google-cloud-sdk/bin:$PATH"
 export EDITOR=nvim
 
 # podman
-# export DOCKER_HOST='unix:///var/folders/kd/swzymx0s67j00xyc3p49gwq40000gn/T/podman/podman-machine-default-api.sock'
-# export CDK_DOCKER=podman
+export DOCKER_HOST='unix:///var/folders/kd/swzymx0s67j00xyc3p49gwq40000gn/T/podman/podman-machine-default-api.sock'
+export CDK_DOCKER=podman
 
 # initialize
 . /opt/homebrew/opt/asdf/libexec/asdf.sh

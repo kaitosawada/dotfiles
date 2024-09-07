@@ -1,13 +1,10 @@
 SCRIPT_DIR="$(pwd)"
 
-for dotfile in "${SCRIPT_DIR}"/.??* ; do
-    [[ "$dotfile" == "${SCRIPT_DIR}/.git" ]] && continue
-    [[ "$dotfile" == "${SCRIPT_DIR}/.github" ]] && continue
-    [[ "$dotfile" == "${SCRIPT_DIR}/.DS_Store" ]] && continue
-
-    ln -fnsv "$dotfile" "$HOME"
-done
+ln -fnsv .zshrc ~
 
 mkdir "$HOME/.config/nvim"
 cp -rs "${SCRIPT_DIR}"/nvim/* "$HOME/.config/nvim"
 
+rm -rf "$HOME/.config/home-manager"
+mkdir "$HOME/.config/home-manager"
+cp -rs "${SCRIPT_DIR}"/home-manager/* "$HOME/.config/home-manager"

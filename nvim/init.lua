@@ -39,6 +39,23 @@ vim.api.nvim_create_autocmd('FileType', {
         vim.opt.shiftwidth = 2
     end,
 })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'nix',
+    callback = function()
+        vim.opt.tabstop = 2
+        vim.opt.shiftwidth = 2
+    end,
+})
+local short_tab_langs = { 'yaml', 'json', 'markdown', 'vim', 'lua', 'sh', 'bash', 'zsh', 'fish' }
+for _, lang in ipairs(short_tab_langs) do
+    vim.api.nvim_create_autocmd('FileType', {
+        pattern = lang,
+        callback = function()
+            vim.opt.tabstop = 2
+            vim.opt.shiftwidth = 2
+        end,
+    })
+end
 
 -- package manager
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
