@@ -1,7 +1,5 @@
 SCRIPT_DIR="$(pwd)"
 
-ln -fnsv .zshrc ~
-
 mkdir "$HOME/.config/nvim"
 cp -rs "${SCRIPT_DIR}"/nvim/* "$HOME/.config/nvim"
 

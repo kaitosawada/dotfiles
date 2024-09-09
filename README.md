@@ -25,12 +25,10 @@ gh auth login
 # dotfilesをクローン
 ghq get kaitosawada/dotfiles
 cd $(ghq root)/github.com/kaitosawada/dotfiles
+make link
 
-chsh -s ~/.nix-profile/bin/zsh
+# 多分nix-envをアンインストールする必要がある
+# 多分すでに.bashrcがあるので-h backupする必要がある
+home-manager switch
+exec $SHELL -l
 ```
-
-zshに変更するために再ログイン
-
-```sh
-```
-
