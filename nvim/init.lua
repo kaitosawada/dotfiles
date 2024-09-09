@@ -112,7 +112,7 @@ vim.cmd [[
 ]]
 
 -- キーマップ
-vim.keymap.set('', '<C-S-Q>', '<C-\\><C-n>:qa!<CR>', { desc = 'Force quit vim' })
+vim.keymap.set('', '<C-Q>', '<C-\\><C-n>:qa!<CR>', { desc = 'Force quit vim' })
 -- vim.keymap.set({ 'n', 'v', 'o' }, '<C-j>', '<C-f>zz', { desc = 'Down 1 page' })
 -- vim.keymap.set({ 'n', 'v', 'o' }, '<C-k>', '<C-b>zz', { desc = 'Up 1 page' })
 vim.keymap.set({ 'n', 'v', 'o' }, '<Up>', '<C-u>zz', { desc = 'Up half page' })
@@ -131,9 +131,6 @@ vim.keymap.set("n", 'gx', [[:execute '!open ' . shellescape(expand('<cfile>'), 1
 vim.keymap.set("i", "jj", "<ESC>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>sv", "<CMD>vsplit<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>sh", "<CMD>split<CR>", { noremap = true, silent = true })
-vim.keymap.set("t", "<C-S-i>", "<C-\\><C-n>", { noremap = true, silent = true })
-vim.keymap.set("t", "<C-S-[>", "<C-\\><C-n>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>bb", "<S-V>%")
 
 -- ghqでリポジトリを移動するカスタム関数の定義
 function ghq_list_telescope()
@@ -227,23 +224,9 @@ require("mason-lspconfig").setup_handlers {
 
 -- 各LSPの設定
 
--- ruff_lspの設定
--- vim.api.nvim_create_autocmd("LspAttach", {
---     group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true }),
---     callback = function(args)
---         local client = vim.lsp.get_client_by_id(args.data.client_id)
---         if client == nil then
---             return
---         end
---         if client.name == 'ruff' then
---             -- Disable hover in favor of Pyright
---             client.server_capabilities.hoverProvider = false
---         end
---     end,
---     desc = 'LSP: Disable hover capability from Ruff',
--- })
+local lspconfig = require('lspconfig')
 
-require('lspconfig').basedpyright.setup {
+lspconfig.basedpyright.setup {
     settings = {
         basedpyright = {
             -- Using Ruff's import organizer
@@ -257,7 +240,7 @@ require('lspconfig').basedpyright.setup {
     },
 }
 
-require('lspconfig').ruff.setup {
+lspconfig.ruff.setup {
     on_attach = function(client, bufnr)
         -- Disable hover in favor of Pyright
         client.server_capabilities.hoverProvider = false
@@ -267,6 +250,30 @@ require('lspconfig').ruff.setup {
             -- args
         },
     },
+}
+
+lspconfig.lua_ls.setup {
+  settings = {
+    Lua = {
+      runtime = {
+        version = 'LuaJIT',
+        path = vim.split(package.path, ';'),
+      },
+      diagnostics = {
+        globals = {'vim'},
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+  on_attach = function(client, bufnr)
+    -- デバッグ用のログ出力
+    vim.lsp.set_log_level("debug")
+  end,
 }
 
 -- local on_attach = function(client, bufnr)
