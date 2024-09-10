@@ -72,7 +72,16 @@ return {
                 cmd = "lazygit",
                 direction = "float",
                 hidden = true,
-                on_open = on_open,
+                on_open = function(term)
+                    vim.api.nvim_buf_set_keymap(term.bufnr, "n", "<ESC><ESC>", "i<cmd>close<CR>",
+                        { noremap = true, silent = true })
+                    vim.api.nvim_buf_set_keymap(term.bufnr, "t", "<ESC><ESC>",
+                        "<cmd>close<CR>", { noremap = true, silent = true })
+                    vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "i<cmd>close<CR>",
+                        { noremap = true, silent = true })
+                    vim.api.nvim_buf_set_keymap(term.bufnr, "t", "q",
+                        "<cmd>close<CR>", { noremap = true, silent = true })
+                end,
             })
 
             function G_lazygit_term_toggle()
