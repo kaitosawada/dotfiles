@@ -17,6 +17,7 @@
     fzf
     lazygit
     asdf-vm
+    awscli2
   ];
 
   programs.starship = {

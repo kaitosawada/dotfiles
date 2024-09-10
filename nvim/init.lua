@@ -112,7 +112,7 @@ vim.cmd [[
 ]]
 
 -- キーマップ
-vim.keymap.set('', '<C-Q>', '<C-\\><C-n>:qa!<CR>', { desc = 'Force quit vim' })
+-- vim.keymap.set('', '<C-Q>', '<C-\\><C-n>:qa!<CR>', { desc = 'Force quit vim' })
 -- vim.keymap.set({ 'n', 'v', 'o' }, '<C-j>', '<C-f>zz', { desc = 'Down 1 page' })
 -- vim.keymap.set({ 'n', 'v', 'o' }, '<C-k>', '<C-b>zz', { desc = 'Up 1 page' })
 vim.keymap.set({ 'n', 'v', 'o' }, '<Up>', '<C-u>zz', { desc = 'Up half page' })
