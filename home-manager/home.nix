@@ -18,6 +18,8 @@
     lazygit
     asdf-vm
     awscli2
+    podman
+    tmux
   ];
 
   programs.starship = {
@@ -67,6 +69,7 @@
     reload = "home-manager switch && exec $SHELL -l";
     conf = "nvim \"$(ghq root)/github.com/kaitosawada/dotfiles/home-manager/home.nix\"";
     config = "nvim \"$(ghq root)/github.com/kaitosawada/dotfiles/home-manager/home.nix\"";
+    ".." = "cd ..";
   };
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -81,6 +84,7 @@
       fi
       . "$HOME/.nix-profile/share/asdf-vm/asdf.sh"
       . "$HOME/.nix-profile/share/bash-completion/completions/asdf.bash"
+      eval "$(direnv hook zsh)"
     '';
   };
   programs.bash = {
@@ -94,6 +98,7 @@
       fi
       . "$HOME/.nix-profile/share/asdf-vm/asdf.sh"
       . "$HOME/.nix-profile/share/bash-completion/completions/asdf.bash"
+      eval "$(direnv hook bash)"
     '';
   };
 }
