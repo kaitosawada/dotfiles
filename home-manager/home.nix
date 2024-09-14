@@ -16,10 +16,10 @@
     neovim
     fzf
     lazygit
-    asdf-vm
     awscli2
-    podman
-    tmux
+    jq
+    zoxide
+    ripgrep
   ];
 
   programs.starship = {
@@ -82,9 +82,8 @@
       if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
           . $HOME/.nix-profile/etc/profile.d/nix.sh;
       fi
-      . "$HOME/.nix-profile/share/asdf-vm/asdf.sh"
-      . "$HOME/.nix-profile/share/bash-completion/completions/asdf.bash"
       eval "$(direnv hook zsh)"
+      eval "$(zoxide init zsh)"
     '';
   };
   programs.bash = {
@@ -96,9 +95,8 @@
       if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
           . $HOME/.nix-profile/etc/profile.d/nix.sh;
       fi
-      . "$HOME/.nix-profile/share/asdf-vm/asdf.sh"
-      . "$HOME/.nix-profile/share/bash-completion/completions/asdf.bash"
       eval "$(direnv hook bash)"
+      eval "$(zoxide init bash)"
     '';
   };
 }
