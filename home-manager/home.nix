@@ -16,7 +16,6 @@
     neovim
     fzf
     lazygit
-    awscli2
     jq
     zoxide
     ripgrep
@@ -49,6 +48,13 @@
     #   org.gradle.daemon.idletimeout=3600000
     # '';
   };
+  
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
 
   programs.git = {
     enable = true;
@@ -66,6 +72,7 @@
   home.shellAliases = {
     g = "cd $(ghq root)/$(ghq list | fzf --reverse) && wezterm cli set-tab-title $(basename \"$PWD\")";
     n = "nvim";
+    lg = "lazygit";
     reload = "home-manager switch && exec $SHELL -l";
     conf = "nvim \"$(ghq root)/github.com/kaitosawada/dotfiles/home-manager/home.nix\"";
     config = "nvim \"$(ghq root)/github.com/kaitosawada/dotfiles/home-manager/home.nix\"";
@@ -79,8 +86,13 @@
       export XDG_DATA_DIRS=$HOME/.nix-profile/share''${XDG_DATA_DIRS:+:}$XDG_DATA_DIRS
       export LIBGL_ALWAYS_INDIRECT=1
       export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
+      # ユーザーに入っている場合
       if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
           . $HOME/.nix-profile/etc/profile.d/nix.sh;
+      fi
+      # システムに入っている場合
+      if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+        . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
       fi
       eval "$(direnv hook zsh)"
       eval "$(zoxide init zsh)"
@@ -92,8 +104,13 @@
       export XDG_DATA_DIRS=$HOME/.nix-profile/share''${XDG_DATA_DIRS:+:}$XDG_DATA_DIRS
       export LIBGL_ALWAYS_INDIRECT=1
       export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
+      # ユーザーに入っている場合
       if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
           . $HOME/.nix-profile/etc/profile.d/nix.sh;
+      fi
+      # システムに入っている場合
+      if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+        . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
       fi
       eval "$(direnv hook bash)"
       eval "$(zoxide init bash)"
