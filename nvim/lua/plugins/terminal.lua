@@ -77,10 +77,11 @@ return {
                         { noremap = true, silent = true })
                     vim.api.nvim_buf_set_keymap(term.bufnr, "t", "<ESC><ESC>",
                         "<cmd>close<CR>", { noremap = true, silent = true })
-                    vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "i<cmd>close<CR>",
-                        { noremap = true, silent = true })
-                    vim.api.nvim_buf_set_keymap(term.bufnr, "t", "q",
-                        "<cmd>close<CR>", { noremap = true, silent = true })
+                    -- qで閉じるようにするとcommit messageが入力できなくなります！
+                    -- vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "i<cmd>close<CR>",
+                    --     { noremap = true, silent = true })
+                    -- vim.api.nvim_buf_set_keymap(term.bufnr, "t", "q",
+                    --     "<cmd>close<CR>", { noremap = true, silent = true })
                 end,
             })
 

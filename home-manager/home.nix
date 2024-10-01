@@ -1,8 +1,13 @@
 { config, pkgs, ... }:
 
+let
+  isDarwin = builtins.currentSystem == "x86_64-darwin" || builtins.currentSystem == "aarch64-darwin";
+  username = builtins.getEnv "USER";
+  homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
+in
 {
-  home.username = "kaitosawada";
-  home.homeDirectory = "/home/kaitosawada";
+  home.username = username;
+  home.homeDirectory = homeDirectory;
 
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
@@ -16,10 +21,11 @@
     neovim
     fzf
     lazygit
-    asdf-vm
+    # asdf-vm
     awscli2
     podman
     tmux
+    zoxide
   ];
 
   programs.starship = {

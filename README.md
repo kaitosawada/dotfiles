@@ -2,7 +2,7 @@
 
 ## installation
 
-### ubuntu
+### ubuntu / MacOS
 
 ```sh
 # nixのインストール
@@ -14,7 +14,6 @@ curl -L https://nixos.org/nix/install | sh
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --update
 nix-shell '<home-manager>' -A install
-
 
 # git, gh, go, ghqのインストール
 nix-env -iA nixpkgs.git nixpkgs.gh nixpkgs.go nixpkgs.ghq nixpkgs.gnumake nixpkgs.direnv nixpkgs.neovim nixpkgs.zsh

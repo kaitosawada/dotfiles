@@ -1,19 +1,19 @@
 return {
     { 'Tyler-Barham/floating-help.nvim' },
-    {
-        'sidebar-nvim/sidebar.nvim',
-        config = function()
-            require('sidebar-nvim').setup({
-                open = false,
-                sections = {
-                    "git",
-                    "diagnostics",
-                    "todos",
-                },
-            })
-            vim.keymap.set("n", "<leader>o", "<CMD>SidebarNvimToggle<CR>")
-        end,
-    },
+    -- {
+    --     'sidebar-nvim/sidebar.nvim',
+    --     config = function()
+    --         require('sidebar-nvim').setup({
+    --             open = false,
+    --             sections = {
+    --                 "git",
+    --                 "diagnostics",
+    --                 "todos",
+    --             },
+    --         })
+    --         vim.keymap.set("n", "<leader>o", "<CMD>SidebarNvimToggle<CR>")
+    --     end,
+    -- },
     { 'folke/todo-comments.nvim' },
     {
         "j-hui/fidget.nvim",

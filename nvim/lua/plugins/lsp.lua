@@ -208,6 +208,26 @@ return {
                 highlight = { enable = true },
                 indent = { enable = true },
             })
+
+            -- local max_filesize = 100 * 1024 -- 100 KB
+            --
+            -- -- Tree-sitterのハイライトを無効にする関数
+            -- local function disable_treesitter_for_large_files(bufnr)
+            --     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(bufnr))
+            --     if ok and stats and stats.size > max_filesize then
+            --         vim.api.nvim_buf_set_option(bufnr, 'syntax', 'OFF')
+            --         vim.api.nvim_buf_set_option(bufnr, 'filetype', 'off')
+            --         return true
+            --     end
+            --     return false
+            -- end
+            --
+            -- -- BufReadPreイベントでTree-sitterのハイライトを無効にする
+            -- vim.api.nvim_create_autocmd({ "BufReadPre" }, {
+            --     callback = function(args)
+            --         disable_treesitter_for_large_files(args.buf)
+            --     end
+            -- })
         end
     },
 }
