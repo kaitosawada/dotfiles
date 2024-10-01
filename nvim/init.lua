@@ -69,6 +69,7 @@ vim.cmd [[
   hi SmoothCursorPurple guifg=#800080
   hi SmoothCursor guifg=#CCCCFF
 ]]
+vim.cmd.highlight 'Visual guibg=#DDEEDD guifg=#555533'
 
 -- キーマップ
 -- vim.keymap.set('', '<C-Q>', '<C-\\><C-n>:qa!<CR>', { desc = 'Force quit vim' })

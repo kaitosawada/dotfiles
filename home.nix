@@ -1,8 +1,13 @@
 { config, pkgs, ... }:
 
+let
+  isDarwin = builtins.currentSystem == "x86_64-darwin" || builtins.currentSystem == "aarch64-darwin";
+  username = builtins.getEnv "USER";
+  homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
+in
 {
-  home.username = "kaitosawada";
-  home.homeDirectory = "/home/kaitosawada";
+  home.username = username;
+  home.homeDirectory = homeDirectory;
 
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
@@ -19,6 +24,11 @@
     jq
     zoxide
     ripgrep
+    # asdf-vm
+    awscli2
+    podman
+    tmux
+    lsd
   ];
 
   programs.starship = {
@@ -27,28 +37,20 @@
     settings = {
       add_newline = true;
 
-      # character = {
-      #   success_symbol = "[➜](bold green)";
-      #   error_symbol = "[➜](bold red)";
-      # };
+      character = {
+        success_symbol = "[$](bold green)";
+        error_symbol = "[$](bold red)";
+      };
 
       # package.disabled = true;
     };
   };
 
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
+    ".tmux.conf".source = dotfiles/.tmux.conf;
+    ".config/nvim".source = ./nvim;
   };
-  
+
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
@@ -64,27 +66,34 @@
   };
 
   home.sessionVariables = {
-    EDITOR = "vim";
+    EDITOR = "nvim";
     LANG = "ja_JP.UTF-8";
     # LC_ALL = "ja_JP.UTF-8";
+    LIBGL_ALWAYS_INDIRECT = 1;
+    DOCKER_HOST = "unix:///var/folders/kd/swzymx0s67j00xyc3p49gwq40000gn/T/podman/podman-machine-default-api.sock";
+    CDK_DOCKER = "podman";
   };
 
   home.shellAliases = {
     g = "cd $(ghq root)/$(ghq list | fzf --reverse) && wezterm cli set-tab-title $(basename \"$PWD\")";
     n = "nvim";
     lg = "lazygit";
-    reload = "home-manager switch && exec $SHELL -l";
-    conf = "nvim \"$(ghq root)/github.com/kaitosawada/dotfiles/home-manager/home.nix\"";
-    config = "nvim \"$(ghq root)/github.com/kaitosawada/dotfiles/home-manager/home.nix\"";
+    reload = "home-manager switch -f \"$(ghq root)/github.com/kaitosawada/dotfiles/home.nix\" && exec $SHELL -l";
+    conf = "nvim \"$(ghq root)/github.com/kaitosawada/dotfiles/home.nix\"";
+    config = "nvim \"$(ghq root)/github.com/kaitosawada/dotfiles/home.nix\"";
     ".." = "cd ..";
+    ls = "lsd";
   };
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  programs.zoxide.enable = true;
+  programs.direnv.enable = true;
+
   programs.zsh = {
     enable = true;
     profileExtra = ''
       export XDG_DATA_DIRS=$HOME/.nix-profile/share''${XDG_DATA_DIRS:+:}$XDG_DATA_DIRS
-      export LIBGL_ALWAYS_INDIRECT=1
       export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
       # ユーザーに入っている場合
       if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
@@ -94,15 +103,12 @@
       if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
         . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
       fi
-      eval "$(direnv hook zsh)"
-      eval "$(zoxide init zsh)"
     '';
   };
   programs.bash = {
     enable = true;
     profileExtra = ''
       export XDG_DATA_DIRS=$HOME/.nix-profile/share''${XDG_DATA_DIRS:+:}$XDG_DATA_DIRS
-      export LIBGL_ALWAYS_INDIRECT=1
       export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
       # ユーザーに入っている場合
       if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
@@ -112,8 +118,6 @@
       if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
         . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
       fi
-      eval "$(direnv hook bash)"
-      eval "$(zoxide init bash)"
     '';
   };
 }
