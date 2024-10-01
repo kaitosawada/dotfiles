@@ -17,49 +17,17 @@ in
     go
     ghq
     gnumake
-    direnv
     neovim
-    fzf
     lazygit
     jq
-    zoxide
     ripgrep
     # asdf-vm
-    awscli2
     podman
-    tmux
     lsd
   ];
 
-  programs.starship = {
-    enable = true;
-    settings = {
-      add_newline = true;
-
-      character = {
-        success_symbol = "[\\$](bold green)";
-        error_symbol = "[\\$](bold red)";
-      };
-    };
-  };
-
   home.file = {
-    ".tmux.conf".source = dotfiles/.tmux.conf;
     ".config/nvim".source = ./nvim;
-  };
-
-  nix = {
-    package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
-
-  programs.git = {
-    enable = true;
-    userName = "kaitosawada";
-    userEmail = "kaito.sawada@proton.me";
-    extraConfig.pull.rebase = false;
   };
 
   home.sessionVariables = {
@@ -81,11 +49,6 @@ in
     ".." = "cd ..";
     ls = "lsd";
   };
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-  programs.zoxide.enable = true;
-  programs.direnv.enable = true;
 
   programs.zsh = {
     enable = true;
@@ -117,4 +80,38 @@ in
       fi
     '';
   };
+
+  programs.starship = {
+    enable = true;
+    settings = {
+      add_newline = true;
+
+      character = {
+        success_symbol = "[\\$](bold green)";
+        error_symbol = "[\\$](bold red)";
+      };
+    };
+  };
+
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
+
+  programs.git = {
+    enable = true;
+    userName = "kaitosawada";
+    userEmail = "kaito.sawada@proton.me";
+    extraConfig.pull.rebase = false;
+  };
+
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
+  programs.zoxide.enable = true;
+  programs.direnv.enable = true;
+  programs.wezterm.enable = true;
+  programs.fzf.enable = true;
+  programs.awscli.enable = true;
 }
