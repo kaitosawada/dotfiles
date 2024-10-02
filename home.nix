@@ -24,6 +24,7 @@ in
     # asdf-vm
     podman
     lsd
+    google-cloud-sdk
   ];
 
   home.file = {
@@ -55,11 +56,9 @@ in
     profileExtra = ''
       export XDG_DATA_DIRS=$HOME/.nix-profile/share''${XDG_DATA_DIRS:+:}$XDG_DATA_DIRS
       export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
-      # ユーザーに入っている場合
       if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
           . $HOME/.nix-profile/etc/profile.d/nix.sh;
       fi
-      # システムに入っている場合
       if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
         . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
       fi
@@ -70,11 +69,9 @@ in
     profileExtra = ''
       export XDG_DATA_DIRS=$HOME/.nix-profile/share''${XDG_DATA_DIRS:+:}$XDG_DATA_DIRS
       export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
-      # ユーザーに入っている場合
       if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
           . $HOME/.nix-profile/etc/profile.d/nix.sh;
       fi
-      # システムに入っている場合
       if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
         . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
       fi
