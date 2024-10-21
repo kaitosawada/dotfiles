@@ -19,11 +19,20 @@ in
     gnumake
     neovim
     lazygit
+    lazysql
     jq
+    kubectx
     ripgrep
     podman
+    gvproxy
     google-cloud-sdk
     nix-search-cli
+    go-task
+    nodejs_22
+    (nodePackages."@antfu/ni".override {
+      nodejs = nodejs_22;
+    })
+    pnpm
   ];
 
   home.file = {
