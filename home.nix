@@ -6,6 +6,7 @@ let
   homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
 in
 {
+  nixpkgs.config.allowUnfree = true;
   home.username = username;
   home.homeDirectory = homeDirectory;
 
@@ -13,7 +14,6 @@ in
 
   home.packages = with pkgs; [
     git
-    gh
     go
     ghq
     gnumake
@@ -23,6 +23,7 @@ in
     ripgrep
     podman
     google-cloud-sdk
+    nix-search-cli
   ];
 
   home.file = {
@@ -45,6 +46,8 @@ in
     reload = "home-manager switch -f \"$(ghq root)/github.com/kaitosawada/dotfiles/home.nix\" && exec $SHELL -l";
     conf = "nvim \"$(ghq root)/github.com/kaitosawada/dotfiles/home.nix\"";
     config = "nvim \"$(ghq root)/github.com/kaitosawada/dotfiles/home.nix\"";
+    ai = "gh copilot suggest";
+    ae = "gh copilot explain";
   };
 
   programs.zsh = {
@@ -111,6 +114,13 @@ in
       pull.rebase = false;
       url."ssh://git@github.com/".insteadOf = "https://github.com/";
     };
+  };
+
+  programs.gh = {
+    enable = true;
+    extensions = [
+      pkgs.gh-copilot
+    ];
   };
 
   programs.fzf = {
