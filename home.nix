@@ -23,20 +23,26 @@ in
     jq
     kubectx
     ripgrep
-    podman
+    # podman
+    docker
+    docker-buildx
     gvproxy
     google-cloud-sdk
     nix-search-cli
     go-task
-    nodejs_22
-    (nodePackages."@antfu/ni".override {
-      nodejs = nodejs_22;
-    })
-    pnpm
+    # nodejs_22
+    # (nodePackages."@antfu/ni".override {
+    #   nodejs = nodejs_22;
+    # })
+    # pnpm
+    duckdb
   ];
 
   home.file = {
-    ".config/nvim".source = ./nvim;
+    ".config/nvim" = {
+      source = ./nvim;
+      recursive = true;
+    };
   };
 
   home.sessionVariables = {
@@ -44,14 +50,15 @@ in
     LANG = "ja_JP.UTF-8";
     LC_ALL = "ja_JP.UTF-8";
     LIBGL_ALWAYS_INDIRECT = 1;
-    DOCKER_HOST = "unix:///var/folders/kd/swzymx0s67j00xyc3p49gwq40000gn/T/podman/podman-machine-default-api.sock";
-    CDK_DOCKER = "podman";
+    # DOCKER_HOST = "unix:///var/folders/kd/swzymx0s67j00xyc3p49gwq40000gn/T/podman/podman-machine-default-api.sock";
+    # CDK_DOCKER = "podman";
   };
 
   home.shellAliases = {
     g = "cd $(ghq root)/$(ghq list | fzf --reverse) && wezterm cli set-tab-title $(basename \"$PWD\")";
     n = "nvim";
     lg = "lazygit";
+    load = "exec $SHELL -l";
     reload = "home-manager switch -f \"$(ghq root)/github.com/kaitosawada/dotfiles/home.nix\" && exec $SHELL -l";
     conf = "nvim \"$(ghq root)/github.com/kaitosawada/dotfiles/home.nix\"";
     config = "nvim \"$(ghq root)/github.com/kaitosawada/dotfiles/home.nix\"";

@@ -77,6 +77,8 @@ vim.cmd.highlight 'Visual guibg=#DDEEDD guifg=#555533'
 -- vim.keymap.set({ 'n', 'v', 'o' }, '<C-k>', '<C-b>zz', { desc = 'Up 1 page' })
 vim.keymap.set({ 'n', 'v', 'o' }, '<Up>', '<C-u>zz', { desc = 'Up half page' })
 vim.keymap.set({ 'n', 'v', 'o' }, '<Down>', '<C-d>zz', { desc = 'Down half page' })
+vim.keymap.set({ 'n', 'v', 'o' }, '(', '(zz', { desc = 'Up half page' })
+vim.keymap.set({ 'n', 'v', 'o' }, '(', '(zz', { desc = 'Down half page' })
 vim.keymap.set('n', '<leader>wj', '<C-w>w', { desc = 'Next Window' })
 vim.keymap.set('n', '<leader>wk', '<C-w>p', { desc = 'Previous Window' })
 vim.keymap.set({ 'n', 'v' }, 'gp', '"0p', { desc = 'Paste from yank register' })
