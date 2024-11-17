@@ -57,9 +57,9 @@ return {
                     --
                     local wk = require("which-key")
                     wk.register({
-                        c = "LSP: code",
-                        g = "LSP: jump",
-                    }, { prefix = "<leader>" })
+                        { "<leader>c", desc = "LSP: code" },
+                        { "<leader>g", desc = "LSP: jump" },
+                    })
                 end,
             })
         end,

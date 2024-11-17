@@ -37,7 +37,8 @@ return {
         end,
     },
     { "nvim-lua/plenary.nvim" },
-    { 'nvim-tree/nvim-web-devicons' },
+    { "nvim-tree/nvim-web-devicons" },
+    -- { "echasnovski/mini.icons" },
     -- {
     --     "max397574/better-escape.nvim",
     --     opts = {
