@@ -11,24 +11,19 @@ sudo chown -R $USER /nix
 curl -L https://nixos.org/nix/install | sh
 . ~/.nix-profile/etc/profile.d/nix.sh
 
-# nix-channelの追加
+# 一時的なgithubの導入からdotfilesをclone
+nix shell nixpkgs#git nixpkgs#gh nixpkgs#ghq --extra-experimental-features nix-command --extra-experimental-features flakes
+gh auth login
+ghq get kaitosawada/dotfiles
+exit
+
+# home-managerのインストール
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --update
 nix-shell '<home-manager>' -A install
 
-# git, gh, go, ghqのインストール
-nix-env -iA nixpkgs.git nixpkgs.gh nixpkgs.go nixpkgs.ghq nixpkgs.zsh
-
-# githubにログイン
-gh auth login
-
-# dotfilesをクローン
-ghq get kaitosawada/dotfiles
-cd $(ghq root)/github.com/kaitosawada/dotfiles
-
-# 多分nix-envをアンインストールする必要がある
-# 多分すでに.bashrcがあるので-h backupする必要がある
-nix-env -e git gh go ghq zsh
-home-manager switch -f home.nix
+# home.nixの適用
+cd ~/ghq/github.com/kaitosawada/dotfiles
+home-manager switch -f home.nix -b backup
 exec $SHELL -l
 ```
