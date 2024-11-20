@@ -317,10 +317,10 @@ return {
             vim.keymap.set('n', ']b', '<CMD>BufferLineMoveNext<CR>')
             vim.keymap.set('n', '[b', '<CMD>BufferLineMovePrev<CR>')
             vim.keymap.set('n', 'gs', '<CMD>BufferLineSortByDirectory<CR>')
-            local wk = require("which-key")
-            wk.register({
-                w = "Bufferline: close tab",
-            }, { prefix = "<leader>" })
+            -- local wk = require("which-key")
+            -- wk.register({
+            --     w = "Bufferline: close tab",
+            -- }, { prefix = "<leader>" })
         end
     },
 }

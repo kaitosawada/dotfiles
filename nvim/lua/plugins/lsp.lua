@@ -4,7 +4,7 @@ return {
         dependencies = {
             'williamboman/mason.nvim',
             'nvim-telescope/telescope.nvim',
-            'folke/which-key.nvim',
+            -- 'folke/which-key.nvim',
         },
         config = function()
             -- Use LspAttach autocommand to only map the following keys
@@ -55,11 +55,11 @@ return {
                         end, opts('format'))
                     end
                     --
-                    local wk = require("which-key")
-                    wk.register({
-                        { "<leader>c", desc = "LSP: code" },
-                        { "<leader>g", desc = "LSP: jump" },
-                    })
+                    -- local wk = require("which-key")
+                    -- wk.register({
+                    --     { "<leader>c", desc = "LSP: code" },
+                    --     { "<leader>g", desc = "LSP: jump" },
+                    -- })
                 end,
             })
         end,

@@ -4,7 +4,7 @@ return {
         tag = '0.1.6',
         dependencies = {
             'nvim-lua/plenary.nvim',
-            'folke/which-key.nvim',
+            -- 'folke/which-key.nvim',
             'nvim-telescope/telescope-ui-select.nvim',
         },
         -- opts_desc = {
@@ -51,10 +51,10 @@ return {
             end, opts("Live Grep Selection"))
 
             -- key description
-            local wk = require("which-key")
-            wk.register({
-                f = "Telescope: find",
-            }, { prefix = "<leader>" })
+            -- local wk = require("which-key")
+            -- wk.register({
+            --     f = "Telescope: find",
+            -- }, { prefix = "<leader>" })
 
             require("telescope").setup {
                 pickers = {
