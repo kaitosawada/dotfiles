@@ -61,7 +61,7 @@ in
     load = "exec $SHELL -l";
     reload = "home-manager switch -f \"$(ghq root)/github.com/kaitosawada/dotfiles/home.nix\" && exec $SHELL -l";
     config = "nvim \"$(ghq root)/github.com/kaitosawada/dotfiles/home.nix\"";
-    ls = "lsd";
+    # ls = "lsd";
     tree = "lsd --tree";
   };
 
