@@ -48,7 +48,7 @@ in
   home.sessionVariables = {
     EDITOR = "nvim";
     LANG = "ja_JP.UTF-8";
-    LC_ALL = "ja_JP.UTF-8";
+    # LC_ALL = "ja_JP.UTF-8";
     LIBGL_ALWAYS_INDIRECT = 1;
     # DOCKER_HOST = "unix:///var/folders/kd/swzymx0s67j00xyc3p49gwq40000gn/T/podman/podman-machine-default-api.sock";
     # CDK_DOCKER = "podman";
@@ -60,10 +60,9 @@ in
     lg = "lazygit";
     load = "exec $SHELL -l";
     reload = "home-manager switch -f \"$(ghq root)/github.com/kaitosawada/dotfiles/home.nix\" && exec $SHELL -l";
-    conf = "nvim \"$(ghq root)/github.com/kaitosawada/dotfiles/home.nix\"";
     config = "nvim \"$(ghq root)/github.com/kaitosawada/dotfiles/home.nix\"";
-    ai = "gh copilot suggest";
-    ae = "gh copilot explain";
+    ls = "lsd";
+    tree = "lsd --tree";
   };
 
   programs.zsh = {
@@ -119,6 +118,7 @@ in
     package = pkgs.nixVersions.stable;
     extraOptions = ''
       experimental-features = nix-command flakes
+      binary-caches = s3://test-bucket-sawada?scheme=https&endpoint=a861edcf31e50df89b431c5ebe6a3019.r2.cloudflarestorage.com&trusted=1&profile=cloudflare-r2 https://cache.nixos.org/
     '';
   };
 
