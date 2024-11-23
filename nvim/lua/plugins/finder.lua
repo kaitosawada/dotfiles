@@ -12,6 +12,14 @@ return {
         -- },
         config = function()
             local builtin = require('telescope.builtin')
+            local telescopeConfig = require("telescope.config")
+
+            local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
+
+            table.insert(vimgrep_arguments, "--hidden")
+            table.insert(vimgrep_arguments, "--glob")
+            table.insert(vimgrep_arguments, "!**/.git/*")
+
             local function opts(desc)
                 return { desc = "Telescope: " .. desc, noremap = true, silent = true }
             end
@@ -62,6 +70,10 @@ return {
                         theme = "dropdown",
                         previewer = true,
                     },
+                    find_files = {
+                        -- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
+                        find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+                    },
                 },
                 extensions = {
                     ["ui-select"] = {
@@ -95,6 +107,7 @@ return {
                             ["<C-k>"] = require("telescope.actions").move_selection_previous,
                         },
                     },
+                    vimgrep_arguments = vimgrep_arguments,
                 },
             }
             -- To get ui-select loaded and working with telescope, you need to call
