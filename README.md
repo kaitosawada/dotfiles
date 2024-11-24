@@ -1,8 +1,8 @@
 # dotfiles
 
-## installation
+個人的なdotfilesです。
 
-### ubuntu / MacOS
+## installation
 
 ```sh
 # nixのインストール

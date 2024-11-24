@@ -4,8 +4,11 @@ let
   isDarwin = builtins.currentSystem == "x86_64-darwin" || builtins.currentSystem == "aarch64-darwin";
   username = builtins.getEnv "USER";
   homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
+  nixvim = import (builtins.fetchGit { url = "https://github.com/nix-community/nixvim"; });
 in
 {
+  imports = [ nixvim.homeManagerModules.nixvim ];
+
   nixpkgs.config.allowUnfree = true;
   home.username = username;
   home.homeDirectory = homeDirectory;
@@ -17,7 +20,6 @@ in
     go
     ghq
     gnumake
-    neovim
     lazygit
     lazysql
     jq
@@ -36,32 +38,22 @@ in
     # })
     # pnpm
     duckdb
+    nixfmt-rfc-style
   ];
-
-  home.file = {
-    ".config/nvim" = {
-      source = ./nvim;
-      recursive = true;
-    };
-  };
 
   home.sessionVariables = {
     EDITOR = "nvim";
     LANG = "ja_JP.UTF-8";
-    # LC_ALL = "ja_JP.UTF-8";
-    LIBGL_ALWAYS_INDIRECT = 1;
-    # DOCKER_HOST = "unix:///var/folders/kd/swzymx0s67j00xyc3p49gwq40000gn/T/podman/podman-machine-default-api.sock";
-    # CDK_DOCKER = "podman";
+    # LIBGL_ALWAYS_INDIRECT = 1;
   };
 
   home.shellAliases = {
-    g = "cd $(ghq root)/$(ghq list | fzf --reverse) && wezterm cli set-tab-title $(basename \"$PWD\")";
+    g = ''cd $(ghq root)/$(ghq list | fzf --reverse) && wezterm cli set-tab-title $(basename "$PWD")'';
     n = "nvim";
     lg = "lazygit";
     load = "exec $SHELL -l";
-    reload = "home-manager switch -f \"$(ghq root)/github.com/kaitosawada/dotfiles/home.nix\" && exec $SHELL -l";
-    config = "nvim \"$(ghq root)/github.com/kaitosawada/dotfiles/home.nix\"";
-    # ls = "lsd";
+    reload = ''nixfmt "$(ghq root)/github.com/kaitosawada/dotfiles" && home-manager switch -f "$(ghq root)/github.com/kaitosawada/dotfiles/home.nix" && exec $SHELL -l'';
+    config = ''nvim "$(ghq root)/github.com/kaitosawada/dotfiles/home.nix"'';
     tree = "lsd --tree";
   };
 
@@ -69,6 +61,7 @@ in
     enable = true;
     autocd = true;
     enableCompletion = true;
+    completionInit = "autoload -Uz compinit && compinit -i"; # https://qiita.com/mkiken/items/8dcefc38857d82949164
     autosuggestion = {
       enable = true;
       highlight = "fg=#AAAAAA";
@@ -85,7 +78,7 @@ in
     # oh-my-zsh = {
     #   enable = true;
     #   # plugins = [ "git" "sudo" ];
-    #   # theme = "robbyrussell";
+    #   theme = "robbyrussell";
     # };
   };
   programs.bash = {
@@ -118,7 +111,7 @@ in
     package = pkgs.nixVersions.stable;
     extraOptions = ''
       experimental-features = nix-command flakes
-      binary-caches = s3://test-bucket-sawada?scheme=https&endpoint=a861edcf31e50df89b431c5ebe6a3019.r2.cloudflarestorage.com&trusted=1&profile=cloudflare-r2 https://cache.nixos.org/
+      # binary-caches = s3://test-bucket-sawada?scheme=https&endpoint=a861edcf31e50df89b431c5ebe6a3019.r2.cloudflarestorage.com&trusted=1&profile=cloudflare-r2 https://cache.nixos.org/
     '';
   };
 
@@ -134,9 +127,7 @@ in
 
   programs.gh = {
     enable = true;
-    extensions = [
-      pkgs.gh-copilot
-    ];
+    extensions = [ pkgs.gh-copilot ];
   };
 
   programs.fzf = {
@@ -149,6 +140,18 @@ in
     enableAliases = true;
   };
 
+  programs.bat = {
+    enable = true;
+    config.theme = "nightfox";
+    themes = {
+      nightfox = {
+        src = ./themes;
+        file = "nightfox.tmTheme";
+      };
+    };
+  };
+
+  programs.nixvim = import ./nixvim;
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   programs.zoxide.enable = true;
