@@ -52,7 +52,7 @@ in
     n = "nvim";
     lg = "lazygit";
     load = "exec $SHELL -l";
-    reload = ''nixfmt "$(ghq root)/github.com/kaitosawada/dotfiles" && home-manager switch -f "$(ghq root)/github.com/kaitosawada/dotfiles/home.nix" && exec $SHELL -l'';
+    reload = ''home-manager switch -f "$(ghq root)/github.com/kaitosawada/dotfiles/home.nix" && exec $SHELL -l'';
     config = ''nvim "$(ghq root)/github.com/kaitosawada/dotfiles/home.nix"'';
     tree = "lsd --tree";
   };
@@ -104,6 +104,12 @@ in
         success_symbol = "[\\$](bold green)";
         error_symbol = "[\\$](bold red)";
       };
+
+      aws.disabled = true;
+      gcloud.disabled = true;
+      package.disabled = true;
+      nix_shell.format = "[$symbol $state]($style) ";
+      nix_shell.symbol = "❄️";
     };
   };
 

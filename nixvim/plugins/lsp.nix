@@ -1,17 +1,15 @@
 {
-  nix.enable = true;
-  pluging.lsp = {
+  plugins.lsp = {
     enable = true;
     servers = {
-      # Average webdev LSPs
-      # ts-ls.enable = true; # TS/JS
+      nixd.enable = true;
       ts_ls.enable = true; # TS/JS
       cssls.enable = true; # CSS
-      tailwindcss.enable = true; # TailwindCSS
       html.enable = true; # HTML
       astro.enable = true; # AstroJS
       vuels.enable = false; # Vue
       basedpyright.enable = true; # Python
+      ruff.enable = true; # Python
       marksman.enable = true; # Markdown
       dockerls.enable = true; # Docker
       bashls.enable = true; # Bash
@@ -35,6 +33,20 @@
         enable = true;
         installRustc = true;
         installCargo = true;
+      };
+    };
+    keymaps = {
+      silent = true;
+      diagnostic = {
+        "<leader>k" = "goto_prev";
+        "<leader>j" = "goto_next";
+      };
+      lspBuf = {
+        "gd" = "definition";
+        "gD" = "references";
+        "gt" = "type_definition";
+        "gi" = "implementation";
+        "<leader>cc" = "hover";
       };
     };
   };

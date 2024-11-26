@@ -9,8 +9,8 @@
   globals.mapleader = " ";
 
   opts = {
-    tabstop = 4;
-    shiftwidth = 4;
+    tabstop = 2;
+    shiftwidth = 2;
     expandtab = true;
     number = true;
   };
