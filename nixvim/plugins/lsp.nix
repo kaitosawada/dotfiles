@@ -40,6 +40,7 @@
       diagnostic = {
         "<leader>k" = "goto_prev";
         "<leader>j" = "goto_next";
+        "<leader>ce" = "open_float";
       };
       lspBuf = {
         "gd" = "definition";
