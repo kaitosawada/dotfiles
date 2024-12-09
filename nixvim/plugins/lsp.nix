@@ -8,14 +8,22 @@
       html.enable = true; # HTML
       astro.enable = true; # AstroJS
       vuels.enable = false; # Vue
-      basedpyright.enable = true; # Python
-      ruff.enable = true; # Python
       marksman.enable = true; # Markdown
       dockerls.enable = true; # Docker
       bashls.enable = true; # Bash
-      clangd.enable = true; # C/C++
-      csharp_ls.enable = true; # C#
       yamlls.enable = true; # YAML
+      terraformls.enable = true; # Terraform
+      ruff.enable = true; # Python
+      basedpyright = {
+        enable = true;
+        settings = {
+          basedpyright = {
+            analysis = {
+              typeCheckingMode = "basic";
+            };
+          };
+        };
+      };
       gopls = {
         # Golang
         enable = true;
@@ -48,6 +56,7 @@
         "gt" = "type_definition";
         "gi" = "implementation";
         "<leader>cc" = "hover";
+        "<leader>ll" = "format";
       };
     };
   };

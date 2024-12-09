@@ -148,7 +148,7 @@
         "v"
       ];
       key = "-";
-      action = "<CMD>NvimTreeToggle<CR>";
+      action = "<CMD>NvimTreeFindFile<CR>";
       options = {
         desc = "Paste from yank register";
         noremap = false;
@@ -307,18 +307,6 @@
       ];
       key = "gp";
       action = "\"0p";
-      options = {
-        desc = "Close tabs which you picked";
-        noremap = false;
-        silent = false;
-      };
-    }
-    {
-      mode = [
-        "n"
-      ];
-      key = "<leader>ll";
-      action = "<CMD>lua vim.lsp.buf.format { async = true }<CR>";
       options = {
         desc = "Close tabs which you picked";
         noremap = false;

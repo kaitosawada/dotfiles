@@ -110,12 +110,22 @@ in
       package.disabled = true;
       nix_shell.format = "[$symbol $state]($style) ";
       nix_shell.symbol = "❄️";
+      direnv = {
+        format = "[$symbol$loaded/$allowed]($style) ";
+        disabled = false;
+        allowed_msg = "✅";
+        not_allowed_msg = "🚫";
+        loaded_msg = "🚚";
+        unloaded_msg = "🛻";
+      };
     };
   };
 
   nix = {
     package = pkgs.nixVersions.stable;
     extraOptions = ''
+      max-jobs = auto
+      cores = 0
       experimental-features = nix-command flakes
       # binary-caches = s3://test-bucket-sawada?scheme=https&endpoint=a861edcf31e50df89b431c5ebe6a3019.r2.cloudflarestorage.com&trusted=1&profile=cloudflare-r2 https://cache.nixos.org/
     '';
