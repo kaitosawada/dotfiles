@@ -52,7 +52,7 @@ in
     n = "nvim";
     lg = "lazygit";
     load = "exec $SHELL -l";
-    reload = ''home-manager switch -f "$(ghq root)/github.com/kaitosawada/dotfiles/home.nix" && exec $SHELL -l'';
+    reload = ''nix run home-manager -- switch -f "$(ghq root)/github.com/kaitosawada/dotfiles/home.nix" && exec $SHELL -l'';
     config = ''nvim "$(ghq root)/github.com/kaitosawada/dotfiles/home.nix"'';
     tree = "lsd --tree";
   };
@@ -169,7 +169,7 @@ in
 
   programs.nixvim = import ./nixvim;
   # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  # programs.home-manager.enable = true;
   programs.zoxide.enable = true;
   programs.direnv.enable = true;
   programs.wezterm.enable = true;
