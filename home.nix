@@ -25,7 +25,7 @@ in
     jq
     kubectx
     ripgrep
-    # podman
+    podman
     docker
     docker-buildx
     gvproxy
@@ -44,6 +44,7 @@ in
   home.sessionVariables = {
     EDITOR = "nvim";
     LANG = "ja_JP.UTF-8";
+    DOCKER_HOST="unix:///var/folders/86/v6ttpl1d4mn5skbhmm2vthp80000gn/T/podman/podman-machine-default-api.sock";
     # LIBGL_ALWAYS_INDIRECT = 1;
   };
 
@@ -70,7 +71,7 @@ in
 
     history = {
       size = 10000;
-      path = "${config.xdg.dataHome}/zsh/history";
+      # path = "${config.xdg.dataHome}/zsh/history";
     };
     profileExtra = ''
       bindkey -M viins 'jj' vi-cmd-mode
@@ -167,11 +168,15 @@ in
     };
   };
 
+  programs.wezterm = {
+    enable = true;
+    extraConfig = builtins.readFile ./.wezterm.lua;
+  };
+
   programs.nixvim = import ./nixvim;
   # Let Home Manager install and manage itself.
   # programs.home-manager.enable = true;
   programs.zoxide.enable = true;
   programs.direnv.enable = true;
-  programs.wezterm.enable = true;
   programs.awscli.enable = true;
 }

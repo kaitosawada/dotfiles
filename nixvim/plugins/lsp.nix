@@ -19,7 +19,7 @@
         settings = {
           basedpyright = {
             analysis = {
-              typeCheckingMode = "basic";
+              typeCheckingMode = "standard";
             };
           };
         };
