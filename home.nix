@@ -25,7 +25,8 @@ in
     jq
     kubectx
     ripgrep
-    podman
+    # podman
+    # podman-desktop
     docker
     docker-buildx
     gvproxy
@@ -44,7 +45,7 @@ in
   home.sessionVariables = {
     EDITOR = "nvim";
     LANG = "ja_JP.UTF-8";
-    DOCKER_HOST="unix:///var/folders/86/v6ttpl1d4mn5skbhmm2vthp80000gn/T/podman/podman-machine-default-api.sock";
+    # DOCKER_HOST="unix:///var/folders/86/v6ttpl1d4mn5skbhmm2vthp80000gn/T/podman/podman-machine-default-api.sock";
     # LIBGL_ALWAYS_INDIRECT = 1;
   };
 
@@ -71,10 +72,16 @@ in
 
     history = {
       size = 10000;
-      # path = "${config.xdg.dataHome}/zsh/history";
+      path = "${config.xdg.dataHome}/zsh/history";
     };
     profileExtra = ''
       bindkey -M viins 'jj' vi-cmd-mode
+      if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+          . $HOME/.nix-profile/etc/profile.d/nix.sh;
+      fi
+      if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+        . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+      fi
     '';
     # oh-my-zsh = {
     #   enable = true;
