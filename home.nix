@@ -7,7 +7,10 @@ let
   nixvim = import (builtins.fetchGit { url = "https://github.com/nix-community/nixvim"; });
 in
 {
-  imports = [ nixvim.homeManagerModules.nixvim ];
+  imports = [
+    nixvim.homeManagerModules.nixvim
+    ./programs
+  ];
 
   nixpkgs.config.allowUnfree = true;
   home.username = username;
@@ -26,8 +29,6 @@ in
     kubectx
     ripgrep
     sd
-    # podman
-    # podman-desktop
     docker
     docker-buildx
     gvproxy
@@ -47,8 +48,6 @@ in
   home.sessionVariables = {
     EDITOR = "nvim";
     LANG = "ja_JP.UTF-8";
-    # DOCKER_HOST="unix:///var/folders/86/v6ttpl1d4mn5skbhmm2vthp80000gn/T/podman/podman-machine-default-api.sock";
-    # LIBGL_ALWAYS_INDIRECT = 1;
   };
 
   home.shellAliases = {
@@ -86,6 +85,7 @@ in
       ${builtins.readFile ./scripts/switch-project.sh}
     '';
   };
+
   programs.bash = {
     enable = true;
     profileExtra = ''
@@ -94,34 +94,6 @@ in
     '';
   };
 
-  programs.starship = {
-    enable = true;
-    settings = {
-      add_newline = true;
-
-      character = {
-        success_symbol = "[\\$](bold green)";
-        error_symbol = "[\\$](bold red)";
-      };
-
-      aws.disabled = true;
-      gcloud.disabled = true;
-      git_branch.disabled = true;
-      git_status.disabled = true;
-      package.disabled = true;
-      nix_shell.format = "[$symbol $state]($style) ";
-      nix_shell.symbol = "❄️";
-
-      direnv = {
-        format = "[$symbol$loaded/$allowed]($style) ";
-        disabled = false;
-        allowed_msg = "✅";
-        not_allowed_msg = "🚫";
-        loaded_msg = "🚚";
-        unloaded_msg = "🛻";
-      };
-    };
-  };
 
   nix = {
     package = pkgs.nixVersions.stable;
@@ -129,7 +101,6 @@ in
       max-jobs = auto
       cores = 0
       experimental-features = nix-command flakes
-      # binary-caches = s3://test-bucket-sawada?scheme=https&endpoint=a861edcf31e50df89b431c5ebe6a3019.r2.cloudflarestorage.com&trusted=1&profile=cloudflare-r2 https://cache.nixos.org/
     '';
   };
 
@@ -172,50 +143,6 @@ in
   programs.wezterm = {
     enable = true;
     extraConfig = builtins.readFile ./.wezterm.lua;
-  };
-
-  programs.tmux = {
-    enable = true;
-    prefix = "C-f";
-    keyMode = "vi";
-    terminal = "tmux-256color";
-    plugins = [
-      {
-        plugin = pkgs.tmuxPlugins.tokyo-night-tmux;
-        extraConfig = '' 
-          set -g @tokyo-night-tmux_theme storm    # storm | day | default to 'night'
-          set -g @tokyo-night-tmux_transparent 0  # 1 or 0
-          set -g @tokyo-night-tmux_show_datetime 0
-          set -g @tokyo-night-tmux_date_format MYD
-          set -g @tokyo-night-tmux_time_format 12H
-        '';
-      }
-      # {
-      #   plugin = pkgs.tmuxPlugins.catppuccin;
-      #   extraConfig = '' 
-      #     set -g @catppuccin_flavour 'frappe'
-      #     set -g @catppuccin_window_tabs_enabled on
-      #     set -g @catppuccin_date_time "%H:%M"
-      #   '';
-      # }
-    ];
-    extraConfig = ''
-      set -g status-left "#S "
-
-      bind -n C-t new-window -c "#{pane_current_path}"
-      bind -n C-q confirm-before 'kill-window'
-
-      bind -n C-h previous-window
-      bind -n C-l next-window
-
-      bind -n C-- split-window -vc "#{pane_current_path}"
-      bind -n C-| split-window -hc "#{pane_current_path}"
-
-      bind -n C-k select-pane -t :.-
-      bind -n C-j select-pane -t :.+
-      bind -n C-w kill-pane
-      bind -n C-y copy-mode
-    '';
   };
 
   programs.nixvim = import ./nixvim;
