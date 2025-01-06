@@ -18,6 +18,7 @@
     gitsigns.enable = true;
     nvim-surround.enable = true;
     todo-comments.enable = true;
+    wakatime.enable = true;
     which-key.enable = true;
     web-devicons.enable = true;
   };

@@ -16,6 +16,7 @@ exit
 # Apply home.nix
 # init --switchでファイル参照できたらいいんだけど？またはinit必要ないかも？
 # nix run home-manager/master --extra-experimental-features "nix-command flakes" -- init --switch
-nix run home-manager/master --extra-experimental-features "nix-command flakes" -- switch -f ~/ghq/github.com/kaitosawada/dotfiles/home.nix -b backup
+nix profile install nixpkgs#home-manager
+home-manager --extra-experimental-features "nix-command flakes" switch -f ~/ghq/github.com/kaitosawada/dotfiles/home.nix -b backup
 exec $SHELL -l
 ```
