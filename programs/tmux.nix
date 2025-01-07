@@ -9,9 +9,10 @@
     prefix = "C-f";
     keyMode = "vi";
     terminal = "tmux-256color";
-    plugins = [
+    plugins = with pkgs; [
+      tmuxPlugins.better-mouse-mode
       {
-        plugin = pkgs.tmuxPlugins.tokyo-night-tmux;
+        plugin = tmuxPlugins.tokyo-night-tmux;
         extraConfig = ''
           set -g @tokyo-night-tmux_theme storm    # storm | day | default to 'night'
           set -g @tokyo-night-tmux_transparent 0  # 1 or 0

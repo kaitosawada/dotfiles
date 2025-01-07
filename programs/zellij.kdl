@@ -1,0 +1,12 @@
+theme "nightfox"
+keybinds {
+  normal {
+    bind "Ctrl l" { GoToNextTab; }
+    bind "Ctrl h" { GoToPreviousTab; }
+    bind "Ctrl k" { FocusNextPane; }
+    bind "Ctrl j" { FocusPreviousPane; }
+    bind "Super w" { CloseTab; }
+    bind "Super t" { NewTab; }
+    bind "Super n" { NewPane; }
+  }
+}
