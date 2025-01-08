@@ -20,11 +20,11 @@
       bindkey -M viins 'jj' vi-cmd-mode
       ${builtins.readFile ../scripts/init-nix.sh}
       ${builtins.readFile ../scripts/switch-project.sh}
-      if [ -x "${pkgs.zellij}/bin/zellij" ]; then
-        eval "$(${pkgs.zellij}/bin/zellij setup --generate-auto-start zsh)"
-      else
-        echo "zellij is not available" >&2
-      fi
+      # if [ -x "${pkgs.zellij}/bin/zellij" ]; then
+      #   eval "$(${pkgs.zellij}/bin/zellij setup --generate-auto-start zsh)"
+      # else
+      #   echo "zellij is not available" >&2
+      # fi
     '';
 
   };

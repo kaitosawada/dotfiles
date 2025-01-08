@@ -62,6 +62,11 @@
   #   enable = true;
   # };
   programs.zoxide.enable = true;
-  programs.direnv.enable = true;
+  programs.direnv = {
+    enable = true;
+    config = {
+      global.quiet = true;
+    };
+  };
   programs.awscli.enable = true;
 }

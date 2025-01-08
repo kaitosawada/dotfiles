@@ -11,19 +11,35 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # zjstatus = {
+    #   url = "github:dj95/zjstatus";
+    # };
   };
 
   outputs =
-    { nixpkgs, home-manager, ... }@inputs:
+    {
+      nixpkgs,
+      home-manager,
+      # zjstatus,
+      ...
+    }@inputs:
+    let
+      pkgs = import nixpkgs {
+        system = "aarch64-darwin";
+        config = {
+          allowUnfree = true;
+        };
+        # overlays = [
+        #   (final: prev: {
+        #     zjstatus = zjstatus.packages.${prev.system}.default;
+        #   })
+        # ];
+      };
+    in
     {
       homeConfigurations = {
         kaitosawada = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            system = "aarch64-darwin";
-            config = {
-              allowUnfree = true;
-            };
-          };
+          inherit pkgs;
           extraSpecialArgs = {
             inherit inputs;
             username = "kaitosawada";
@@ -32,12 +48,7 @@
           modules = [ ./home.nix ];
         };
         kaito = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            system = "aarch64-darwin";
-            config = {
-              allowUnfree = true;
-            };
-          };
+          inherit pkgs;
           extraSpecialArgs = {
             inherit inputs;
             username = "kaitosawada";

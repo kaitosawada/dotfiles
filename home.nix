@@ -58,7 +58,7 @@
       grep = "rg";
       sed = "sd";
       cd = "z";
-      t = "zellij -l welcome";
+      t = ''zellij attach "$(basename $(pwd))" --create'';
     };
   };
 

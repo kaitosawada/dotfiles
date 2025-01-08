@@ -1,12 +1,18 @@
-theme "nightfox"
+theme "catppuccin-macchiato"
 keybinds {
   normal {
     bind "Ctrl l" { GoToNextTab; }
     bind "Ctrl h" { GoToPreviousTab; }
-    bind "Ctrl k" { FocusNextPane; }
-    bind "Ctrl j" { FocusPreviousPane; }
-    bind "Super w" { CloseTab; }
+    bind "Ctrl j" { FocusNextPane; }
+    bind "Ctrl k" { FocusPreviousPane; }
+    bind "Super w" { CloseFocus; }
     bind "Super t" { NewTab; }
     bind "Super n" { NewPane; }
+    bind "Ctrl q" { Detach; }
+  }
+}
+ui {
+  pane_frames {
+    rounded_corners true
   }
 }

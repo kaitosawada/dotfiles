@@ -1,4 +1,9 @@
 function switch-project() {
+  # zellij内ならreturn
+  if [ -n "$ZELLIJ" ]; then
+    echo "zellij内では使えません"
+    return
+  fi
   local repo
   repo="$(ghq list | fzf --reverse)"
   [ -z "$repo" ] && return 1
@@ -6,14 +11,14 @@ function switch-project() {
   local dir="$(ghq root)/$repo"
   local session_name="$(basename "$repo")"
 
-  # if command -v zellij >/dev/null 2>&1; then
-  #   if [ -z "$ZELLIJ" ]; then
-  #     echo "zellij --session $session_name"
-  #     cd "$dir" && zellij attach "$session_name" --create
-  #   else
-  #     zellij detach
-  #   fi
-  if command -v tmux >/dev/null 2>&1; then
+  if command -v zellij >/dev/null 2>&1; then
+    if [ -z "$ZELLIJ" ]; then
+      echo "zellij --session $session_name"
+      cd "$dir" && zellij attach "$session_name" --create
+    else
+      return
+    fi
+  elif command -v tmux >/dev/null 2>&1; then
     # 既にtmux内かどうかで挙動を分ける
     if [ -z "$TMUX" ]; then
       tmux new-session -A -s "$session_name" -c "$dir"
