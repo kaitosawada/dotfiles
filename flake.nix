@@ -19,11 +19,30 @@
   outputs =
     {
       nixpkgs,
+      flake-utils,
       home-manager,
       # zjstatus,
       ...
     }@inputs:
-    {
+    flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
+      in
+      {
+        devShells = {
+          default = pkgs.mkShell {
+            buildInputs = [
+              pkgs.hello
+            ];
+          };
+        };
+      }
+    )
+    // {
       homeConfigurations = {
         kaitosawada-arm64-Darwin = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {

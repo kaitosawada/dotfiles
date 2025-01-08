@@ -5,15 +5,12 @@
     settings =
       {
         format =
-          "[╭───](color_purple)"
+          "[╭───](color_green)"
           + "$os"
           + "$username"
-          + "[](bg:color_yellow fg:color_purple)"
+          + "[](bg:color_purple fg:color_green)"
           + "$directory"
-          + "[](fg:color_yellow bg:color_aqua)"
-          + "$git_branch"
-          + "$git_status"
-          + "[](fg:color_aqua bg:color_blue)"
+          + "[](fg:color_purple bg:color_blue)"
           + "$c"
           + "$rust"
           + "$golang"
@@ -24,6 +21,8 @@
           + "$haskell"
           + "$python"
           + "[](fg:color_blue bg:color_bg3)"
+          + "$nix_shell"
+          + "$direnv"
           + "$docker_context"
           + "$conda"
           + "[](fg:color_bg3 bg:color_bg1)"
@@ -49,7 +48,8 @@
 
         os = {
           disabled = false;
-          style = "bg:color_purple fg:color_fg0";
+          format = "[$symbol ]($style)";
+          style = "bg:color_green fg:color_fg0";
           symbols = {
             Windows = "󰍲";
             Ubuntu = "󰕈";
@@ -76,17 +76,14 @@
         };
 
         username = {
-          show_always = true;
-          style_user = "bg:color_purple fg:color_fg0";
-          style_root = "bg:color_purple fg:color_fg0";
-          format = "[ $user ]($style)";
+          style_user = "bg:color_green fg:color_fg0";
+          style_root = "bg:color_green fg:color_fg0";
+          format = "[$user ]($style)";
         };
 
         directory = {
-          style = "fg:color_fg0 bg:color_yellow";
+          style = "fg:color_fg0 bg:color_purple";
           format = "[ $path ]($style)";
-          truncation_length = 3;
-          truncation_symbol = "…/";
           substitutions = {
             Documents = "󰈙 ";
             Downloads = " ";
@@ -174,8 +171,8 @@
         character = rec {
           # "[╭───](color_green)"
           error_symbol = "[╰─ ](bold color_red)";
-          success_symbol = "[╰─ ](bold color_purple)";
-          vimcmd_symbol = "[╰─󰩗 ](bold color_green)";
+          success_symbol = "[╰─ ](bold color_green)";
+          vimcmd_symbol = "[╰─< ](bold color_green)";
           vimcmd_replace_one_symbol = vimcmd_symbol;
           vimcmd_replace_symbol = vimcmd_symbol;
           vimcmd_visual_symbol = vimcmd_symbol;
@@ -186,16 +183,21 @@
         git_branch.disabled = true;
         git_status.disabled = true;
         package.disabled = true;
-        nix_shell.format = "[$symbol $state]($style) ";
-        nix_shell.symbol = "❄️";
+
+        nix_shell = {
+          symbol = "❄️";
+          style = "bg:color_blue";
+          format = "[[ $symbol](fg:#83a598 bg:color_bg3)]($style)";
+          # nix_shell.format = "[$symbol $state]($style) ";
+        };
 
         direnv = {
-          format = "[$symbol$loaded/$allowed]($style) ";
+          format = "[[ $symbol$loaded/$allowed ](fg:#83a598 bg:color_bg3)]($style)";
           disabled = false;
-          allowed_msg = "✅";
-          not_allowed_msg = "🚫";
-          loaded_msg = "🚚";
-          unloaded_msg = "🛻";
+          allowed_msg = "";
+          denied_msg = "";
+          loaded_msg = " ";
+          unloaded_msg = " ";
         };
       };
   };
