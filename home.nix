@@ -33,11 +33,12 @@
       google-cloud-sdk
       nix-search-cli
       go-task
-      # nodejs_22
-      # (nodePackages."@antfu/ni".override {
-      #   nodejs = nodejs_22;
-      # })
-      # pnpm
+      nodejs_22
+      (nodePackages."@antfu/ni".override {
+        nodejs = nodejs_22;
+      })
+      pnpm
+      yarn
       duckdb
       nixfmt-rfc-style
       todo-txt-cli

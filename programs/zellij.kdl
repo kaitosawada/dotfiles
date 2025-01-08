@@ -9,6 +9,7 @@ keybinds {
     bind "Super t" { NewTab; }
     bind "Super n" { NewPane; }
     bind "Ctrl q" { Detach; }
+    bind "Ctrl Shift q" { Quit; }
   }
 }
 ui {
