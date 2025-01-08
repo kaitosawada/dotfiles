@@ -23,23 +23,15 @@
       # zjstatus,
       ...
     }@inputs:
-    let
-      pkgs = import nixpkgs {
-        system = "aarch64-darwin";
-        config = {
-          allowUnfree = true;
-        };
-        # overlays = [
-        #   (final: prev: {
-        #     zjstatus = zjstatus.packages.${prev.system}.default;
-        #   })
-        # ];
-      };
-    in
     {
       homeConfigurations = {
-        kaitosawada = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
+        kaitosawada-arm64-Darwin = home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            system = "aarch64-darwin";
+            config = {
+              allowUnfree = true;
+            };
+          };
           extraSpecialArgs = {
             inherit inputs;
             username = "kaitosawada";
@@ -47,12 +39,17 @@
           };
           modules = [ ./home.nix ];
         };
-        kaito = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
+        kaitosawada-x86_64-Linux = home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            system = "x86_64-linux";
+            config = {
+              allowUnfree = true;
+            };
+          };
           extraSpecialArgs = {
             inherit inputs;
             username = "kaitosawada";
-            homeDirectory = "/Users/kaitosawada";
+            homeDirectory = "/home/kaitosawada";
           };
           modules = [ ./home.nix ];
         };

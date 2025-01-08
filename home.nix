@@ -53,11 +53,10 @@
       n = "nvim";
       lg = "lazygit";
       load = "exec $SHELL -l";
-      reload = ''home-manager switch --flake "$(ghq root)/github.com/kaitosawada/dotfiles" && exec $SHELL -l'';
+      reload = ''home-manager switch --flake "$(ghq root)/github.com/kaitosawada/dotfiles#$(whoami)-$(uname -m)-$(uname -s)" && exec $SHELL -l'';
       config = ''cd "$(ghq root)/github.com/kaitosawada/dotfiles && nvim'';
       tree = "lsd --tree";
       grep = "rg";
-      sed = "sd";
       cd = "z";
       t = ''zellij attach "$(basename $(pwd))" --create'';
     };
