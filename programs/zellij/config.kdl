@@ -11,6 +11,9 @@ keybinds {
     bind "Ctrl q" { Detach; }
     bind "Ctrl Shift q" { Quit; }
   }
+  shared {
+    bind "jj" { SwitchToMode "normal"; }
+  }
 }
 ui {
   pane_frames {

@@ -3,7 +3,7 @@
   imports = [
     ./starship.nix
     # ./tmux.nix
-    ./zellij.nix
+    ./zellij
     ./zsh.nix
   ];
 

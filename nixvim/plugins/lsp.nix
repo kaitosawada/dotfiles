@@ -1,4 +1,5 @@
 {
+  # https://github.com/nix-community/nixvim/blob/main/plugins/lsp/lsp-packages.nix
   plugins.lsp = {
     enable = true;
     servers = {
