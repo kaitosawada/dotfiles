@@ -11,8 +11,8 @@ keybinds {
     bind "Ctrl q" { Detach; }
     bind "Ctrl Shift q" { Quit; }
   }
-  shared {
-    bind "jj" { SwitchToMode "normal"; }
+  shared_except "normal" {
+    bind "j" { SwitchToMode "normal"; }
   }
 }
 ui {

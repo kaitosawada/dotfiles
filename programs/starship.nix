@@ -172,7 +172,7 @@
           # "[╭───](color_green)"
           error_symbol = "[╰─ ](bold color_red)";
           success_symbol = "[╰─ ](bold color_green)";
-          vimcmd_symbol = "[╰─< ](bold color_green)";
+          vimcmd_symbol = "[╰─ ](bold color_purple)";
           vimcmd_replace_one_symbol = vimcmd_symbol;
           vimcmd_replace_symbol = vimcmd_symbol;
           vimcmd_visual_symbol = vimcmd_symbol;
