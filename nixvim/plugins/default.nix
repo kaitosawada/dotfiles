@@ -15,6 +15,7 @@
     copilot-vim.enable = true;
     leap.enable = true;
     # fidget-nvim.enable = true;
+    glow.enable = true;
     gitsigns.enable = true;
     nvim-surround.enable = true;
     todo-comments.enable = true;

@@ -21,6 +21,7 @@
       go
       ghq
       gnumake
+      glow
       lazygit
       lazysql
       jq
@@ -42,6 +43,7 @@
       duckdb
       nixfmt-rfc-style
       todo-txt-cli
+      bitwarden-cli
     ];
 
     sessionVariables = {
