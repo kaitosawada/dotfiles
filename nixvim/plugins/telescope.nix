@@ -11,4 +11,18 @@
       # vim.keymap.set('n', '<leader>tc', builtin.commands, opts("Commands"))
     };
   };
+  keymaps = [
+    {
+      mode = [
+        "v"
+      ];
+      key = "<leader>g";
+      action = "\"ay<cmd>Telescope live_grep<cr><C-r>a";
+      options = {
+        desc = "Up half page";
+        noremap = false;
+        silent = false;
+      };
+    }
+  ];
 }
