@@ -43,7 +43,7 @@
       duckdb
       nixfmt-rfc-style
       todo-txt-cli
-      bitwarden-cli
+      redis
     ];
 
     sessionVariables = {

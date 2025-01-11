@@ -13,6 +13,7 @@
     shiftwidth = 2;
     expandtab = true;
     number = true;
+    conceallevel = 1;
   };
 
   userCommands = {
