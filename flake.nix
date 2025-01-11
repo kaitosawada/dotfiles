@@ -19,11 +19,32 @@
   outputs =
     {
       nixpkgs,
+      nixvim,
       flake-utils,
       home-manager,
       # zjstatus,
       ...
-    }@inputs:
+    }:
+    let
+      inputs = {
+        inherit nixpkgs home-manager nixvim;
+      };
+      mkConfig =
+        username: system:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            inherit system;
+            config = {
+              allowUnfree = true;
+            };
+          };
+          extraSpecialArgs = {
+            inherit inputs username;
+            homeDirectory = "/Users/${username}";
+          };
+          modules = [ ./home.nix ];
+        };
+    in
     flake-utils.lib.eachDefaultSystem (
       system:
       let
@@ -44,34 +65,11 @@
     )
     // {
       homeConfigurations = {
-        kaitosawada-arm64-Darwin = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            system = "aarch64-darwin";
-            config = {
-              allowUnfree = true;
-            };
-          };
-          extraSpecialArgs = {
-            inherit inputs;
-            username = "kaitosawada";
-            homeDirectory = "/Users/kaitosawada";
-          };
-          modules = [ ./home.nix ];
-        };
-        kaitosawada-x86_64-Linux = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            system = "x86_64-linux";
-            config = {
-              allowUnfree = true;
-            };
-          };
-          extraSpecialArgs = {
-            inherit inputs;
-            username = "kaitosawada";
-            homeDirectory = "/home/kaitosawada";
-          };
-          modules = [ ./home.nix ];
-        };
+        kaito = mkConfig "kaito" "aarch64-darwin";
+        kaitosawada = mkConfig "kaitosawada" "aarch64-darwin";
+        kaitosawada-x86_64-Linux = mkConfig "kaitosawada" "x86_64-linux";
+        kaitosawada-arm64-Darwin = mkConfig "kaitosawada" "aarch64-darwin";
+        kaito-arm64-Darwin = mkConfig "kaito" "aarch64-darwin";
       };
     };
 }
