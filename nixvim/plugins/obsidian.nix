@@ -1,5 +1,5 @@
 {
-  plugsins.obsidian = {
+  plugins.obsidian = {
     enable = true;
     settings = {
       workspaces = [
