@@ -3,6 +3,7 @@
   imports = [
     ./lualine.nix
     ./nvim-tree.nix
+    ./obsidian.nix
     ./lazygit.nix
     ./lsp.nix
     ./telescope.nix

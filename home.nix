@@ -43,6 +43,7 @@
       duckdb
       nixfmt-rfc-style
       todo-txt-cli
+      redis
     ];
 
     sessionVariables = {

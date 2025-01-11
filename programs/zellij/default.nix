@@ -7,34 +7,12 @@
     source = ./config.kdl;
     target = ".config/zellij/config.kdl";
   };
-  home.file.".zellij_layout" = {
-    text = ''
-        layout {
-            pane size=1 borderless=true {
-                plugin location="tab-bar"
-            }
-            pane split_direction="vertical" {
-                pane size="60%" command="nvim"
-                pane split_direction="horizontal" {
-                    pane
-                    pane
-                    pane
-                }
-            }
-            pane size=1 borderless=true {
-                plugin location="status-bar"
-            }
-            new_tab_template {
-              pane size=1 borderless=true {
-                plugin location="tab-bar"
-              }
-              pane
-              pane size=1 borderless=true {
-                plugin location="status-bar"
-              }
-            }
-        }
-    '';
+  home.file.".config/zellij/layouts/default.kdl" = {
+    source = ./layouts/default.kdl;
     target = ".config/zellij/layouts/default.kdl";
+  };
+  home.file.".config/zellij/layouts/sd_common_backend.kdl" = {
+    source = ./layouts/sd_common_backend.kdl;
+    target = ".config/zellij/layouts/sd_common_backend.kdl";
   };
 }

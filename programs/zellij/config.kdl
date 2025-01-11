@@ -11,9 +11,9 @@ keybinds {
     bind "Ctrl q" { Detach; }
     bind "Ctrl Shift q" { Quit; }
   }
-  shared_except "normal" {
-    bind "j" { SwitchToMode "normal"; }
-  }
+  // shared_except "normal" {
+  //   bind "j" { SwitchToMode "normal"; }
+  // }
 }
 ui {
   pane_frames {
