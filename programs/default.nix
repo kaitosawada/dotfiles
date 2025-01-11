@@ -1,9 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
-    ./skk.nix
     ./starship.nix
-    # ./tmux.nix
     ./zellij
     ./zsh.nix
   ];

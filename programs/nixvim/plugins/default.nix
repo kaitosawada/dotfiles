@@ -1,5 +1,6 @@
 {
   imports = [
+    ./flash.nix
     ./lualine.nix
     ./nvim-tree.nix
     ./obsidian.nix
@@ -14,7 +15,7 @@
     auto-session.enable = true;
     bufferline.enable = true;
     copilot-vim.enable = true;
-    leap.enable = true;
+    # leap.enable = true;
     fidget.enable = true;
     gitsigns.enable = true;
     nvim-surround.enable = true;
