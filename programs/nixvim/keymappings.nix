@@ -314,7 +314,7 @@
       };
     }
     {
-      mode = ["n"];
+      mode = [ "n" ];
       key = "gx";
       action = ":execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>";
       options = {

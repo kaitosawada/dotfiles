@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
+    ./skk.nix
     ./starship.nix
     # ./tmux.nix
     ./zellij
@@ -56,7 +57,7 @@
     extraConfig = builtins.readFile ../.wezterm.lua;
   };
 
-  programs.nixvim = import ../nixvim;
+  programs.nixvim = import ./nixvim;
   # Let Home Manager install and manage itself.
   # programs.home-manager = {
   #   enable = true;
