@@ -1,4 +1,5 @@
 {
+  # https://github.com/epwalsh/obsidian.nvim?tab=readme-ov-file#demo
   plugins.obsidian = {
     enable = true;
     settings = {
@@ -8,6 +9,9 @@
           path = "~/obsidian/kaitosawada";
         }
       ];
+      daily_notes = {
+        folder = "daily";
+      };
     };
   };
 
@@ -54,10 +58,26 @@
     }
     {
       mode = "n";
-      key = "<leader>os";
+      key = "<leader>og";
       action = "<cmd>ObsidianSearch<CR>";
       options = {
         desc = "Obsidian: Search";
+      };
+    }
+    {
+      mode = "n";
+      key = "<leader>os";
+      action = "<cmd>ObsidianDailies<CR>";
+      options = {
+        desc = "Obsidian: Search Daily Notes";
+      };
+    }
+    {
+      mode = "v";
+      key = "<leader>ol";
+      action = "<cmd>ObsidianLinkNew<CR>";
+      options = {
+        desc = "Obsidian: Search Daily Notes";
       };
     }
   ];
