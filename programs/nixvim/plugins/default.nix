@@ -14,10 +14,12 @@
     auto-save.enable = true;
     auto-session.enable = true;
     bufferline.enable = true;
+    chatgpt.enable = true;
     copilot-vim.enable = true;
     # leap.enable = true;
     fidget.enable = true;
     gitsigns.enable = true;
+    lsp-signature.enable = true;
     nvim-surround.enable = true;
     todo-comments.enable = true;
     wakatime.enable = true;

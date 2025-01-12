@@ -45,6 +45,9 @@
       nixfmt-rfc-style
       todo-txt-cli
       redis
+      (bitwarden-cli.override {
+        nodejs_20 = nodejs_22;
+      })
     ];
 
     sessionVariables = {

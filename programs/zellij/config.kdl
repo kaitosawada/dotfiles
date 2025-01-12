@@ -20,3 +20,6 @@ ui {
     rounded_corners true
   }
 }
+// delete-sessionが効かないので、セッションのシリアライズを無効にする
+// 恐らくnix経由でインストールしているため、シリアライズの保存先がstore pathになっているのが原因
+session_serialization false

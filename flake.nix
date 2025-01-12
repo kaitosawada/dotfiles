@@ -11,29 +11,36 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # zjstatus = {
-    #   url = "github:dj95/zjstatus";
-    # };
   };
 
   outputs =
     {
       nixpkgs,
       nixvim,
-      flake-utils,
       home-manager,
-      # zjstatus,
       ...
     }:
     let
+      # for bitwarden-cli
+      # https://github.com/NixOS/nixpkgs/issues/339576
+      overlays = [
+        (final: prev: {
+          bitwarden-cli = prev.bitwarden-cli.overrideAttrs (oldAttrs: {
+            nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ prev.llvmPackages_18.stdenv.cc ];
+            stdenv = prev.llvmPackages_18.stdenv;
+          });
+        })
+      ];
+
       inputs = {
-        inherit nixpkgs home-manager nixvim;
+        inherit home-manager nixvim;
       };
+
       mkConfig =
         username: system:
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
-            inherit system;
+            inherit system overlays;
             config = {
               allowUnfree = true;
             };
@@ -45,25 +52,7 @@
           modules = [ ./home.nix ];
         };
     in
-    flake-utils.lib.eachDefaultSystem (
-      system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        };
-      in
-      {
-        devShells = {
-          default = pkgs.mkShell {
-            buildInputs = [
-              pkgs.hello
-            ];
-          };
-        };
-      }
-    )
-    // {
+    {
       homeConfigurations = {
         kaito = mkConfig "kaito" "aarch64-darwin";
         kaitosawada = mkConfig "kaitosawada" "aarch64-darwin";

@@ -57,7 +57,7 @@ in
         "n"
         "c"
       ];
-      key = "<C-,>";
+      key = "<F12>";
       action = "<Plug>(skkeleton-toggle)";
       options = {
         desc = "skkeleton: Enable";
