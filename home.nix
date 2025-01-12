@@ -45,9 +45,14 @@
       nixfmt-rfc-style
       todo-txt-cli
       redis
-      (bitwarden-cli.override {
-        nodejs_20 = nodejs_22;
-      })
+      # https://github.com/NixOS/nixpkgs/issues/339576
+      (
+        (bitwarden-cli.overrideAttrs (oldAttrs: {
+          nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ llvmPackages_18.stdenv.cc ];
+          stdenv = llvmPackages_18.stdenv;
+        })).override
+        { nodejs_20 = nodejs_22; }
+      )
     ];
 
     sessionVariables = {

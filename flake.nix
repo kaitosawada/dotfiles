@@ -21,17 +21,6 @@
       ...
     }:
     let
-      # for bitwarden-cli
-      # https://github.com/NixOS/nixpkgs/issues/339576
-      overlays = [
-        (final: prev: {
-          bitwarden-cli = prev.bitwarden-cli.overrideAttrs (oldAttrs: {
-            nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ prev.llvmPackages_18.stdenv.cc ];
-            stdenv = prev.llvmPackages_18.stdenv;
-          });
-        })
-      ];
-
       inputs = {
         inherit home-manager nixvim;
       };
@@ -40,7 +29,7 @@
         username: system:
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
-            inherit system overlays;
+            inherit system;
             config = {
               allowUnfree = true;
             };
