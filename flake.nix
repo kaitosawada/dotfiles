@@ -33,11 +33,6 @@
             allowUnfree = true;
           };
         };
-
-        inputs = {
-          inherit home-manager nixvim;
-        };
-
         strListToAttrs =
           list: f:
           builtins.listToAttrs (
@@ -46,7 +41,7 @@
               value = f x;
             }) list
           );
-
+        homeDir = if system == "aarch64-darwin" then "/Users" else "/home";
         treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
       in
       {
@@ -61,10 +56,13 @@
               home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
                 extraSpecialArgs = {
-                  inherit inputs username system;
-                  homeDirectory = "/Users/${username}";
+                  inherit username system;
+                  homeDirectory = "${homeDir}/${username}";
                 };
-                modules = [ ./home.nix ];
+                modules = [
+                  ./home.nix
+                  nixvim.homeManagerModules.nixvim
+                ];
               }
             );
         formatter = treefmtEval.config.build.wrapper;

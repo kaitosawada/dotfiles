@@ -7,7 +7,7 @@
     ./obsidian.nix
     ./lazygit.nix
     ./lsp.nix
-    ./skkeleton.nix
+    # ./skkeleton.nix
     ./telescope.nix
     ./treesitter.nix
   ];

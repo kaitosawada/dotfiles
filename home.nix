@@ -1,5 +1,4 @@
 {
-  inputs,
   system,
   username,
   homeDirectory,
@@ -8,7 +7,6 @@
 }:
 {
   imports = [
-    inputs.nixvim.homeManagerModules.nixvim
     ./programs
   ];
 
@@ -80,6 +78,8 @@
       max-jobs = 8 
       cores = 8
       experimental-features = nix-command flakes
+      substituters = https://cache.nixos.org https://kaitosawada.cachix.org
+      trusted-public-keys = kaitosawada.cachix.org-1:N4QdsiZtO/vRmx6xZJ8uP77u/WmKG8Me0kHFYbXGoN4=
     '';
   };
 }

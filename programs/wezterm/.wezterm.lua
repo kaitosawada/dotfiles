@@ -103,17 +103,5 @@ config.keys = {
 -- default program
 config.default_prog = { "/bin/zsh", "-l" }
 
--- ssh
-config.ssh_domains = {
-    {
-        name = "contabo",
-        remote_address = "46.250.249.164",
-        username = "kaitosawada",
-        ssh_option = {
-            identityfile = '~/.ssh/id_contabo',
-        },
-    },
-}
-
 -- and finally, return the configuration to wezterm
 return config

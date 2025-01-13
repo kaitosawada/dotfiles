@@ -2,6 +2,8 @@
 
 ## installation
 
+home-managerはnix profileで管理しています。
+
 ```sh
 # Nix Installation
 sh <(curl -L https://nixos.org/nix/install) # (linux) --daemon
@@ -14,9 +16,7 @@ ghq get kaitosawada/dotfiles
 exit
 
 # Apply home.nix
-# init --switchでファイル参照できたらいいんだけど？またはinit必要ないかも？
-# nix run home-manager/master --extra-experimental-features "nix-command flakes" -- init --switch
 nix profile install nixpkgs#home-manager
-home-manager --extra-experimental-features "nix-command flakes" switch -f ~/ghq/github.com/kaitosawada/dotfiles/home.nix -b backup
+home-manager --extra-experimental-features "nix-command flakes" switch --flake ".#$(whoami)-x86_64-linux" -b backup
 exec $SHELL -l
 ```

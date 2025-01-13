@@ -50,16 +50,7 @@
     };
   };
 
-  programs.wezterm = {
-    enable = true;
-    extraConfig = builtins.readFile ../.wezterm.lua;
-  };
-
   programs.nixvim = import ./nixvim;
-  # Let Home Manager install and manage itself.
-  # programs.home-manager = {
-  #   enable = true;
-  # };
   programs.zoxide.enable = true;
   programs.direnv = {
     enable = true;
