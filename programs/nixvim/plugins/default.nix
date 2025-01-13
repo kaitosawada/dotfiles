@@ -1,5 +1,6 @@
 {
   imports = [
+    ./bufferline.nix
     ./flash.nix
     ./lualine.nix
     ./nvim-tree.nix
@@ -10,13 +11,12 @@
     ./telescope.nix
     ./treesitter.nix
   ];
+
   plugins = {
+    avante.enable = true;
     auto-save.enable = true;
     auto-session.enable = true;
-    bufferline.enable = true;
-    chatgpt.enable = true;
     copilot-vim.enable = true;
-    # leap.enable = true;
     fidget.enable = true;
     gitsigns.enable = true;
     lsp-signature.enable = true;

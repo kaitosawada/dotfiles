@@ -3,6 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    flake-utils.url = "github:numtide/flake-utils";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -15,39 +17,57 @@
 
   outputs =
     {
+      flake-utils,
       nixpkgs,
       nixvim,
       home-manager,
+      treefmt-nix,
       ...
     }:
-    let
-      inputs = {
-        inherit home-manager nixvim;
-      };
-
-      mkConfig =
-        username: system:
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            inherit system;
-            config = {
-              allowUnfree = true;
-            };
+    flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          config = {
+            allowUnfree = true;
           };
-          extraSpecialArgs = {
-            inherit inputs username;
-            homeDirectory = "/Users/${username}";
-          };
-          modules = [ ./home.nix ];
         };
-    in
-    {
-      homeConfigurations = {
-        kaito = mkConfig "kaito" "aarch64-darwin";
-        kaitosawada = mkConfig "kaitosawada" "aarch64-darwin";
-        kaitosawada-x86_64-Linux = mkConfig "kaitosawada" "x86_64-linux";
-        kaitosawada-arm64-Darwin = mkConfig "kaitosawada" "aarch64-darwin";
-        kaito-arm64-Darwin = mkConfig "kaito" "aarch64-darwin";
-      };
-    };
+
+        inputs = {
+          inherit home-manager nixvim;
+        };
+
+        strListToAttrs =
+          list: f:
+          builtins.listToAttrs (
+            map (x: {
+              name = "${x}-${system}";
+              value = f x;
+            }) list
+          );
+
+        treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
+      in
+      {
+        packages.homeConfigurations =
+          strListToAttrs
+            [
+              "kaito"
+              "kaitosawada"
+            ]
+            (
+              username:
+              home-manager.lib.homeManagerConfiguration {
+                inherit pkgs;
+                extraSpecialArgs = {
+                  inherit inputs username system;
+                  homeDirectory = "/Users/${username}";
+                };
+                modules = [ ./home.nix ];
+              }
+            );
+        formatter = treefmtEval.config.build.wrapper;
+      }
+    );
 }

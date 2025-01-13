@@ -1,5 +1,6 @@
 {
   inputs,
+  system,
   username,
   homeDirectory,
   pkgs,
@@ -64,12 +65,12 @@
       n = "nvim";
       lg = "lazygit";
       load = "exec $SHELL -l";
-      reload = ''home-manager switch --flake "$(ghq root)/github.com/kaitosawada/dotfiles#$(whoami)-$(uname -m)-$(uname -s)" && exec $SHELL -l'';
-      config = ''cd "$(ghq root)/github.com/kaitosawada/dotfiles && nvim'';
+      reload = ''home-manager switch --flake "$(ghq root)/github.com/kaitosawada/dotfiles#${username}-${system}" && exec $SHELL -l'';
       tree = "lsd --tree";
       grep = "rg";
       cd = "z";
       t = ''zellij attach "$(basename $(pwd))" --create'';
+      unlock = "export BW_SESSION=$(bw unlock --raw)";
     };
   };
 

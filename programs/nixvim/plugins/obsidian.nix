@@ -34,7 +34,7 @@
     }
     {
       mode = "n";
-      key = "<leader>od";
+      key = "<leader>ot";
       action = "<cmd>ObsidianToday<CR>";
       options = {
         desc = "Obsidian: Open Today's Daily Note";
@@ -58,7 +58,7 @@
     }
     {
       mode = "n";
-      key = "<leader>og";
+      key = "<leader>os";
       action = "<cmd>ObsidianSearch<CR>";
       options = {
         desc = "Obsidian: Search";
@@ -66,7 +66,7 @@
     }
     {
       mode = "n";
-      key = "<leader>os";
+      key = "<leader>d";
       action = "<cmd>ObsidianDailies<CR>";
       options = {
         desc = "Obsidian: Search Daily Notes";

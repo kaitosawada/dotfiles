@@ -145,4 +145,19 @@
       '';
     };
   };
+  keymaps = [
+    {
+      mode = [
+        "n"
+        "v"
+      ];
+      key = "-";
+      action = "<CMD>NvimTreeFindFile<CR>";
+      options = {
+        desc = "Paste from yank register";
+        noremap = false;
+        silent = false;
+      };
+    }
+  ];
 }
