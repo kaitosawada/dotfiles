@@ -7,13 +7,29 @@
     ./obsidian.nix
     ./lazygit.nix
     ./lsp.nix
-    # ./skkeleton.nix
+    ./skkeleton.nix
     ./telescope.nix
     ./treesitter.nix
   ];
 
   plugins = {
-    avante.enable = true;
+    avante = {
+      enable = true;
+      settings = {
+        provider = "openai";
+        mappings = {
+          submit = {
+            normal = "<CR>";
+            insert = "<C-CR>";
+          };
+        };
+        windows = {
+          ask = {
+            floating = true;
+          };
+        };
+      };
+    };
     auto-save.enable = true;
     auto-session.enable = true;
     copilot-vim.enable = true;
