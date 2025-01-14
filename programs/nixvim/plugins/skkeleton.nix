@@ -63,7 +63,7 @@ in
         "${skkDict}/SKK-JISYO.L"
       }
     })
-    require("skkeleton_indicator").setup({border = "single"})
+    require("skkeleton_indicator").setup()
   '';
 
   extraPlugins = [

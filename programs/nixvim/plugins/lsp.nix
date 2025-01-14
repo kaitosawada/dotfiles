@@ -37,6 +37,7 @@
         # Lua
         enable = true;
         settings.telemetry.enable = false;
+        settings.diagnostics.globals = [ "vim" ];
       };
 
       # Rust

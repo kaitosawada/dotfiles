@@ -14,6 +14,7 @@
     expandtab = true;
     number = true;
     conceallevel = 1;
+    laststatus = 3;
   };
 
   userCommands = {
@@ -21,4 +22,6 @@
       command = "wq";
     };
   };
+
+  extraConfigLuaPre = builtins.readFile ./pre.lua;
 }

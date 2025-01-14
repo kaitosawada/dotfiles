@@ -1,5 +1,6 @@
 {
   imports = [
+    ./avante.nix
     ./bufferline.nix
     ./flash.nix
     ./lualine.nix
@@ -13,23 +14,6 @@
   ];
 
   plugins = {
-    avante = {
-      enable = true;
-      settings = {
-        provider = "openai";
-        mappings = {
-          submit = {
-            normal = "<CR>";
-            insert = "<C-CR>";
-          };
-        };
-        windows = {
-          ask = {
-            floating = true;
-          };
-        };
-      };
-    };
     auto-save.enable = true;
     auto-session.enable = true;
     copilot-vim.enable = true;
@@ -40,6 +24,9 @@
     todo-comments.enable = true;
     wakatime.enable = true;
     which-key.enable = true;
+
+    # for avante.lazyLoad
+    lz-n.enable = true;
     web-devicons.enable = true;
   };
 }
