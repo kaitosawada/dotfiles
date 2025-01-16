@@ -4,9 +4,9 @@
     settings = {
       customCommands = [
         {
-          key = "C";
+          key = "c";
           context = "files";
-          command = "git commit -v -t ~/.config/git/commit_template_with_prompt.txt";
+          command = "git commit -v";
           description = "Commit changes using git editor";
           subprocess = true;
         }
