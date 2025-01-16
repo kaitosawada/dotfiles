@@ -138,8 +138,6 @@
       action = "<CMD>split<CR>";
       options = {
         desc = "横に分割";
-        noremap = true;
-        silent = true;
       };
     }
     {
@@ -151,8 +149,6 @@
       action = "\"*y";
       options = {
         desc = "Close tabs which you picked";
-        noremap = false;
-        silent = false;
       };
     }
     {
@@ -164,8 +160,6 @@
       action = "\"0p";
       options = {
         desc = "Close tabs which you picked";
-        noremap = false;
-        silent = false;
       };
     }
   ];

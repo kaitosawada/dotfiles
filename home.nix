@@ -22,7 +22,6 @@
       ghq
       gnumake
       glow
-      lazygit
       lazysql
       jq
       kubectx
@@ -69,6 +68,7 @@
       cd = "z";
       t = ''zellij attach "$(basename $(pwd))" --create'';
       unlock = "export BW_SESSION=$(bw unlock --raw)";
+      gr = ''cd "$(git rev-parse --show-toplevel)"'';
     };
   };
 

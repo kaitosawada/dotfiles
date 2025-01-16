@@ -1,7 +1,9 @@
 { pkgs, ... }:
 {
   imports = [
+    ./lazygit.nix
     ./starship.nix
+    ./wezterm
     ./zellij
     ./zsh.nix
   ];

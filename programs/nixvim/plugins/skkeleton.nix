@@ -28,6 +28,7 @@ let
       hash = "sha256-kqvNcCX4wlvb8BVrSF+WD5uGY8zHaS2mp75y8tenMnk=";
     };
   };
+
   skkeleton = pkgs.vimUtils.buildVimPlugin {
     name = "skkeleton";
     src = pkgs.fetchFromGitHub {
@@ -37,6 +38,7 @@ let
       hash = "sha256-V86J+8rg1/5ZUL9t0k2S5H+z7KZ1DZwLwmb5yM0+vts=";
     };
   };
+
   # build時にテストが失敗するので除外
   skkeleton_indicator =
     (pkgs.vimUtils.buildVimPlugin {
@@ -83,6 +85,20 @@ in
       action = "<Plug>(skkeleton-enable)";
       options = {
         desc = "skkeleton: Enable";
+        noremap = true;
+        silent = true;
+      };
+    }
+    {
+      mode = [
+        "i"
+        "n"
+        "c"
+      ];
+      key = "<C-z>";
+      action = "<Plug>(skkeleton-disable)";
+      options = {
+        desc = "skkeleton: Disable";
         noremap = true;
         silent = true;
       };
