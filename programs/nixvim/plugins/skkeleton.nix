@@ -56,6 +56,26 @@ let
           ${oldAttrs.neovimRequireCheckHook or ""}
         '';
       });
+
+  ddc = pkgs.vimUtils.buildVimPlugin {
+    name = "ddc";
+    src = pkgs.fetchFromGitHub {
+      owner = "Shougo";
+      repo = "ddc.vim";
+      rev = "5dd4b0842c1f238ebaf4d6157c05408a9a454743";
+      hash = "sha256-IWXBcHM6LSBzwshsroDx3GAVvTWMtlOmQKei9PSAEqI=";
+    };
+  };
+
+  pum = pkgs.vimUtils.buildVimPlugin {
+    name = "pum";
+    src = pkgs.fetchFromGitHub {
+      owner = "Shougo";
+      repo = "pum.vim";
+      rev = "f6ba3223260c228c0c7fd19a189ce36e20325b85";
+      hash = "sha256-rYswWOgnG5A4rSFknMWz2z1feeoYx/JVJlhYsuoZzXU=";
+    };
+  };
 in
 {
   extraConfigLua = ''
@@ -65,11 +85,28 @@ in
         "${skkDict}/SKK-JISYO.L"
       }
     })
+    vim.fn["ddc#custom#patch_global"]('sources', { 'skkeleton' })
+    vim.fn["ddc#custom#patch_global"]({
+      sourceOptions = {
+        ["skkeleton"] = {
+          mark = 'skkeleton',
+          matchers = {},
+          sorters = {},
+          converters = {},
+          isVolatile = true,
+          minAutoCompleteLength = 1,
+        },
+      }
+    })
+        
+    vim.fn["ddc#enable"]()
     require("skkeleton_indicator").setup()
   '';
 
   extraPlugins = [
     denops
+    ddc
+    pum
     skkeleton
     skkeleton_indicator
   ];

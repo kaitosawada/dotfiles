@@ -1,4 +1,3 @@
-{ pkgs, config, ... }:
 {
   programs.zsh = {
     enable = true;
@@ -11,21 +10,42 @@
     };
     syntaxHighlighting.enable = true;
 
-    history = {
-      size = 10000;
-      path = "${config.xdg.dataHome}/zsh/history";
-      extended = true;
-    };
+    # history = {
+    #   size = 10000;
+    #   extended = true;
+    # };
     initExtra = ''
       bindkey -M viins 'jj' vi-cmd-mode
       ${builtins.readFile ../scripts/init-nix.sh}
       ${builtins.readFile ../scripts/switch-project.sh}
-      # if [ -x "${pkgs.zellij}/bin/zellij" ]; then
-      #   eval "$(${pkgs.zellij}/bin/zellij setup --generate-auto-start zsh)"
-      # else
-      #   echo "zellij is not available" >&2
-      # fi
-    '';
 
+      # https://zenn.dev/entaku/articles/8464d0c109b936
+      # ディレクトリごとの履歴ファイルを保存するディレクトリを作成
+      HISTDIR="$HOME/.zsh_history.d"
+      [[ ! -d "$HISTDIR" ]] && mkdir -p "$HISTDIR"
+
+      # カレントディレクトリが変更されたときに呼ばれる関数
+      function chpwd() {
+          local history_file="$HISTDIR/$(pwd | sed -e "s|/|_|g").history"
+          # 履歴ファイルが存在しない場合は作成
+          [[ ! -f "$history_file" ]] && touch "$history_file"
+          # HISTFILE変数を更新
+          HISTFILE="$history_file"
+      }
+
+      # 履歴の保存件数を設定
+      HISTSIZE=1000
+      SAVEHIST=1000
+
+      # 履歴を共有
+      setopt share_history
+      # 重複を記録しない
+      setopt hist_ignore_dups
+      # スペースで始まるコマンドは履歴に追加しない
+      setopt hist_ignore_space
+
+      # 初期設定
+      chpwd
+    '';
   };
 }

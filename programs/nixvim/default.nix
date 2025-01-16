@@ -13,9 +13,16 @@
     shiftwidth = 2;
     expandtab = true;
     number = true;
-    conceallevel = 1;
     laststatus = 3;
   };
+
+  autoCmd = [ 
+    {
+      command = "setlocal conceallevel=1";
+      event = "FileType";
+      pattern = "markdown";
+    }
+  ];
 
   userCommands = {
     "Wq" = {
