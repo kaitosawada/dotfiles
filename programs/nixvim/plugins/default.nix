@@ -16,6 +16,12 @@
   plugins = {
     auto-save.enable = true;
     auto-session.enable = true;
+    chatgpt = {
+      enable = true;
+      settings = {
+        api_key_cmd = "bw get notes chatgpt-api --nointeraction";
+      };
+    };
     copilot-vim.enable = true;
     fidget.enable = true;
     gitsigns.enable = true;
@@ -29,4 +35,15 @@
     lz-n.enable = true;
     web-devicons.enable = true;
   };
+
+  keymaps = [
+    {
+      mode = "n";
+      key = "<leader>ch";
+      action = "<CMD>ChatGPT<CR>";
+      options = {
+        desc = "ChatGPT";
+      };
+    }
+  ];
 }
