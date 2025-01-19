@@ -2,6 +2,7 @@
   imports = [
     ./avante.nix
     ./bufferline.nix
+    ./cmp.nix
     ./flash.nix
     ./lualine.nix
     ./nvim-tree.nix

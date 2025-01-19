@@ -105,7 +105,7 @@
     {
       mode = "n";
       key = "gx";
-      action = ":execute '!open ' . shellescape(expand('<cfile>'); 1)<CR>";
+      action = ":execute '!open ' . shellescape(expand('<cfile>'))<CR>";
       options = {
         desc = "リンクを開く";
         noremap = true;

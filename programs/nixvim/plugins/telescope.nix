@@ -19,7 +19,7 @@
       key = "<leader>g";
       action = "\"ay<cmd>Telescope live_grep<cr><C-r>a";
       options = {
-        desc = "Up half page";
+        desc = "Telescope: live_grep";
         noremap = false;
         silent = false;
       };

@@ -61,6 +61,7 @@
         "gi" = "implementation";
         "<leader>cc" = "hover";
         "<leader>ll" = "format";
+        "<leader>ca" = "code_action";
       };
     };
   };

@@ -57,26 +57,36 @@ let
         '';
       });
 
-  ddc = pkgs.vimUtils.buildVimPlugin {
-    name = "ddc";
+  cmp-skkeleton = pkgs.vimUtils.buildVimPlugin {
+    name = "cmp-skkeleton";
     src = pkgs.fetchFromGitHub {
-      owner = "Shougo";
-      repo = "ddc.vim";
-      rev = "5dd4b0842c1f238ebaf4d6157c05408a9a454743";
-      hash = "sha256-IWXBcHM6LSBzwshsroDx3GAVvTWMtlOmQKei9PSAEqI=";
+      owner = "uga-rosa";
+      repo = "cmp-skkeleton";
+      rev = "2c268a407e9e843abd03c6fa77485541a4ddcd9a";
+      hash = "sha256-Odg0cmLML2L4YVcrMt7Lrie1BAl7aNEq6xqJN3/JhZs=";
     };
   };
 
-  pum = pkgs.vimUtils.buildVimPlugin {
-    name = "pum";
-    src = pkgs.fetchFromGitHub {
-      owner = "Shougo";
-      repo = "pum.vim";
-      rev = "f6ba3223260c228c0c7fd19a189ce36e20325b85";
-      hash = "sha256-rYswWOgnG5A4rSFknMWz2z1feeoYx/JVJlhYsuoZzXU=";
-    };
-  };
 in
+# ddc = pkgs.vimUtils.buildVimPlugin {
+#   name = "ddc";
+#   src = pkgs.fetchFromGitHub {
+#     owner = "Shougo";
+#     repo = "ddc.vim";
+#     rev = "5dd4b0842c1f238ebaf4d6157c05408a9a454743";
+#     hash = "sha256-IWXBcHM6LSBzwshsroDx3GAVvTWMtlOmQKei9PSAEqI=";
+#   };
+# };
+#
+# pum = pkgs.vimUtils.buildVimPlugin {
+#   name = "pum";
+#   src = pkgs.fetchFromGitHub {
+#     owner = "Shougo";
+#     repo = "pum.vim";
+#     rev = "f6ba3223260c228c0c7fd19a189ce36e20325b85";
+#     hash = "sha256-rYswWOgnG5A4rSFknMWz2z1feeoYx/JVJlhYsuoZzXU=";
+#   };
+# };
 {
   extraConfigLua = ''
     vim.fn["skkeleton#register_kanatable"]("rom", { jj = "escape" })
@@ -85,30 +95,16 @@ in
         "${skkDict}/SKK-JISYO.L"
       }
     })
-    vim.fn["ddc#custom#patch_global"]('sources', { 'skkeleton' })
-    vim.fn["ddc#custom#patch_global"]({
-      sourceOptions = {
-        ["skkeleton"] = {
-          mark = 'skkeleton',
-          matchers = {},
-          sorters = {},
-          converters = {},
-          isVolatile = true,
-          minAutoCompleteLength = 1,
-        },
-      }
-    })
-        
-    vim.fn["ddc#enable"]()
+    vim.fn["skkeleton#register_keymap"]('input', ";", 'disable')
+    vim.fn["skkeleton#register_keymap"]('input', "l", 'henkanPoint')
     require("skkeleton_indicator").setup()
   '';
 
   extraPlugins = [
     denops
-    ddc
-    pum
     skkeleton
     skkeleton_indicator
+    cmp-skkeleton
   ];
 
   keymaps = [
@@ -132,7 +128,7 @@ in
         "n"
         "c"
       ];
-      key = "<C-z>";
+      key = "<F6>";
       action = "<Plug>(skkeleton-disable)";
       options = {
         desc = "skkeleton: Disable";
