@@ -95,6 +95,7 @@ in
         "${skkDict}/SKK-JISYO.L"
       }
     })
+
     vim.fn["skkeleton#register_keymap"]('input', ";", 'disable')
     vim.fn["skkeleton#register_keymap"]('input', "l", 'henkanPoint')
     require("skkeleton_indicator").setup()
@@ -114,7 +115,7 @@ in
         "n"
         "c"
       ];
-      key = "<C-u>";
+      key = "<F7>";
       action = "<Plug>(skkeleton-enable)";
       options = {
         desc = "skkeleton: Enable";
