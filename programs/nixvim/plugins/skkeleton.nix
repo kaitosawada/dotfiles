@@ -129,6 +129,20 @@ in
         "n"
         "c"
       ];
+      key = "<C-u>";
+      action = "<Plug>(skkeleton-enable)";
+      options = {
+        desc = "skkeleton: Enable";
+        noremap = true;
+        silent = true;
+      };
+    }
+    {
+      mode = [
+        "i"
+        "n"
+        "c"
+      ];
       key = "<F6>";
       action = "<Plug>(skkeleton-disable)";
       options = {

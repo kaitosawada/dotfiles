@@ -27,6 +27,7 @@
     fidget.enable = true;
     gitsigns.enable = true;
     lsp-signature.enable = true;
+    noice.enable = true;
     nvim-surround.enable = true;
     todo-comments.enable = true;
     wakatime.enable = true;
