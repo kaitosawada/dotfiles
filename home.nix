@@ -51,6 +51,7 @@
         })).override
         { nodejs_20 = nodejs_22; }
       )
+      bindfs
     ];
 
     sessionVariables = {
@@ -78,6 +79,7 @@
       max-jobs = 8 
       cores = 8
       experimental-features = nix-command flakes
+      trusted-users = root kaitosawada kaito ubuntu
     '';
   };
 }
