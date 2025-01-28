@@ -24,12 +24,12 @@
     }
   ];
 
-  clipboard = {
-    register = "unnamed,unnamedplus";
-    providers.xclip = {
-      enable = true;
-    };
-  };
+  # clipboard = {
+  #   register = "unnamed,unnamedplus";
+  #   providers.xclip = {
+  #     enable = true;
+  #   };
+  # };
 
   userCommands = {
     "Wq" = {
