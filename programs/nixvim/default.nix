@@ -16,13 +16,20 @@
     laststatus = 3;
   };
 
-  autoCmd = [ 
+  autoCmd = [
     {
       command = "setlocal conceallevel=1";
       event = "FileType";
       pattern = "markdown";
     }
   ];
+
+  clipboard = {
+    register = "unnamed,unnamedplus";
+    providers.xclip = {
+      enable = true;
+    };
+  };
 
   userCommands = {
     "Wq" = {
@@ -31,4 +38,17 @@
   };
 
   extraConfigLuaPre = builtins.readFile ./pre.lua;
+  extraConfigLua = ''
+    vim.g.clipboard = {
+      name = 'OSC 52',
+      copy = {
+        ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+        ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+      },
+      paste = {
+        ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+        ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+      },
+    }
+  '';
 }
