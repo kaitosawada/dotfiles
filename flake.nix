@@ -50,6 +50,7 @@
             [
               "kaito"
               "kaitosawada"
+              "ubuntu"
             ]
             (
               username:
