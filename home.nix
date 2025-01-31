@@ -63,7 +63,7 @@
       n = "nvim";
       lg = "lazygit";
       load = "exec $SHELL -l";
-      reload = ''home-manager switch --flake "$(ghq root)/github.com/kaitosawada/dotfiles#${username}-${system}" && exec $SHELL -l'';
+      reload = ''home-manager switch --flake "$(ghq root)/github.com/kaitosawada/dotfiles#${username}-${system} --impure" && exec $SHELL -l'';
       tree = "lsd --tree";
       grep = "rg";
       cd = "z";

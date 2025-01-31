@@ -1,7 +1,7 @@
 layout {
     tab_template name="default_tab" {
       pane size=1 borderless=true {
-          plugin location="tab-bar"
+          plugin location="compact-bar"
       }
       pane split_direction="vertical" {
           pane size="60%" command="nvim"
@@ -11,20 +11,14 @@ layout {
               pane
           }
       }
-      pane size=1 borderless=true {
-          plugin location="status-bar"
-      }
     }
     default_tab name="sd_common_backend" {}
     default_tab name="webapp" cwd="./packages/webapp" {}
     default_tab name="nix-clusters" cwd="./packages/nix-clusters" {}
     new_tab_template {
       pane size=1 borderless=true {
-        plugin location="tab-bar"
+        plugin location="compact-bar"
       }
       pane
-      pane size=1 borderless=true {
-        plugin location="status-bar"
-      }
     }
 }
