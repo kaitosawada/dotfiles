@@ -10,6 +10,7 @@
       # vim.keymap.set('n', '<leader>tr', builtin.registers, opts("Registers"))
       # vim.keymap.set('n', '<leader>tc', builtin.commands, opts("Commands"))
     };
+    extensions.fzf-native.enable = true;
   };
   keymaps = [
     {

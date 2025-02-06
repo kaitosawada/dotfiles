@@ -10,6 +10,7 @@
     ./lazygit.nix
     ./lsp.nix
     ./skkeleton.nix
+    ./smart-open.nix
     ./telescope.nix
     ./treesitter.nix
     ./zellij-nav.nix
@@ -18,7 +19,6 @@
   plugins = {
     # core
     auto-save.enable = true;
-    auto-session.enable = true;
     copilot-vim.enable = true;
 
     # view
@@ -31,7 +31,7 @@
     noice.enable = true;
     notify.enable = true;
     todo-comments.enable = true;
-    
+
     # tools
     nvim-surround.enable = true;
     which-key.enable = true;
