@@ -1,7 +1,7 @@
 {
   imports = [
-    ./avante.nix
     ./bufferline.nix
+    ./codecompanion.nix
     ./cmp.nix
     ./flash.nix
     ./lualine.nix
@@ -12,40 +12,35 @@
     ./skkeleton.nix
     ./telescope.nix
     ./treesitter.nix
+    ./zellij-nav.nix
   ];
 
   plugins = {
+    # core
     auto-save.enable = true;
     auto-session.enable = true;
-    chatgpt = {
-      enable = true;
-      settings = {
-        api_key_cmd = "bw get notes chatgpt-api --nointeraction";
-      };
-    };
     copilot-vim.enable = true;
-    fidget.enable = true;
-    gitsigns.enable = true;
+
+    # view
     lsp-signature.enable = true;
+    gitsigns.enable = true;
+    dressing = {
+      enable = true;
+      settings.input.enabled = false;
+    };
     noice.enable = true;
-    nvim-surround.enable = true;
+    notify.enable = true;
     todo-comments.enable = true;
-    wakatime.enable = true;
+    
+    # tools
+    nvim-surround.enable = true;
     which-key.enable = true;
+
+    # integrations
+    wakatime.enable = true;
 
     # for avante.lazyLoad
     lz-n.enable = true;
     web-devicons.enable = true;
   };
-
-  keymaps = [
-    {
-      mode = "n";
-      key = "<leader>ch";
-      action = "<CMD>ChatGPT<CR>";
-      options = {
-        desc = "ChatGPT";
-      };
-    }
-  ];
 }

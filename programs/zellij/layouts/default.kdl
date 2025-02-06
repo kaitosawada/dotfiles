@@ -2,9 +2,9 @@ layout {
     pane size=1 borderless=true {
         plugin location="compact-bar"
     }
-    pane split_direction="vertical" {
-        pane size="60%" command="nvim"
-        pane split_direction="horizontal" {
+    pane split_direction="horizontal" {
+        pane size="70%" command="nvim"
+        pane split_direction="vertical" {
             pane
             pane
             pane

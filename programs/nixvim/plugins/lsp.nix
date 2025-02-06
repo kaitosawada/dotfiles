@@ -15,6 +15,7 @@
       yamlls.enable = true; # YAML
       terraformls.enable = true; # Terraform
       ruff.enable = true; # Python
+      sqls.enable = true; # SQL
       basedpyright = {
         enable = true;
         settings = {

@@ -18,6 +18,7 @@ ghq get ssh://git@github.com/kaitosawada/dotfiles.git
 exit
 
 # Apply home.nix
+export NIXPKGS_ALLOW_UNFREE=1
 nix profile install nixpkgs#home-manager --extra-experimental-features "nix-command flakes"
 cd ~/ghq/github.com/kaitosawada/dotfiles
 home-manager --extra-experimental-features "nix-command flakes" switch --flake ".#$(whoami)-x86_64-linux" -b backup

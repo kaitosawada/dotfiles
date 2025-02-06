@@ -24,5 +24,17 @@
         silent = false;
       };
     }
+    {
+      mode = [
+        "n"
+      ];
+      key = "<leader>q";
+      action = "<cmd>Telescope quickfix<cr>";
+      options = {
+        desc = "Telescope: quickfix";
+        noremap = false;
+        silent = false;
+      };
+    }
   ];
 }

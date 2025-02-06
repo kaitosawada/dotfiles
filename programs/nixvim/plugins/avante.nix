@@ -18,7 +18,7 @@
     settings = {
       provider = "openai";
       openai = {
-        api_key_name = "cmd:bw get notes chatgpt-api --nointeraction";
+        api_key_name = "cmd:bw get notes openai-api-key --nointeraction";
       };
       mappings = {
         submit = {

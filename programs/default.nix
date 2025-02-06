@@ -54,11 +54,11 @@
 
   programs.nixvim = import ./nixvim;
   programs.zoxide.enable = true;
+
+  # https://github.com/nix-community/home-manager/blob/master/modules/programs/direnv.nix
   programs.direnv = {
     enable = true;
-    config = {
-      global.quiet = true;
-    };
+    enableZshIntegration = false;
   };
   programs.awscli.enable = true;
 }

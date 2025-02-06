@@ -12,6 +12,9 @@
       daily_notes = {
         folder = "daily";
       };
+      ui = {
+        enable = false;
+      };
     };
   };
 

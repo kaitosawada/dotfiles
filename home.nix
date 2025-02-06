@@ -21,25 +21,20 @@
       go
       ghq
       gnumake
-      glow
       lazysql
       jq
-      kubectx
       ripgrep
       sd
       docker
       docker-buildx
-      gvproxy
-      google-cloud-sdk
       nix-search-cli
-      go-task
-      nodejs_22
+      nodejs_23
       (nodePackages."@antfu/ni".override {
-        nodejs = nodejs_22;
+        nodejs = nodejs_23;
       })
       pnpm
       yarn
-      duckdb
+      # duckdb
       nixfmt-rfc-style
       todo-txt-cli
       redis
@@ -48,8 +43,12 @@
         (bitwarden-cli.overrideAttrs (oldAttrs: {
           nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ llvmPackages_18.stdenv.cc ];
           stdenv = llvmPackages_18.stdenv;
+
+          postFixup = ''
+            wrapProgram $out/bin/bw --set NODE_NO_WARNINGS 1
+          '';
         })).override
-        { nodejs_20 = nodejs_22; }
+        { nodejs_20 = nodejs_23; }
       )
       bindfs
     ];
@@ -57,13 +56,14 @@
     sessionVariables = {
       EDITOR = "nvim";
       LANG = "ja_JP.UTF-8";
+      NIXPKGS_ALLOW_UNFREE = "1";
     };
 
     shellAliases = {
       n = "nvim";
       lg = "lazygit";
       load = "exec $SHELL -l";
-      reload = ''home-manager switch --flake "$(ghq root)/github.com/kaitosawada/dotfiles#${username}-${system} --impure" && exec $SHELL -l'';
+      reload = ''export NIXPKGS_ALLOW_UNFREE=1 && home-manager switch --flake "$(ghq root)/github.com/kaitosawada/dotfiles#${username}-${system}" --impure && exec $SHELL -l'';
       tree = "lsd --tree";
       grep = "rg";
       cd = "z";

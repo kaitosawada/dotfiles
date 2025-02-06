@@ -58,7 +58,7 @@
     }
     {
       mode = "n";
-      key = "<leader>wj";
+      key = "<leader>j";
       action = "<C-w>w";
       options = {
         desc = "Next Window";
@@ -69,7 +69,7 @@
     {
       mode = "n";
       key = "<leader>wk";
-      action = "<C-w>p";
+      action = "<C-w>k";
       options = {
         desc = "Previous Window";
         noremap = false;
