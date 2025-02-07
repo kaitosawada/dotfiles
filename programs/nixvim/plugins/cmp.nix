@@ -1,4 +1,5 @@
 {
+  # https://nix-community.github.io/nixvim/plugins/cmp/index.html
   plugins.cmp = {
     enable = true;
     autoEnableSources = true;

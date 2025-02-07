@@ -1,5 +1,6 @@
 {
   imports = [
+    ./alpha.nix
     ./bufferline.nix
     ./codecompanion.nix
     ./cmp.nix
@@ -10,7 +11,6 @@
     ./lazygit.nix
     ./lsp.nix
     ./skkeleton.nix
-    ./smart-open.nix
     ./telescope.nix
     ./treesitter.nix
     ./zellij-nav.nix
