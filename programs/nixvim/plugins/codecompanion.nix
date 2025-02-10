@@ -14,7 +14,7 @@
                 },
                 schema = {
                   model = {
-                    default = "o1-mini",
+                    default = "o3-mini",
                   },
                 },
               })
@@ -72,10 +72,10 @@
           adapter = "openai";
         };
         chat = {
-          adapter = "anthropic";
+          adapter = "openai";
         };
         inline = {
-          adapter = "anthropic";
+          adapter = "openai";
         };
       };
     };

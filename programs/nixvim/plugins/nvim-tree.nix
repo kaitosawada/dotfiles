@@ -151,7 +151,7 @@
         "n"
         "v"
       ];
-      key = "-";
+      key = "<leader>te";
       action = "<CMD>NvimTreeFindFile<CR>";
       options = {
         desc = "Paste from yank register";

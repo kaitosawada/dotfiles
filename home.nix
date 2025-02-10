@@ -44,6 +44,11 @@
           nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ llvmPackages_18.stdenv.cc ];
           stdenv = llvmPackages_18.stdenv;
 
+          postInstall = ''
+            rm -rf $out/lib/node_modules/@bitwarden/clients/node_modules/.bin
+            rm -rf $out/lib/node_modules/@bitwarden/clients/node_modules/@bitwarden
+          '';
+
           postFixup = ''
             wrapProgram $out/bin/bw --set NODE_NO_WARNINGS 1
           '';

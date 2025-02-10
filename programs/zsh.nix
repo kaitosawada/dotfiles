@@ -19,7 +19,7 @@
       ${builtins.readFile ../scripts/init-nix.sh}
       ${builtins.readFile ../scripts/switch-project.sh}
 
-      if [ -z "$ZELLIJ" ]; then
+      if [ -n "$ZELLIJ" ]; then
         eval "$(direnv hook zsh)"
       fi
 

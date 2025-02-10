@@ -4,11 +4,14 @@
     ./bufferline.nix
     ./codecompanion.nix
     ./cmp.nix
+    ./dooing.nix
     ./flash.nix
     ./lualine.nix
     ./nvim-tree.nix
     ./obsidian.nix
     ./lazygit.nix
+    ./notify.nix
+    ./no-neck-pain.nix
     ./lsp.nix
     ./skkeleton.nix
     ./telescope.nix
@@ -29,7 +32,6 @@
       settings.input.enabled = false;
     };
     noice.enable = true;
-    notify.enable = true;
     todo-comments.enable = true;
 
     # tools

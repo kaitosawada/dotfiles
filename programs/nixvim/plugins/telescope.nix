@@ -24,12 +24,13 @@ in
     keymaps = {
       # "<leader>f" = "find_files";
       "<leader>f" = "smart_open";
+      "-" = "smart_open";
       "<leader>g" = "live_grep";
       "<leader>td" = "resume";
-      # vim.keymap.set('n', '<leader>tb', builtin.buffers, opts("Buffers"))
-      # vim.keymap.set('n', '<leader>th', builtin.help_tags, opts("Help Tags"))
-      # vim.keymap.set('n', '<leader>tr', builtin.registers, opts("Registers"))
-      # vim.keymap.set('n', '<leader>tc', builtin.commands, opts("Commands"))
+      "<leader>tb" = "buffers";
+      "<leader>th" = "help_tags";
+      "<leader>tr" = "registers";
+      "<leader>tc" = "commands";
     };
     extensions.fzf-native.enable = true;
     enabledExtensions = [
@@ -58,7 +59,7 @@ in
       mode = [
         "n"
       ];
-      key = "<leader>q";
+      key = "<leader>tq";
       action = "<cmd>Telescope quickfix<cr>";
       options = {
         desc = "Telescope: quickfix";
