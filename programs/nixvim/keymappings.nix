@@ -162,85 +162,85 @@
         desc = "Close tabs which you picked";
       };
     }
-    # https://github.com/fresh2dev/zellij-autolock?tab=readme-ov-file
-    # zellijとシームレスに移動する
-    {
-      mode = [
-        "n"
-        "v"
-        "o"
-      ];
-      key = "<C-j>";
-      action.__raw = ''
-        function()
-          local function get_last_focusable_winnr()
-            local last_winnr = vim.fn.winnr('$')
-            for i = last_winnr, 1, -1 do
-              local win_id = vim.fn.win_getid(i)
-              if vim.api.nvim_win_get_config(win_id).focusable ~= false then
-                return i
-              end
-            end
-            return 0  -- focusableなウィンドウが見つからない場合
-          end
-
-          local current = vim.fn.winnr()
-          local last = get_last_focusable_winnr()
-
-          -- 次のウィンドウが存在し、フォーカス可能な場合
-          if current < last then
-            vim.cmd('wincmd w')
-          else
-            vim.cmd('wincmd 1 w')
-            -- 最後のウィンドウの場合はzellijコマンドを実行
-            vim.fn.system('zellij action focus-next-pane')
-          end
-        end
-      '';
-      options = {
-        desc = "Debug window info";
-        noremap = false;
-        silent = false;
-      };
-    }
-    # zellijとシームレスに移動する
-    {
-      mode = [
-        "n"
-        "v"
-        "o"
-      ];
-      key = "<C-k>";
-      action.__raw = ''
-        function()
-          local function get_first_focusable_winnr()
-            local last_winnr = vim.fn.winnr('$')
-            for i = 1, last_winnr, 1 do
-              local win_id = vim.fn.win_getid(i)
-              if vim.api.nvim_win_get_config(win_id).focusable ~= false then
-                return i
-              end
-            end
-            return 0  -- focusableなウィンドウが見つからない場合
-          end
-
-          local current = vim.fn.winnr()
-          local first = get_first_focusable_winnr()
-
-          -- 前のウィンドウが存在し、フォーカス可能な場合
-          if first < current then
-            vim.cmd('wincmd W')
-          else
-            -- 最初のウィンドウの場合はzellijコマンドを実行
-            vim.fn.system('zellij action focus-previous-pane')
-          end
-        end
-      '';
-      options = {
-        desc = "Debug window info";
-        noremap = false;
-        silent = false;
-      };
-    }
+    # # https://github.com/fresh2dev/zellij-autolock?tab=readme-ov-file
+    # # zellijとシームレスに移動する
+    # {
+    #   mode = [
+    #     "n"
+    #     "v"
+    #     "o"
+    #   ];
+    #   key = "<C-j>";
+    #   action.__raw = ''
+    #     function()
+    #       local function get_last_focusable_winnr()
+    #         local last_winnr = vim.fn.winnr('$')
+    #         for i = last_winnr, 1, -1 do
+    #           local win_id = vim.fn.win_getid(i)
+    #           if vim.api.nvim_win_get_config(win_id).focusable ~= false then
+    #             return i
+    #           end
+    #         end
+    #         return 0  -- focusableなウィンドウが見つからない場合
+    #       end
+    #
+    #       local current = vim.fn.winnr()
+    #       local last = get_last_focusable_winnr()
+    #
+    #       -- 次のウィンドウが存在し、フォーカス可能な場合
+    #       if current < last then
+    #         vim.cmd('wincmd w')
+    #       else
+    #         vim.cmd('wincmd 1 w')
+    #         -- 最後のウィンドウの場合はzellijコマンドを実行
+    #         vim.fn.system('zellij action focus-next-pane')
+    #       end
+    #     end
+    #   '';
+    #   options = {
+    #     desc = "Debug window info";
+    #     noremap = false;
+    #     silent = false;
+    #   };
+    # }
+    # # zellijとシームレスに移動する
+    # {
+    #   mode = [
+    #     "n"
+    #     "v"
+    #     "o"
+    #   ];
+    #   key = "<C-k>";
+    #   action.__raw = ''
+    #     function()
+    #       local function get_first_focusable_winnr()
+    #         local last_winnr = vim.fn.winnr('$')
+    #         for i = 1, last_winnr, 1 do
+    #           local win_id = vim.fn.win_getid(i)
+    #           if vim.api.nvim_win_get_config(win_id).focusable ~= false then
+    #             return i
+    #           end
+    #         end
+    #         return 0  -- focusableなウィンドウが見つからない場合
+    #       end
+    #
+    #       local current = vim.fn.winnr()
+    #       local first = get_first_focusable_winnr()
+    #
+    #       -- 前のウィンドウが存在し、フォーカス可能な場合
+    #       if first < current then
+    #         vim.cmd('wincmd W')
+    #       else
+    #         -- 最初のウィンドウの場合はzellijコマンドを実行
+    #         vim.fn.system('zellij action focus-previous-pane')
+    #       end
+    #     end
+    #   '';
+    #   options = {
+    #     desc = "Debug window info";
+    #     noremap = false;
+    #     silent = false;
+    #   };
+    # }
   ];
 }
