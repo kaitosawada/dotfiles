@@ -22,13 +22,13 @@ in
     theme "catppuccin-macchiato"
     plugins {
       autolock location="file:${zellij-autolock}/bin/zellij-autolock.wasm" {
-        is_enabled true
+        is_enabled false // falseにしています
         triggers "nvim"
       }
     }
-    load_plugins {
-      autolock
-    }
+    // load_plugins {
+    //   autolock
+    // }
     keybinds {
       normal {
         bind "Ctrl l" { GoToNextTab; }

@@ -31,10 +31,12 @@ in
       "<leader>th" = "help_tags";
       "<leader>tr" = "registers";
       "<leader>tc" = "commands";
+      "<leader>tn" = "noice";
     };
     extensions.fzf-native.enable = true;
     enabledExtensions = [
       "smart_open"
+      "noice"
     ];
   };
 

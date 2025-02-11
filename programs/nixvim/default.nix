@@ -37,7 +37,7 @@
     };
   };
 
-  extraConfigLuaPre = builtins.readFile ./pre.lua;
+  extraConfigLuaPre = builtins.readFile lua/bitwarden.lua;
   extraConfigLua = ''
     vim.g.clipboard = {
       name = 'OSC 52',
@@ -50,5 +50,5 @@
         ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
       },
     }
-  '';
+  '' + builtins.readFile lua/codecompanion.lua;
 }
