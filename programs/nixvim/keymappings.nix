@@ -77,6 +77,26 @@
       };
     }
     {
+      mode = "n";
+      key = "<Right>";
+      action = "<C-w>w";
+      options = {
+        desc = "Next Window";
+        noremap = false;
+        silent = false;
+      };
+    }
+    {
+      mode = "n";
+      key = "<Left>";
+      action = "<C-w>W";
+      options = {
+        desc = "Previous Window";
+        noremap = false;
+        silent = false;
+      };
+    }
+    {
       mode = [
         "n"
         "v"

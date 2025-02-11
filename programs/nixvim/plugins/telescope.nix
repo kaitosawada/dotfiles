@@ -24,7 +24,6 @@ in
     keymaps = {
       # "<leader>f" = "find_files";
       "<leader>f" = "smart_open";
-      "-" = "smart_open";
       "<leader>g" = "live_grep";
       "<leader>td" = "resume";
       "<leader>tb" = "buffers";
