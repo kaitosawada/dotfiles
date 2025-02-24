@@ -4,7 +4,6 @@
     ./bufferline.nix
     ./codecompanion.nix
     ./cmp.nix
-    ./dooing.nix
     ./flash.nix
     ./lualine.nix
     ./nvim-tree.nix
