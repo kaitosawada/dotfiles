@@ -16,18 +16,18 @@
       terraformls.enable = true; # Terraform
       ruff.enable = true; # Python
       sqls.enable = true; # SQL
-      # basedpyright = {
-      #   enable = true;
-      #   settings = {
-      #     basedpyright = {
-      #       disableOrganizeImports = true;
-      #       analysis = {
-      #         typeCheckingMode = "standard";
-      #         autoImportCompletions = true;
-      #       };
-      #     };
-      #   };
-      # };
+      basedpyright = {
+        enable = true;
+        settings = {
+          basedpyright = {
+            disableOrganizeImports = true;
+            analysis = {
+              typeCheckingMode = "standard";
+              autoImportCompletions = true;
+            };
+          };
+        };
+      };
       gopls = {
         # Golang
         enable = true;
