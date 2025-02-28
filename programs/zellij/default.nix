@@ -1,34 +1,12 @@
-{ pkgs, ... }:
-let
-  # https://github.com/fresh2dev/zellij-autolock/releases/download/0.2.2/zellij-autolock.wasm
-  zellij-autolock = pkgs.stdenv.mkDerivation {
-    name = "zellij-autolock";
-    src = pkgs.fetchurl {
-      url = "https://github.com/fresh2dev/zellij-autolock/releases/download/0.2.2/zellij-autolock.wasm";
-      hash = "sha256-aclWB7/ZfgddZ2KkT9vHA6gqPEkJ27vkOVLwIEh7jqQ=";
-    };
-    dontUnpack = true;
-    installPhase = ''
-      mkdir -p $out/bin
-      cp $src $out/bin/zellij-autolock.wasm
-    '';
-  };
-in
 {
   programs.zellij = {
     enable = true;
+    enableBashIntegration = false;
+    enableZshIntegration = false;
+    enableFishIntegration = false;
   };
   home.file.".config/zellij/config.kdl".text = ''
     theme "catppuccin-macchiato"
-    plugins {
-      autolock location="file:${zellij-autolock}/bin/zellij-autolock.wasm" {
-        is_enabled false // falseにしています
-        triggers "nvim"
-      }
-    }
-    // load_plugins {
-    //   autolock
-    // }
     keybinds {
       normal {
         bind "Ctrl l" { GoToNextTab; }
