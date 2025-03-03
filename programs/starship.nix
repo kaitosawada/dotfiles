@@ -1,7 +1,14 @@
 # { config, pkgs, ... }:
 {
+  programs.zsh.initExtra = ''
+    # VSCode ターミナルでは starship を無効にする
+    if [[ $TERM != "dumb" && $TERM_PROGRAM != "vscode" ]]; then
+      eval "$(/Users/kaitosawada/.nix-profile/bin/starship init zsh)"
+    fi
+  '';
   programs.starship = {
     enable = true;
+    enableZshIntegration = false;
     settings =
       {
         format =
