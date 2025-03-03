@@ -38,7 +38,6 @@
 
   programs.lsd = {
     enable = true;
-    enableAliases = true;
   };
 
   programs.bat = {
