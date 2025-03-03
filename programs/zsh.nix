@@ -15,10 +15,6 @@
       ${builtins.readFile ../scripts/init-nix.sh}
       ${builtins.readFile ../scripts/switch-project.sh}
 
-      if [ -n "$ZELLIJ" ]; then
-        eval "$(direnv hook zsh)"
-      fi
-
       if [ -d "$HOME/google-cloud-sdk/bin" ]; then
         export PATH="$HOME/google-cloud-sdk/bin:$PATH"
       fi
