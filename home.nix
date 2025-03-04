@@ -56,7 +56,9 @@
         { nodejs_20 = nodejs_23; }
       )
       bindfs
-      claude-code
+      (import ./programs/claude-code {
+        inherit lib fetchzip buildNpmPackage;
+      })
     ];
 
     sessionVariables = {
