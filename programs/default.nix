@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 {
   imports = [
     ./lazygit.nix
@@ -18,7 +18,7 @@
 
   programs.git = {
     enable = true;
-    userName = "kaitosawada";
+    userName = username;
     userEmail = "kaito.sawada@proton.me";
     extraConfig = {
       pull.rebase = false;
