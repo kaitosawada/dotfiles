@@ -17,11 +17,11 @@
   };
 
   autoCmd = [
-    {
-      command = "setlocal conceallevel=1";
-      event = "FileType";
-      pattern = "markdown";
-    }
+    # {
+    #   command = "setlocal conceallevel=1";
+    #   event = "FileType";
+    #   pattern = "markdown";
+    # }
   ];
 
   # clipboard = {

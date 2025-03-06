@@ -32,6 +32,7 @@
     };
     noice.enable = true;
     todo-comments.enable = true;
+    render-markdown.enable = true;
 
     # tools
     nvim-surround.enable = true;
