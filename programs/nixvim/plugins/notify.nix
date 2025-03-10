@@ -7,6 +7,7 @@
           vim.api.nvim_win_set_config(win, { focusable = false })
         end
       '';
+      background_colour = "#1e222a";
     };
   };
 }

@@ -2,30 +2,31 @@
   plugins = {
     treesitter = {
       enable = true;
-      lazyLoad = {
-        settings = {
-          ft = [
-            "lua"
-            "nix"
-            "rust"
-            "typescript"
-            "tsx"
-            "javascript"
-            "json"
-            "css"
-            "html"
-            "bash"
-            "c"
-            "java"
-            "markdown"
-            "python"
-            "query"
-            "regex"
-            "vim"
-            "yaml"
-          ];
-        };
-      };
+      # lazyLoad = {
+      #   settings = {
+      #     ft = [
+      #       "lua"
+      #       "nix"
+      #       "rust"
+      #       "typescript"
+      #       "tsx"
+      #       "javascript"
+      #       "react-typescript"
+      #       "json"
+      #       "css"
+      #       "html"
+      #       "bash"
+      #       "c"
+      #       "java"
+      #       "markdown"
+      #       "python"
+      #       "query"
+      #       "regex"
+      #       "vim"
+      #       "yaml"
+      #     ];
+      #   };
+      # };
       settings = {
         highlight = {
           enable = true;
