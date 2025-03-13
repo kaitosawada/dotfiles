@@ -15,7 +15,6 @@
     ./skkeleton.nix
     ./telescope.nix
     ./treesitter.nix
-    ./zellij-nav.nix
   ];
 
   plugins = {
