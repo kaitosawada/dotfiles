@@ -1,9 +1,9 @@
 {
   programs.zellij = {
     enable = true;
-    enableBashIntegration = false;
-    enableZshIntegration = false;
-    enableFishIntegration = false;
+    # enableBashIntegration = false;
+    # enableZshIntegration = false;
+    # enableFishIntegration = false;
   };
   home.file.".config/zellij/config.kdl".text = ''
     theme "catppuccin-macchiato"
@@ -37,9 +37,4 @@
     source = ./layouts/default.kdl;
     target = ".config/zellij/layouts/default.kdl";
   };
-  home.file.".config/zellij/layouts/sd_common_backend.kdl" = {
-    source = ./layouts/sd_common_backend.kdl;
-    target = ".config/zellij/layouts/sd_common_backend.kdl";
-  };
-
 }
