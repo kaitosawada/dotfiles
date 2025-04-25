@@ -34,7 +34,7 @@
       })
       pnpm
       yarn
-      # duckdb
+      duckdb
       nixfmt-rfc-style
       todo-txt-cli
       redis

@@ -4,10 +4,45 @@
     enable = true;
     servers = {
       nixd.enable = true;
-      ts_ls.enable = true; # TS/JS
+      # TS/JS
+      ts_ls = {
+        enable = true;
+        filetypes = [
+          "typescript"
+          "typescriptreact"
+          "typescript.tsx"
+        ];
+      };
       cssls.enable = true; # CSS
+      tailwindcss.enable = true; # TailwindCSS
       html.enable = true; # HTML
-      astro.enable = true; # AstroJS
+      astro.enable = false; # AstroJS
+      emmet_ls = {
+        enable = true;
+        filetypes = [
+          "html"
+          "css"
+          "scss"
+          "javascript"
+          "javascriptreact"
+          "typescript"
+          "typescriptreact"
+          "svelte"
+          "vue"
+        ];
+      };
+      svelte.enable = false; # Svelte
+      volar = {
+        enable = true; # Vue
+        # volar formatter indent is broken, so we disable it in favor of prettier
+        onAttach.function = ''
+               on_attach = function(client)
+          client.server_capabilities.document_formatting = false
+          client.server_capabilities.document_range_formatting = false
+               end
+        '';
+        onAttach.override = true;
+      };
       vuels.enable = false; # Vue
       marksman.enable = true; # Markdown
       dockerls.enable = true; # Docker
@@ -28,14 +63,15 @@
           };
         };
       };
+
+      # Golang
       gopls = {
-        # Golang
         enable = true;
         autostart = true;
       };
 
+      # Lua
       lua_ls = {
-        # Lua
         enable = true;
         settings.telemetry.enable = false;
         settings.diagnostics.globals = [ "vim" ];
