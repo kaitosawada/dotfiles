@@ -6,14 +6,14 @@
 
 buildNpmPackage rec {
   pname = "claude-code";
-  version = "0.2.35";
+  version = "0.2.81";
 
   src = fetchzip {
     url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${version}.tgz";
-    hash = "sha256-j1N2Q8Na3Y8gnB0Y6KQgN7tNwK/i+H7608GMwpCNG6Q=";
+    hash = "sha256-J8CzGMISOYwcw24z8/BV9Xg2oww8cOiF/l4yzy4h8JQ=";
   };
 
-  npmDepsHash = "sha256-BEmrH1vkkBKGY/sELRwy0S+RGFF8qFHhoFEvtZHnmUI=";
+  npmDepsHash = "sha256-eYLPMfwW0UkRZzzmU+b74aPYN9BkH7KyyVu+ASOIM/A=";
 
   # package-lock.json はnpm install @anthropic-ai/claude-code で生成できます
   postPatch = ''
