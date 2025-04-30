@@ -37,6 +37,9 @@ in
       "smart_open"
       "noice"
     ];
+    settings.defaults.mappings.i = {
+      "<C-u>" = false;
+    };
   };
 
   extraPlugins = [
