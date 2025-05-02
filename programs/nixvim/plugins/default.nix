@@ -1,5 +1,6 @@
 {
   imports = [
+    ./aider.nix
     ./alpha.nix
     ./bufferline.nix
     ./codecompanion.nix
@@ -9,7 +10,7 @@
     ./nvim-tree.nix
     ./obsidian.nix
     ./lazygit.nix
-    ./notify.nix
+    # ./notify.nix
     ./no-neck-pain.nix
     ./lsp.nix
     ./skkeleton.nix
