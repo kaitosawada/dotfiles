@@ -15,6 +15,11 @@
       ${builtins.readFile ../scripts/init-nix.sh}
       ${builtins.readFile ../scripts/switch-project.sh}
 
+      function f6-null() { :; }  # 何もしない関数
+      zle -N f6-null
+      bindkey "^[[17~" f6-null
+      bindkey "^[[15~" f6-null
+
       if [ -d "$HOME/google-cloud-sdk/bin" ]; then
         export PATH="$HOME/google-cloud-sdk/bin:$PATH"
       fi
