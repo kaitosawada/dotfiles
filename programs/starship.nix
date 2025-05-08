@@ -1,6 +1,6 @@
 { homeDirectory, ... }:
 {
-  programs.zsh.initExtra = ''
+  programs.zsh.initContent = ''
     # VSCode ターミナルでは starship を無効にする
     if [[ $TERM != "dumb" && $TERM_PROGRAM != "vscode" ]]; then
       eval "$(${homeDirectory}/.nix-profile/bin/starship init zsh)"
