@@ -1,9 +1,10 @@
 {
   imports = [
-    ./aider.nix
+    # ./avante.nix
     ./alpha.nix
     ./bufferline.nix
-    ./codecompanion.nix
+    # ./claude-code.nix
+    # ./codecompanion.nix
     ./cmp.nix
     ./flash.nix
     ./lualine.nix

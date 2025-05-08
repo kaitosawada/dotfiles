@@ -125,9 +125,22 @@ in
     }
     {
       mode = [
+        "t"
+      ];
+      key = "<F7>";
+      action = "<C-\\><C-n><Plug>(skkeleton-enable)";
+      options = {
+        desc = "skkeleton: Enable";
+        noremap = true;
+        silent = true;
+      };
+    }
+    {
+      mode = [
         "i"
         "n"
         "c"
+        "t"
       ];
       key = "<C-u>";
       action = "<Plug>(skkeleton-enable)";
@@ -142,6 +155,7 @@ in
         "i"
         "n"
         "c"
+        "t"
       ];
       key = "<F6>";
       action = "<Plug>(skkeleton-disable)";

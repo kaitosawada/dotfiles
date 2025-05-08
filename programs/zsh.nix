@@ -10,7 +10,7 @@
     };
     syntaxHighlighting.enable = true;
 
-    initExtra = ''
+    initContent = ''
       bindkey -M viins 'jj' vi-cmd-mode
       ${builtins.readFile ../scripts/init-nix.sh}
       ${builtins.readFile ../scripts/switch-project.sh}
