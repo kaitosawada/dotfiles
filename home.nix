@@ -75,7 +75,6 @@
       reload = ''export NIXPKGS_ALLOW_UNFREE=1 && home-manager switch --flake "$(ghq root)/github.com/kaitosawada/dotfiles#${username}-${system}" --impure && exec $SHELL -l'';
       tree = "lsd --tree";
       grep = "rg";
-      cd = "z";
       t = ''zellij attach "$(basename $(pwd))" --create'';
       unlock = "export BW_SESSION=$(bw unlock --raw)";
       gr = ''cd "$(git rev-parse --show-toplevel)"'';
