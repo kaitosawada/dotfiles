@@ -59,7 +59,7 @@
       (import ./programs/claude-code {
         inherit lib fetchzip buildNpmPackage;
       })
-      aider-chat
+      codex
     ];
 
     sessionVariables = {
