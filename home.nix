@@ -60,6 +60,7 @@
         inherit lib fetchzip buildNpmPackage;
       })
       codex
+      imagemagick
     ];
 
     sessionVariables = {
