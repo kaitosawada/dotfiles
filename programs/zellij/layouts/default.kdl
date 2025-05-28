@@ -3,10 +3,13 @@ layout {
         plugin location="compact-bar"
     }
     pane split_direction="vertical" {
-        pane size="65%" command="nvim"
+        pane size="55%" command="nvim"
         pane split_direction="horizontal" {
-            pane
-            pane
+            pane command="claude"
+            pane split_direction="vertical" {
+                pane
+                pane
+            }
         }
     }
     new_tab_template {
