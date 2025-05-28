@@ -1,18 +1,13 @@
 {
   imports = [
-    # ./avante.nix
     ./alpha.nix
     ./bufferline.nix
-    # ./claude-code.nix
-    # ./codecompanion.nix
     ./cmp.nix
     ./flash.nix
     ./lualine.nix
     ./nvim-tree.nix
     ./obsidian.nix
     ./lazygit.nix
-    # ./notify.nix
-    ./no-neck-pain.nix
     ./lsp.nix
     ./skkeleton.nix
     ./telescope.nix

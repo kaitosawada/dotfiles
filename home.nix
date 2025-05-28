@@ -10,6 +10,24 @@
     ./programs
   ];
 
+  programs.mise = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+    globalConfig = {
+      tools = {
+        node = "24";
+        python = "3.12";
+        "npm:yarn" = "latest";
+        "npm:pnpm" = "latest";
+        "npm:@anthropic-ai/claude-code" = "latest";
+        "npm:@openai/codex" = "latest";
+        "npm:@antfu/ni" = "latest";
+        "npm:@bitwarden/cli" = "latest";
+      };
+    };
+  };
+
   home = {
     username = username;
     homeDirectory = homeDirectory;
@@ -28,38 +46,10 @@
       docker
       docker-buildx
       nix-search-cli
-      nodejs_23
-      (nodePackages."@antfu/ni".override {
-        nodejs = nodejs_23;
-      })
-      pnpm
-      yarn
       duckdb
       nixfmt-rfc-style
       todo-txt-cli
       redis
-      # https://github.com/NixOS/nixpkgs/issues/339576
-      (
-        (bitwarden-cli.overrideAttrs (oldAttrs: {
-          nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ llvmPackages_18.stdenv.cc ];
-          stdenv = llvmPackages_18.stdenv;
-
-          postInstall = ''
-            rm -rf $out/lib/node_modules/@bitwarden/clients/node_modules/.bin
-            rm -rf $out/lib/node_modules/@bitwarden/clients/node_modules/@bitwarden
-          '';
-
-          postFixup = ''
-            wrapProgram $out/bin/bw --set NODE_NO_WARNINGS 1
-          '';
-        })).override
-        { nodejs_20 = nodejs_23; }
-      )
-      bindfs
-      (import ./programs/claude-code {
-        inherit lib fetchzip buildNpmPackage;
-      })
-      codex
       imagemagick
     ];
 
@@ -73,7 +63,7 @@
       n = "nvim";
       lg = "lazygit";
       load = "exec $SHELL -l";
-      reload = ''export NIXPKGS_ALLOW_UNFREE=1 && home-manager switch --flake "$(ghq root)/github.com/kaitosawada/dotfiles#${username}-${system}" --impure && exec $SHELL -l'';
+      reload = ''export NIXPKGS_ALLOW_UNFREE=1 && home-manager switch --flake "$(ghq root)/github.com/kaitosawada/dotfiles#${username}-${system}" --impure && exec $SHELL -l && mise i'';
       tree = "lsd --tree";
       grep = "rg";
       t = ''zellij attach "$(basename $(pwd))" --create'';
