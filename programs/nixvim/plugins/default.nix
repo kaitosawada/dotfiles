@@ -29,6 +29,12 @@
     noice.enable = true;
     todo-comments.enable = true;
     render-markdown.enable = true;
+    image = {
+      enable = true;
+      settings = {
+        backend = "kitty";
+      };
+    };
 
     # tools
     nvim-surround.enable = true;
