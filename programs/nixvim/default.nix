@@ -63,5 +63,5 @@
         vim.fn.system('code -g ' .. current_file .. ':' .. line_num .. ':' .. col_num)
       end
     end, {})
-  '' + builtins.readFile lua/codecompanion.lua;
+  '';
 }

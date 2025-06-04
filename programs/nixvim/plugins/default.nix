@@ -3,6 +3,7 @@
     ./alpha.nix
     ./bufferline.nix
     ./cmp.nix
+    ./claudecode.nix
     ./flash.nix
     ./lualine.nix
     ./nvim-tree.nix
