@@ -16,14 +16,18 @@
     enableZshIntegration = true;
     globalConfig = {
       tools = {
+        # Node.js
         node = "24";
-        python = "3.12";
         "npm:yarn" = "latest";
         "npm:pnpm" = "latest";
         "npm:@anthropic-ai/claude-code" = "latest";
         "npm:@openai/codex" = "latest";
         "npm:@antfu/ni" = "latest";
         "npm:@bitwarden/cli" = "latest";
+
+        # Python
+        python = "3.12";
+        uv = "latest";
       };
     };
   };

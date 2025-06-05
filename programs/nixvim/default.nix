@@ -16,21 +16,6 @@
     laststatus = 3;
   };
 
-  autoCmd = [
-    # {
-    #   command = "setlocal conceallevel=1";
-    #   event = "FileType";
-    #   pattern = "markdown";
-    # }
-  ];
-
-  # clipboard = {
-  #   register = "unnamed,unnamedplus";
-  #   providers.xclip = {
-  #     enable = true;
-  #   };
-  # };
-
   userCommands = {
     "Wq" = {
       command = "wq";

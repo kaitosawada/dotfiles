@@ -193,5 +193,18 @@
         silent = true;
       };
     }
+    {
+      mode = [
+        "n"
+        "v"
+      ];
+      key = ";";
+      action = ":";
+      options = {
+        desc = "Command Mode";
+        noremap = true;
+        silent = true;
+      };
+    }
   ];
 }
