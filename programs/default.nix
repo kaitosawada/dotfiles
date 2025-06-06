@@ -4,6 +4,7 @@
     ./lazygit.nix
     ./starship.nix
     ./wezterm
+    ./tmux.nix
     ./zellij
     ./zsh.nix
   ];
@@ -53,6 +54,12 @@
 
   programs.nixvim = import ./nixvim;
   programs.zoxide.enable = true;
+
+  programs.yazi = {
+    enable = true;
+    enableZshIntegration = true;
+    shellWrapperName = "y";
+  };
 
   # https://github.com/nix-community/home-manager/blob/master/modules/programs/direnv.nix
   programs.direnv = {
