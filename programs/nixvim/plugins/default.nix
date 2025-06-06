@@ -1,52 +1,32 @@
 {
   imports = [
     ./alpha.nix
+    ./auto-save.nix
     ./bufferline.nix
-    ./cmp.nix
     ./claudecode.nix
+    ./cmp.nix
+    ./copilot-vim.nix
+    ./dressing.nix
     ./flash.nix
+    ./gitsigns.nix
+    ./image.nix
+    ./lazygit.nix
+    ./lsp-signature.nix
+    ./lsp.nix
     ./lualine.nix
+    ./lz-n.nix
+    ./noice.nix
+    ./nvim-surround.nix
     ./nvim-tree.nix
     ./obsidian.nix
-    ./lazygit.nix
-    ./lsp.nix
+    ./render-markdown.nix
     ./skkeleton.nix
     ./telescope.nix
+    ./todo-comments.nix
     ./treesitter.nix
+    ./wakatime.nix
+    ./web-devicons.nix
+    ./which-key.nix
     ./yazi.nix
   ];
-
-  plugins = {
-    # core
-    auto-save.enable = true;
-    copilot-vim.enable = true;
-
-    # view
-    lsp-signature.enable = true;
-    gitsigns.enable = true;
-    dressing = {
-      enable = true;
-      settings.input.enabled = false;
-    };
-    noice.enable = true;
-    todo-comments.enable = true;
-    render-markdown.enable = true;
-    image = {
-      enable = true;
-      settings = {
-        backend = "kitty";
-      };
-    };
-
-    # tools
-    nvim-surround.enable = true;
-    which-key.enable = true;
-
-    # integrations
-    wakatime.enable = true;
-
-    # for avante.lazyLoad
-    lz-n.enable = true;
-    web-devicons.enable = true;
-  };
 }
