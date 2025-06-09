@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   programs.yazi = {
     enable = true;
@@ -25,6 +25,19 @@
           }
         ];
       };
+    };
+    plugins = {
+      smart-enter = pkgs.yaziPlugins.smart-enter;
+      git = pkgs.yaziPlugins.git;
+    };
+    keymap = {
+      manager.prepend_keymap = [
+        {
+          on = [ "<Enter>" ];
+          run = "plugin smart-enter";
+          desc = "Enter the child directory, or open the file";
+        }
+      ];
     };
   };
 }
