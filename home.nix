@@ -24,6 +24,8 @@
         "npm:@openai/codex" = "latest";
         "npm:@antfu/ni" = "latest";
         "npm:@bitwarden/cli" = "latest";
+        "npm:playwright" = "latest";
+        "npm:@playwright/mcp" = "latest";
 
         # Python
         python = "3.12";
@@ -54,6 +56,7 @@
       nixfmt-rfc-style
       todo-txt-cli
       imagemagick
+      libreoffice-bin
 
       # rust
       rustc
