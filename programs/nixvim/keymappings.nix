@@ -29,34 +29,6 @@
       };
     }
     {
-      mode = [
-        "n"
-        "v"
-        "o"
-      ];
-      key = "(";
-      action = "(zz";
-      options = {
-        desc = "Up half page";
-        noremap = false;
-        silent = false;
-      };
-    }
-    {
-      mode = [
-        "n"
-        "v"
-        "o"
-      ];
-      key = "(";
-      action = "(zz";
-      options = {
-        desc = "Down half page";
-        noremap = false;
-        silent = false;
-      };
-    }
-    {
       mode = "n";
       key = "<leader>j";
       action = "<C-w>w";
@@ -70,26 +42,6 @@
       mode = "n";
       key = "<leader>wk";
       action = "<C-w>k";
-      options = {
-        desc = "Previous Window";
-        noremap = false;
-        silent = false;
-      };
-    }
-    {
-      mode = "n";
-      key = "<Right>";
-      action = "<C-w>w";
-      options = {
-        desc = "Next Window";
-        noremap = false;
-        silent = false;
-      };
-    }
-    {
-      mode = "n";
-      key = "<Left>";
-      action = "<C-w>W";
       options = {
         desc = "Previous Window";
         noremap = false;
