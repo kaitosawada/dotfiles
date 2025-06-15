@@ -54,6 +54,12 @@
       nixfmt-rfc-style
       todo-txt-cli
       imagemagick
+
+      # rust
+      rustc
+      cargo
+      rustfmt
+      clippy
     ];
 
     sessionVariables = {
