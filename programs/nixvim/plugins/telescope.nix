@@ -15,6 +15,7 @@ let
       fzf-lua
       telescope-fzf-native-nvim
     ];
+
   };
 in
 {
@@ -23,7 +24,7 @@ in
     enable = true;
     keymaps = {
       # "<leader>f" = "find_files";
-      "<leader>f" = "smart_open";
+      # "<leader>f" = "smart_open";
       "<leader>g" = "live_grep";
       "<leader>td" = "resume";
       "<leader>tb" = "buffers";
@@ -67,6 +68,18 @@ in
       action = "<cmd>Telescope quickfix<cr>";
       options = {
         desc = "Telescope: quickfix";
+        noremap = false;
+        silent = false;
+      };
+    }
+    {
+      mode = [
+        "n"
+      ];
+      key = "<leader>f";
+      action = "<cmd>lua require('telescope').extensions.smart_open.smart_open({ cwd_only = true })<cr>";
+      options = {
+        desc = "Telescope: smart_open";
         noremap = false;
         silent = false;
       };
