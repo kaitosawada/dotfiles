@@ -57,6 +57,12 @@
       todo-txt-cli
       imagemagick
       libreoffice-bin
+
+      # rust
+      rustc
+      cargo
+      rustfmt
+      clippy
     ];
 
     sessionVariables = {
