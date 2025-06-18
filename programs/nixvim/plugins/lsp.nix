@@ -13,6 +13,8 @@
           "typescript.tsx"
         ];
       };
+      # biome
+      biome.enable = true;
       cssls.enable = true; # CSS
       tailwindcss.enable = true; # TailwindCSS
       html.enable = true; # HTML
@@ -99,6 +101,7 @@
         "<leader>cc" = "hover";
         "<leader>ll" = "format";
         "<leader>ca" = "code_action";
+        "<leader>td" = "lsp_workspace_diagnostic";
       };
     };
   };
