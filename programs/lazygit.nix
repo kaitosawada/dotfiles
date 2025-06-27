@@ -8,7 +8,7 @@
           context = "files";
           command = "git commit -v";
           description = "Commit changes using git editor";
-          subprocess = true;
+          output = "terminal";
         }
       ];
     };

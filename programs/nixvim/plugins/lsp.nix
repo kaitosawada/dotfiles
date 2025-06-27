@@ -101,7 +101,6 @@
         "<leader>cc" = "hover";
         "<leader>ll" = "format";
         "<leader>ca" = "code_action";
-        "<leader>td" = "lsp_workspace_diagnostic";
       };
     };
   };

@@ -6,10 +6,12 @@
     ./claudecode.nix
     ./cmp.nix
     ./copilot-vim.nix
+    ./csvview.nix
     ./dressing.nix
     ./flash.nix
     ./gitsigns.nix
     ./image.nix
+    ./indent-blankline.nix
     ./lazygit.nix
     ./lsp-signature.nix
     ./lsp.nix
@@ -24,6 +26,8 @@
     ./telescope.nix
     ./todo-comments.nix
     ./treesitter.nix
+    ./treesitter-context.nix
+    ./trouble.nix
     ./wakatime.nix
     ./web-devicons.nix
     ./which-key.nix
