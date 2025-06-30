@@ -13,6 +13,8 @@
           "typescript.tsx"
         ];
       };
+      # biome
+      biome.enable = true;
       cssls.enable = true; # CSS
       tailwindcss.enable = true; # TailwindCSS
       html.enable = true; # HTML

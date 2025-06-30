@@ -76,9 +76,9 @@
       lg = "lazygit";
       load = "exec $SHELL -l";
       reload = ''export NIXPKGS_ALLOW_UNFREE=1 && home-manager switch --flake "$(ghq root)/github.com/kaitosawada/dotfiles#${username}-${system}" --impure && exec $SHELL -l && mise i'';
-      tree = "lsd --tree";
-      grep = "rg";
       t = ''zellij attach "$(basename $(pwd))" --create'';
+      o = "cd ~/obsidian/kaitosawada && nvim .";
+      todo = "nvim ~/obsidian/kaitosawada/tasks.md";
     };
   };
 

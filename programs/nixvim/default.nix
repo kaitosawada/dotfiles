@@ -35,5 +35,25 @@
         ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
       },
     }
+
+    -- ファイルの外部変更を自動的に読み込む
+    vim.opt.autoread = true
+
+    -- フォーカスを得た時、バッファに入った時に自動読み込みをチェック
+    vim.api.nvim_create_autocmd({"FocusGained", "BufEnter"}, {
+      pattern = "*",
+      command = "silent! !"
+    })
+
+    vim.api.nvim_create_autocmd({"FocusGained", "BufEnter"}, {
+      pattern = "*",
+      command = "checktime"
+    })
+
+    -- ファイルが変更された時の通知（オプション）
+    vim.api.nvim_create_autocmd("FileChangedShell", {
+      pattern = "*",
+      command = "echo 'Warning: File changed on disk'"
+    })
   '';
 }
