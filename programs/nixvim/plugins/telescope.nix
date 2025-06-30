@@ -32,6 +32,12 @@ in
       "<leader>tr" = "registers";
       "<leader>tc" = "commands";
       "<leader>tn" = "noice";
+
+      # lsp
+      "gd" = "lsp_definition";
+      "gD" = "lsp_references";
+      "gt" = "lsp_type_definition";
+      "gi" = "lsp_implementation";
     };
     extensions.fzf-native.enable = true;
     enabledExtensions = [

@@ -1,9 +1,9 @@
 {
   imports = [
+    ./accelerated-jk.nix
     ./alpha.nix
     ./auto-save.nix
     ./bufferline.nix
-    ./claudecode.nix
     ./cmp.nix
     ./copilot-vim.nix
     ./dressing.nix

@@ -92,10 +92,6 @@
         "<leader>ce" = "open_float";
       };
       lspBuf = {
-        "gd" = "definition";
-        "gD" = "references";
-        "gt" = "type_definition";
-        "gi" = "implementation";
         "<leader>cc" = "hover";
         "<leader>ll" = "format";
         "<leader>ca" = "code_action";

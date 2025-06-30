@@ -3,11 +3,11 @@
     enable = true;
     enableBashIntegration = false;
     enableZshIntegration = false;
-    # enableFishIntegration = false;
   };
   home.file.".config/zellij/config.kdl".text = ''
     theme "catppuccin-macchiato"
     keybinds {
+      unbind "Ctrl b"
       normal {
         bind "Ctrl l" { GoToNextTab; }
         bind "Ctrl h" { GoToPreviousTab; }
