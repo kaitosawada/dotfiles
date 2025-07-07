@@ -34,10 +34,10 @@ in
       "<leader>tn" = "noice";
 
       # lsp
-      "gd" = "lsp_definition";
+      "gd" = "lsp_definitions";
       "gD" = "lsp_references";
-      "gt" = "lsp_type_definition";
-      "gi" = "lsp_implementation";
+      "gt" = "lsp_type_definitions";
+      "gi" = "lsp_implementations";
     };
     extensions.fzf-native.enable = true;
     enabledExtensions = [
