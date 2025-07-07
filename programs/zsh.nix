@@ -14,6 +14,7 @@
       bindkey -M viins 'jj' vi-cmd-mode
       ${builtins.readFile ../scripts/init-nix.sh}
       ${builtins.readFile ../scripts/switch-project.sh}
+      ${builtins.readFile ../scripts/lazygit-neovim-integration.sh}
 
       function f6-null() { :; }  # 何もしない関数
       zle -N f6-null

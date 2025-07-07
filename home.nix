@@ -40,29 +40,38 @@
     stateVersion = "24.11";
 
     packages = with pkgs; [
-      deno
+      # git
       git
-      go
       ghq
+
+      # languages
+      deno
+      go
+
+      # nix
+      nix-search-cli
+      nixfmt-rfc-style
+
+      # tools
       gnumake
-      lazysql
       jq
       ripgrep
       sd
-      docker
-      docker-buildx
-      nix-search-cli
-      duckdb
-      nixfmt-rfc-style
-      todo-txt-cli
       imagemagick
       libreoffice-bin
+
+      # docker
+      docker
+      docker-buildx
 
       # rust
       rustc
       cargo
       rustfmt
       clippy
+
+      # neovim
+      neovim-remote
     ];
 
     sessionVariables = {
