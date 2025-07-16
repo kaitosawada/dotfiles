@@ -8,6 +8,7 @@
 {
   imports = [
     ./programs
+    ./claude.nix
   ];
 
   programs.mise = {
@@ -24,12 +25,16 @@
         "npm:@openai/codex" = "latest";
         "npm:@antfu/ni" = "latest";
         "npm:@bitwarden/cli" = "latest";
-        "npm:playwright" = "latest";
-        "npm:@playwright/mcp" = "latest";
 
         # Python
         python = "3.12";
         uv = "latest";
+        pipx = "latest";
+
+        # MCP Servers
+        "npm:playwright" = "latest";
+        "npm:@playwright/mcp" = "latest";
+        "pipx:markitdown-mcp" = "latest"; # ffmpeg is required for this
       };
     };
   };
@@ -59,6 +64,7 @@
       sd
       imagemagick
       libreoffice-bin
+      ffmpeg # for markitdown-mcp
 
       # docker
       docker
