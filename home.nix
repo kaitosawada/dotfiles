@@ -52,6 +52,7 @@
       # languages
       deno
       go
+      biome
 
       # nix
       nix-search-cli

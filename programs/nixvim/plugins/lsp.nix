@@ -1,10 +1,22 @@
 {
+  pkgs,
+  ...
+}:
+{
+  # https://nix-community.github.io/nixvim/plugins/lsp-format/index.html
+  plugins.lsp-format = {
+    enable = true;
+  };
   # https://github.com/nix-community/nixvim/blob/main/plugins/lsp/lsp-packages.nix
   plugins.lsp = {
     enable = true;
     servers = {
       nixd.enable = true;
-      # TS/JS
+
+      # TypeScript / JavaScript
+      biome = {
+        enable = true;
+      };
       ts_ls = {
         enable = true;
         filetypes = [
@@ -13,26 +25,13 @@
           "typescript.tsx"
         ];
       };
-      biome.enable = true; # Biome (JavaScript/TypeScript)
+
+      # CSS / HTML
       cssls.enable = true; # CSS
       tailwindcss.enable = true; # TailwindCSS
       html.enable = true; # HTML
-      astro.enable = false; # AstroJS
-      emmet_ls = {
-        enable = true;
-        filetypes = [
-          "html"
-          "css"
-          "scss"
-          "javascript"
-          "javascriptreact"
-          "typescript"
-          "typescriptreact"
-          "svelte"
-          "vue"
-        ];
-      };
-      svelte.enable = false; # Svelte
+
+      # Vue
       volar = {
         enable = true; # Vue
         # volar formatter indent is broken, so we disable it in favor of prettier
@@ -44,14 +43,17 @@
         '';
         onAttach.override = true;
       };
-      vuels.enable = false; # Vue
+
+      # etc.
       marksman.enable = true; # Markdown
       dockerls.enable = true; # Docker
       bashls.enable = true; # Bash
       yamlls.enable = true; # YAML
       terraformls.enable = true; # Terraform
-      ruff.enable = true; # Python
       sqls.enable = true; # SQL
+
+      # Python
+      ruff.enable = true; # Ruff (Linter)
       basedpyright = {
         enable = true;
         settings = {
