@@ -1,22 +1,5 @@
 SESSION_FILE="/tmp/bw_session"
 
--- local function get_notes(session, items)
---   if not session or session == "" or session == vim.NIL then
---     vim.notify("Bitwarden session not found.")
---     return
---   else
---     for _, item_id in ipairs(items) do
---       vim.notify("Getting item: " .. item_id)
---       local get_cmd = string.format("BW_SESSION=%s bw get notes %s 2>/dev/null", session, item_id)
---       local note = io.popen(get_cmd):read("*a")
---       if note then
---         note = note:gsub("\n", "")
---         vim.fn.setenv("BW_NOTE_" .. item_id, note)
---       end
---     end
---   end
--- end
-
 local function get_session_from_file()
   local file = io.open(SESSION_FILE, "r")
   if not file then
