@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   # https://github.com/nix-community/nixvim/blob/main/plugins/lsp/lsp-packages.nix
   plugins.lsp = {
@@ -82,8 +83,10 @@
       # Rust
       rust_analyzer = {
         enable = true;
-        installRustc = true;
-        installCargo = true;
+        rustcPackage = pkgs.rustc;
+        cargoPackage = pkgs.cargo;
+        installRustc = false;
+        installCargo = false;
       };
     };
     keymaps = {

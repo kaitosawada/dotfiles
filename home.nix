@@ -61,8 +61,8 @@
       # rust
       rustc
       cargo
-      rustfmt
-      clippy
+      # rustfmt
+      # clippy
     ];
 
     sessionVariables = {
