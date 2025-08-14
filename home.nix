@@ -8,6 +8,7 @@
 {
   imports = [
     ./programs
+    ./claude.nix
   ];
 
   programs.mise = {
@@ -24,12 +25,16 @@
         "npm:@openai/codex" = "latest";
         "npm:@antfu/ni" = "latest";
         "npm:@bitwarden/cli" = "latest";
-        "npm:playwright" = "latest";
-        "npm:@playwright/mcp" = "latest";
 
         # Python
         python = "3.12";
         uv = "latest";
+        pipx = "latest";
+
+        # MCP Servers
+        "npm:playwright" = "latest";
+        "npm:@playwright/mcp" = "latest";
+        "pipx:markitdown-mcp" = "latest"; # ffmpeg is required for this
       };
     };
   };
@@ -40,29 +45,35 @@
     stateVersion = "24.11";
 
     packages = with pkgs; [
-      deno
+      # git
       git
-      go
       ghq
+
+      # languages
+      deno
+      go
+      biome
+
+      # nix
+      nix-search-cli
+      nixfmt-rfc-style
+
+      # tools
       gnumake
-      lazysql
       jq
       ripgrep
       sd
-      docker
-      docker-buildx
-      nix-search-cli
-      duckdb
-      nixfmt-rfc-style
-      todo-txt-cli
       imagemagick
       libreoffice-bin
+      ffmpeg # for markitdown-mcp
+
+      # docker
+      docker
+      docker-buildx
 
       # rust
       rustc
       cargo
-      # rustfmt
-      # clippy
     ];
 
     sessionVariables = {
@@ -76,6 +87,7 @@
       lg = "lazygit";
       load = "exec $SHELL -l";
       reload = ''export NIXPKGS_ALLOW_UNFREE=1 && home-manager switch --flake "$(ghq root)/github.com/kaitosawada/dotfiles#${username}-${system}" --impure && exec $SHELL -l && mise i'';
+      upgrade = "mise upgrade && nix flake update && nix store gc";
       t = ''zellij attach "$(basename $(pwd))" --create'';
       o = "cd ~/obsidian/kaitosawada && nvim .";
       todo = "nvim ~/obsidian/kaitosawada/tasks.md";
