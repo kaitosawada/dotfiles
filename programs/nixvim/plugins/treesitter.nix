@@ -59,6 +59,7 @@
           "python"
           "query"
           "regex"
+          "swift"
           "tsx"
           "typescript"
           "vim"

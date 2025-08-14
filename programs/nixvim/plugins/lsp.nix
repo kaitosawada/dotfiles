@@ -89,6 +89,11 @@
         installRustc = false;
         installCargo = false;
       };
+
+      # swift
+      sourcekit = {
+        enable = true;
+      };
     };
     keymaps = {
       silent = true;
