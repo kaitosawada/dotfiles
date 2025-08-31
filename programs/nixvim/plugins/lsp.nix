@@ -1,4 +1,3 @@
-{ pkgs, ... }:
 {
   pkgs,
   ...
@@ -88,6 +87,11 @@
         cargoPackage = pkgs.cargo;
         installRustc = false;
         installCargo = false;
+      };
+
+      # swift
+      sourcekit = {
+        enable = true;
       };
     };
     keymaps = {

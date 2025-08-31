@@ -42,7 +42,7 @@
     -- フォーカスを得た時、バッファに入った時に自動読み込みをチェック
     vim.api.nvim_create_autocmd({"FocusGained", "BufEnter"}, {
       pattern = "*",
-      command = "silent! !"
+      command = "silent! checktime"
     })
 
     vim.api.nvim_create_autocmd({"FocusGained", "BufEnter"}, {

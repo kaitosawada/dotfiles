@@ -63,12 +63,15 @@
       jq
       ripgrep
       sd
+      tree-sitter
       imagemagick
       libreoffice-bin
       ffmpeg # for markitdown-mcp
 
       # docker
+      colima
       docker
+      docker-compose
       docker-buildx
 
       # rust

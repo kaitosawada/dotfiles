@@ -14,8 +14,8 @@
       action = "<CMD>Yazi<CR>";
       options = {
         desc = "Yazi: Open";
-        noremap = false;
-        silent = false;
+        noremap = true;
+        silent = true;
       };
     }
   ];

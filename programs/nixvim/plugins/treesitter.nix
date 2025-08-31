@@ -53,6 +53,7 @@
           "luap"
           "nix"
           "rust"
+          "swift"
           "java"
           "markdown"
           "markdown_inline"
