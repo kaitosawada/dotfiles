@@ -5,8 +5,8 @@ layout {
     pane split_direction="vertical" {
         pane size="55%" command="nvim"
         pane split_direction="horizontal" {
-            pane size="60%" command="codex" {
-              args "--model" "gpt-5"
+            pane size="60%" command="claude" {
+              args "--continue"
             }
             pane split_direction="vertical" {
                 pane
