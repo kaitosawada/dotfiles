@@ -5,7 +5,8 @@
     ./auto-save.nix
     ./bufferline.nix
     ./cmp.nix
-    ./copilot-vim.nix
+    # ./copilot-vim.nix
+    # ./codecompanion.nix
     ./csvview.nix
     ./dressing.nix
     ./flash.nix
@@ -31,6 +32,7 @@
     ./wakatime.nix
     ./web-devicons.nix
     ./which-key.nix
+    ./windsurf-vim.nix
     ./yazi.nix
   ];
 }
