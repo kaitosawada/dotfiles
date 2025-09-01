@@ -44,8 +44,27 @@ in
       "smart_open"
       "noice"
     ];
-    settings.defaults.mappings.i = {
-      "<C-u>" = false;
+    settings = {
+      defaults.mappings.i = {
+        "<C-u>" = false;
+      };
+      pickers = {
+        live_grep = {
+          additional_args = [
+            "--hidden"
+            "--glob"
+            "!.git/"
+            "--glob"
+            "!node_modules/"
+            "--glob"
+            "!.next/"
+            "--glob"
+            "!dist/"
+            "--glob"
+            "!build/"
+          ];
+        };
+      };
     };
   };
 
