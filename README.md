@@ -24,3 +24,20 @@ cd ~/ghq/github.com/kaitosawada/dotfiles
 home-manager --extra-experimental-features "nix-command flakes" switch --flake ".#$(whoami)-x86_64-linux" -b backup
 exec $SHELL -l
 ```
+
+## docker
+
+colimaを使っています。
+
+```sh
+sudo ln -sf $HOME/.colima/default/docker.sock /var/run/docker.sock
+```
+
+## llama-server
+
+llama.vimで補完してます。
+
+```sh
+llama-server --fim-qwen-3b-default
+llama-server --fim-qwen-7b-default
+```

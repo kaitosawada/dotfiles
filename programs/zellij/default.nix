@@ -8,6 +8,7 @@
     theme "catppuccin-macchiato"
     keybinds {
       unbind "Ctrl b"
+      unbind "Ctrl p"
       normal {
         bind "Ctrl l" { GoToNextTab; }
         bind "Ctrl h" { GoToPreviousTab; }
@@ -32,6 +33,7 @@
       }
     }
     session_serialization false
+    mouse_mode false
   '';
   home.file.".config/zellij/layouts/default.kdl" = {
     source = ./layouts/default.kdl;

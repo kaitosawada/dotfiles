@@ -3,6 +3,7 @@
   username,
   homeDirectory,
   pkgs,
+  aipkgs,
   ...
 }:
 {
@@ -80,6 +81,10 @@
       # rust
       rustc
       cargo
+
+      # llm
+      llama-cpp
+      aipkgs.crush
     ];
 
     sessionVariables = {

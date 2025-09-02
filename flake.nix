@@ -13,6 +13,7 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-ai-tools.url = "github:numtide/nix-ai-tools";
   };
 
   outputs =
@@ -22,6 +23,7 @@
       nixvim,
       home-manager,
       treefmt-nix,
+      nix-ai-tools,
       ...
     }:
     flake-utils.lib.eachDefaultSystem (
@@ -33,6 +35,7 @@
             allowUnfree = true;
           };
         };
+        aipkgs = nix-ai-tools.packages.${system};
         strListToAttrs =
           list: f:
           builtins.listToAttrs (
@@ -57,7 +60,7 @@
               home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
                 extraSpecialArgs = {
-                  inherit username system;
+                  inherit username system aipkgs;
                   homeDirectory = "${homeDir}/${username}";
                 };
                 modules = [
