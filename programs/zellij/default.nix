@@ -9,6 +9,9 @@
     keybinds {
       unbind "Ctrl b"
       unbind "Ctrl p"
+      shared_except "pane" "locked" {
+        unbind "Ctrl p"
+      }
       normal {
         bind "Ctrl l" { GoToNextTab; }
         bind "Ctrl h" { GoToPreviousTab; }
@@ -19,6 +22,7 @@
         bind "Super n" { NewPane; }
         bind "Ctrl q" { Detach; }
         bind "Ctrl Shift q" { Quit; }
+        bind "Super f" { ToggleFocusFullscreen; }
       }
       locked {
         bind "Super t" { NewTab; }

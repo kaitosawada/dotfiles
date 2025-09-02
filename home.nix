@@ -77,6 +77,7 @@
       docker
       docker-compose
       docker-buildx
+      docker-credential-helpers
 
       # rust
       rustc
@@ -91,6 +92,7 @@
       EDITOR = "nvim";
       LANG = "ja_JP.UTF-8";
       NIXPKGS_ALLOW_UNFREE = "1";
+      DOCKER_HOST = "unix:///Users/kaitosawada/.colima/default/docker.sock";
     };
 
     shellAliases = {

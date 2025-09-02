@@ -1,0 +1,1 @@
+- llama-vimがtelescopeとかで発火しないようにしたい
