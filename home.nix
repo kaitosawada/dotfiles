@@ -105,6 +105,28 @@
       o = "cd ~/obsidian/kaitosawada && nvim .";
       todo = "nvim ~/obsidian/kaitosawada/tasks.md";
     };
+
+    file = {
+      "Library/LaunchAgents/com.kaitosawada.colima.start.plist" = {
+        source = ./scripts/launchd/com.kaitosawada.colima.start.plist;
+      };
+      "Library/LaunchAgents/com.kaitosawada.llama.server.plist" = {
+        source = ./scripts/launchd/com.kaitosawada.llama.server.plist;
+      };
+    };
+  };
+
+  home.activation.enableLaunchAgents = {
+    after = [ "writeBoundary" ];
+    before = [ ];
+    data = ''
+      if command -v launchctl >/dev/null 2>&1; then
+        launchctl unload -wF "$HOME/Library/LaunchAgents/com.kaitosawada.llama.server.plist" 2>/dev/null || true
+        launchctl unload -wF "$HOME/Library/LaunchAgents/com.kaitosawada.colima.start.plist" 2>/dev/null || true
+        launchctl load -w "$HOME/Library/LaunchAgents/com.kaitosawada.colima.start.plist" || true
+        launchctl load -w "$HOME/Library/LaunchAgents/com.kaitosawada.llama.server.plist" || true
+      fi
+    '';
   };
 
   nix = {
