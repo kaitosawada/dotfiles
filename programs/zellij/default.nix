@@ -24,6 +24,18 @@
         bind "Ctrl Shift q" { Quit; }
         bind "Super f" { ToggleFocusFullscreen; }
       }
+      scroll {
+        bind "Ctrl l" { GoToNextTab; SwitchToMode "normal"; }
+        bind "Ctrl h" { GoToPreviousTab; SwitchToMode "normal"; }
+        bind "Ctrl j" { FocusNextPane; SwitchToMode "normal"; }
+        bind "Ctrl k" { FocusPreviousPane; SwitchToMode "normal"; }
+        bind "Super w" { CloseFocus; SwitchToMode "normal"; }
+        bind "Super t" { NewTab; SwitchToMode "normal"; }
+        bind "Super n" { NewPane; SwitchToMode "normal"; }
+        bind "Ctrl q" { Detach; }
+        bind "Ctrl Shift q" { Quit; }
+        bind "Super f" { ToggleFocusFullscreen; SwitchToMode "normal"; }
+      }
       locked {
         bind "Super t" { NewTab; }
         bind "Super n" { NewPane; }
