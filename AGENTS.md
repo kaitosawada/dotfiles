@@ -1,4 +1,4 @@
-# CRUSH.md
+# AGENTS.md
 
 This repository is a Nix/Home Manager dotfiles setup using flakes. Use these notes when automating tasks here.
 

@@ -86,6 +86,7 @@
       # llm
       llama-cpp
       aipkgs.crush
+      aipkgs.amp
     ];
 
     sessionVariables = {

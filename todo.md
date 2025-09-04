@@ -1,1 +1,2 @@
 - llama-vimがtelescopeとかで発火しないようにしたい
+- llama-serverやcolimaのlaunchdが動作してなさそう
