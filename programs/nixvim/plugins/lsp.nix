@@ -17,6 +17,7 @@
       biome = {
         enable = true;
       };
+
       ts_ls = {
         enable = true;
         filetypes = [
@@ -24,6 +25,35 @@
           "typescriptreact"
           "typescript.tsx"
         ];
+        onAttach.function = ''
+          local root_dir = client.config.root_dir
+          if root_dir then
+            local deno_json = root_dir .. "/deno.json"
+            local deno_jsonc = root_dir .. "/deno.jsonc"
+            if vim.fn.filereadable(deno_json) == 1 or vim.fn.filereadable(deno_jsonc) == 1 then
+              client.stop()
+            end
+          end
+        '';
+        onAttach.override = true;
+      };
+
+      denols = {
+        enable = true;
+        filetypes = [
+          "typescript"
+        ];
+        onAttach.function = ''
+          local root_dir = client.config.root_dir
+          if root_dir then
+            local deno_json = root_dir .. "/deno.json"
+            local deno_jsonc = root_dir .. "/deno.jsonc"
+            if vim.fn.filereadable(deno_json) ~= 1 and vim.fn.filereadable(deno_jsonc) ~= 1 then
+              client.stop()
+            end
+          end
+        '';
+        onAttach.override = true;
       };
 
       # CSS / HTML
@@ -36,10 +66,8 @@
         enable = true; # Vue
         # volar formatter indent is broken, so we disable it in favor of prettier
         onAttach.function = ''
-          on_attach = function(client)
-            client.server_capabilities.document_formatting = false
-            client.server_capabilities.document_range_formatting = false
-          end
+          client.server_capabilities.document_formatting = false
+          client.server_capabilities.document_range_formatting = false
         '';
         onAttach.override = true;
       };
