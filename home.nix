@@ -93,7 +93,7 @@
       EDITOR = "nvim";
       LANG = "ja_JP.UTF-8";
       NIXPKGS_ALLOW_UNFREE = "1";
-      DOCKER_HOST = "unix:///Users/kaitosawada/.colima/default/docker.sock";
+      DOCKER_HOST = "unix://$HOME/.colima/default/docker.sock";
     };
 
     shellAliases = {
@@ -111,9 +111,9 @@
       "Library/LaunchAgents/com.kaitosawada.colima.start.plist" = {
         source = ./scripts/launchd/com.kaitosawada.colima.start.plist;
       };
-      "Library/LaunchAgents/com.kaitosawada.llama.server.plist" = {
-        source = ./scripts/launchd/com.kaitosawada.llama.server.plist;
-      };
+      # "Library/LaunchAgents/com.kaitosawada.llama.server.plist" = {
+      #   source = ./scripts/launchd/com.kaitosawada.llama.server.plist;
+      # };
     };
   };
 
@@ -125,7 +125,7 @@
         launchctl unload -wF "$HOME/Library/LaunchAgents/com.kaitosawada.llama.server.plist" 2>/dev/null || true
         launchctl unload -wF "$HOME/Library/LaunchAgents/com.kaitosawada.colima.start.plist" 2>/dev/null || true
         launchctl load -w "$HOME/Library/LaunchAgents/com.kaitosawada.colima.start.plist" || true
-        launchctl load -w "$HOME/Library/LaunchAgents/com.kaitosawada.llama.server.plist" || true
+        # launchctl load -w "$HOME/Library/LaunchAgents/com.kaitosawada.llama.server.plist" || true
       fi
     '';
   };

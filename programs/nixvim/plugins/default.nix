@@ -14,7 +14,7 @@
     ./image.nix
     ./indent-blankline.nix
     ./lazygit.nix
-    ./llama-vim.nix
+    # ./llama-vim.nix
     ./lsp-signature.nix
     ./lsp.nix
     ./lualine.nix
@@ -34,7 +34,7 @@
     ./wakatime.nix
     ./web-devicons.nix
     ./which-key.nix
-    # ./windsurf-vim.nix
+    ./windsurf-vim.nix
     ./yazi.nix
   ];
 }

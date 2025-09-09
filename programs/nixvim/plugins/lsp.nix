@@ -17,6 +17,7 @@
       biome = {
         enable = true;
       };
+
       ts_ls = {
         enable = true;
         extraOptions = {
@@ -29,6 +30,35 @@
             "typescript.tsx"
           ];
         };
+        onAttach.function = ''
+          local root_dir = client.config.root_dir
+          if root_dir then
+            local deno_json = root_dir .. "/deno.json"
+            local deno_jsonc = root_dir .. "/deno.jsonc"
+            if vim.fn.filereadable(deno_json) == 1 or vim.fn.filereadable(deno_jsonc) == 1 then
+              client.stop()
+            end
+          end
+        '';
+        onAttach.override = true;
+      };
+
+      denols = {
+        enable = true;
+        filetypes = [
+          "typescript"
+        ];
+        onAttach.function = ''
+          local root_dir = client.config.root_dir
+          if root_dir then
+            local deno_json = root_dir .. "/deno.json"
+            local deno_jsonc = root_dir .. "/deno.jsonc"
+            if vim.fn.filereadable(deno_json) ~= 1 and vim.fn.filereadable(deno_jsonc) ~= 1 then
+              client.stop()
+            end
+          end
+        '';
+        onAttach.override = true;
       };
 
       # CSS / HTML
