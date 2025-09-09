@@ -29,62 +29,6 @@
       };
     }
     {
-      mode = [
-        "n"
-        "v"
-        "o"
-      ];
-      key = "<C-f>";
-      action = "<C-d>zz";
-      options = {
-        desc = "Up page";
-        noremap = false;
-        silent = false;
-      };
-    }
-    {
-      mode = [
-        "n"
-        "v"
-        "o"
-      ];
-      key = "<C-b>";
-      action = "<C-u>zz";
-      options = {
-        desc = "Down page";
-        noremap = false;
-        silent = false;
-      };
-    }
-    {
-      mode = [
-        "n"
-        "v"
-        "o"
-      ];
-      key = "(";
-      action = "(zz";
-      options = {
-        desc = "Up half page";
-        noremap = false;
-        silent = false;
-      };
-    }
-    {
-      mode = [
-        "n"
-        "v"
-        "o"
-      ];
-      key = "(";
-      action = "(zz";
-      options = {
-        desc = "Down half page";
-        noremap = false;
-        silent = false;
-      };
-    }
-    {
       mode = "n";
       key = "<leader>j";
       action = "<C-w>w";
@@ -217,19 +161,6 @@
       action = "<C-\\><C-n>";
       options = {
         desc = "Terminal to Normal Mode";
-        noremap = true;
-        silent = true;
-      };
-    }
-    {
-      mode = [
-        "n"
-        "v"
-      ];
-      key = ";";
-      action = ":";
-      options = {
-        desc = "Command Mode";
         noremap = true;
         silent = true;
       };

@@ -8,7 +8,7 @@
     # ./copilot-vim.nix
     # ./codecompanion.nix
     ./csvview.nix
-    ./dressing.nix
+    # ./dressing.nix
     ./flash.nix
     ./gitsigns.nix
     ./image.nix

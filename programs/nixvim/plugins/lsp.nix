@@ -61,11 +61,6 @@
         onAttach.override = true;
       };
 
-      # CSS / HTML
-      cssls.enable = true; # CSS
-      tailwindcss.enable = true; # TailwindCSS
-      html.enable = true; # HTML
-
       # Vue
       volar = {
         enable = true; # Vue
@@ -76,6 +71,11 @@
         '';
         onAttach.override = true;
       };
+
+      # CSS / HTML
+      cssls.enable = true; # CSS
+      tailwindcss.enable = true; # TailwindCSS
+      html.enable = true; # HTML
 
       # etc.
       marksman.enable = true; # Markdown
