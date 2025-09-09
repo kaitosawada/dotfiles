@@ -19,11 +19,16 @@
       };
       ts_ls = {
         enable = true;
-        filetypes = [
-          "typescript"
-          "typescriptreact"
-          "typescript.tsx"
-        ];
+        extraOptions = {
+          filetypes = [
+            "javascript"
+            "javascriptreact"
+            "javascript.jsx"
+            "typescript"
+            "typescriptreact"
+            "typescript.tsx"
+          ];
+        };
       };
 
       # CSS / HTML
@@ -36,10 +41,8 @@
         enable = true; # Vue
         # volar formatter indent is broken, so we disable it in favor of prettier
         onAttach.function = ''
-          on_attach = function(client)
-            client.server_capabilities.document_formatting = false
-            client.server_capabilities.document_range_formatting = false
-          end
+          client.server_capabilities.document_formatting = false
+          client.server_capabilities.document_range_formatting = false
         '';
         onAttach.override = true;
       };
