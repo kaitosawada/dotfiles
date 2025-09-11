@@ -3,10 +3,6 @@
   ...
 }:
 {
-  # https://nix-community.github.io/nixvim/plugins/lsp-format/index.html
-  plugins.lsp-format = {
-    enable = true;
-  };
   # https://github.com/nix-community/nixvim/blob/main/plugins/lsp/lsp-packages.nix
   plugins.lsp = {
     enable = true;
@@ -20,16 +16,6 @@
 
       ts_ls = {
         enable = true;
-        # extraOptions = {
-        #   filetypes = [
-        #     "javascript"
-        #     "javascriptreact"
-        #     "javascript.jsx"
-        #     "typescript"
-        #     "typescriptreact"
-        #     "typescript.tsx"
-        #   ];
-        # };
         onAttach.function = ''
           local root_dir = client.config.root_dir
           if root_dir then
