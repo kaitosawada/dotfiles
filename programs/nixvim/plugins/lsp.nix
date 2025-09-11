@@ -20,16 +20,16 @@
 
       ts_ls = {
         enable = true;
-        extraOptions = {
-          filetypes = [
-            "javascript"
-            "javascriptreact"
-            "javascript.jsx"
-            "typescript"
-            "typescriptreact"
-            "typescript.tsx"
-          ];
-        };
+        # extraOptions = {
+        #   filetypes = [
+        #     "javascript"
+        #     "javascriptreact"
+        #     "javascript.jsx"
+        #     "typescript"
+        #     "typescriptreact"
+        #     "typescript.tsx"
+        #   ];
+        # };
         onAttach.function = ''
           local root_dir = client.config.root_dir
           if root_dir then
@@ -64,12 +64,12 @@
       # Vue
       volar = {
         enable = true; # Vue
-        # volar formatter indent is broken, so we disable it in favor of prettier
-        onAttach.function = ''
-          client.server_capabilities.document_formatting = false
-          client.server_capabilities.document_range_formatting = false
-        '';
-        onAttach.override = true;
+        # # volar formatter indent is broken, so we disable it in favor of prettier
+        # onAttach.function = ''
+        #   client.server_capabilities.document_formatting = false
+        #   client.server_capabilities.document_range_formatting = false
+        # '';
+        # onAttach.override = true;
       };
 
       # CSS / HTML
