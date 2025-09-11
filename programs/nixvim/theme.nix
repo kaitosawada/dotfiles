@@ -5,7 +5,9 @@
     settings = {
       options.transparent = true;
       groups.all = {
-        Visual = { bg = "#545c7e"; };
+        Visual = {
+          bg = "#545c7e";
+        };
       };
     };
   };
