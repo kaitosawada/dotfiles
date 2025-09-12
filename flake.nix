@@ -26,7 +26,44 @@
       nix-ai-tools,
       ...
     }:
-    flake-utils.lib.eachDefaultSystem (
+    let
+      systems = [ "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
+      
+      mkHomeConfig = system: username:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+            config = {
+              allowUnfree = true;
+            };
+          };
+          aipkgs = nix-ai-tools.packages.${system};
+          homeDir = if system == "aarch64-darwin" || system == "x86_64-darwin" then "/Users" else "/home";
+        in
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = {
+            inherit username system aipkgs;
+            homeDirectory = "${homeDir}/${username}";
+          };
+          modules = [
+            ./home.nix
+            nixvim.homeModules.nixvim
+          ];
+        };
+        
+      homeConfigurations = builtins.listToAttrs (
+        builtins.concatMap (system:
+          map (username: {
+            name = "${username}-${system}";
+            value = mkHomeConfig system username;
+          }) [ "kaito" "kaitosawada" "ubuntu" ]
+        ) systems
+      );
+    in
+    {
+      inherit homeConfigurations;
+    } // flake-utils.lib.eachDefaultSystem (
       system:
       let
         pkgs = import nixpkgs {
@@ -35,40 +72,9 @@
             allowUnfree = true;
           };
         };
-        aipkgs = nix-ai-tools.packages.${system};
-        strListToAttrs =
-          list: f:
-          builtins.listToAttrs (
-            map (x: {
-              name = "${x}-${system}";
-              value = f x;
-            }) list
-          );
-        homeDir = if system == "aarch64-darwin" then "/Users" else "/home";
         treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
       in
       {
-        packages.homeConfigurations =
-          strListToAttrs
-            [
-              "kaito"
-              "kaitosawada"
-              "ubuntu"
-            ]
-            (
-              username:
-              home-manager.lib.homeManagerConfiguration {
-                inherit pkgs;
-                extraSpecialArgs = {
-                  inherit username system aipkgs;
-                  homeDirectory = "${homeDir}/${username}";
-                };
-                modules = [
-                  ./home.nix
-                  nixvim.homeModules.nixvim
-                ];
-              }
-            );
         formatter = treefmtEval.config.build.wrapper;
       }
     );
