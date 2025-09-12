@@ -3,7 +3,6 @@
   username,
   homeDirectory,
   pkgs,
-  aipkgs,
   ...
 }:
 {
@@ -36,6 +35,9 @@
         "npm:playwright" = "latest";
         "npm:@playwright/mcp" = "latest";
         "pipx:markitdown-mcp" = "latest"; # ffmpeg is required for this
+        
+        # AI Tools
+        "npm:@charmland/crush" = "latest";
       };
     };
   };
@@ -66,7 +68,6 @@
       jq
       ripgrep
       sd
-      tree-sitter
       imagemagick
       libreoffice-bin
       ffmpeg # for markitdown-mcp
@@ -83,10 +84,8 @@
       rustc
       cargo
 
-      # llm
-      llama-cpp
-      aipkgs.crush
-      aipkgs.amp
+      # # llm
+      # llama-cpp
     ];
 
     sessionVariables = {

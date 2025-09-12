@@ -3,8 +3,9 @@
     ./accelerated-jk.nix
     ./alpha.nix
     ./auto-save.nix
+    ./blink-cmp.nix
     ./bufferline.nix
-    ./cmp.nix
+    # ./cmp.nix
     # ./copilot-vim.nix
     # ./codecompanion.nix
     ./csvview.nix
@@ -24,13 +25,14 @@
     # ./nvim-tree.nix
     ./obsidian.nix
     ./render-markdown.nix
-    ./skkeleton.nix
+    # ./skkeleton.nix
     ./smear-cursor.nix
     ./telescope.nix
     ./todo-comments.nix
     ./treesitter.nix
     ./treesitter-context.nix
     ./trouble.nix
+    ./tsc.nix
     ./wakatime.nix
     ./web-devicons.nix
     ./which-key.nix

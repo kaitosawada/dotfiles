@@ -13,7 +13,6 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-ai-tools.url = "github:numtide/nix-ai-tools";
   };
 
   outputs =
@@ -23,7 +22,6 @@
       nixvim,
       home-manager,
       treefmt-nix,
-      nix-ai-tools,
       ...
     }:
     let
@@ -42,13 +40,12 @@
               allowUnfree = true;
             };
           };
-          aipkgs = nix-ai-tools.packages.${system};
           homeDir = if system == "aarch64-darwin" || system == "x86_64-darwin" then "/Users" else "/home";
         in
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = {
-            inherit username system aipkgs;
+            inherit username system;
             homeDirectory = "${homeDir}/${username}";
           };
           modules = [

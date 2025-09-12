@@ -15,7 +15,6 @@ let
       fzf-lua
       telescope-fzf-native-nvim
     ];
-
   };
 in
 {
