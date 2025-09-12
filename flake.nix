@@ -27,9 +27,14 @@
       ...
     }:
     let
-      systems = [ "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
-      
-      mkHomeConfig = system: username:
+      systems = [
+        "x86_64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
+      ];
+
+      mkHomeConfig =
+        system: username:
         let
           pkgs = import nixpkgs {
             inherit system;
@@ -51,19 +56,27 @@
             nixvim.homeModules.nixvim
           ];
         };
-        
+
       homeConfigurations = builtins.listToAttrs (
-        builtins.concatMap (system:
-          map (username: {
-            name = "${username}-${system}";
-            value = mkHomeConfig system username;
-          }) [ "kaito" "kaitosawada" "ubuntu" ]
+        builtins.concatMap (
+          system:
+          map
+            (username: {
+              name = "${username}-${system}";
+              value = mkHomeConfig system username;
+            })
+            [
+              "kaito"
+              "kaitosawada"
+              "ubuntu"
+            ]
         ) systems
       );
     in
     {
       inherit homeConfigurations;
-    } // flake-utils.lib.eachDefaultSystem (
+    }
+    // flake-utils.lib.eachDefaultSystem (
       system:
       let
         pkgs = import nixpkgs {
