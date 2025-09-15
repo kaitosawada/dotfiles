@@ -35,7 +35,7 @@
         "npm:playwright" = "latest";
         "npm:@playwright/mcp" = "latest";
         "pipx:markitdown-mcp" = "latest"; # ffmpeg is required for this
-        
+
         # AI Tools
         "npm:@charmland/crush" = "latest";
       };
@@ -113,6 +113,10 @@
       # "Library/LaunchAgents/com.kaitosawada.llama.server.plist" = {
       #   source = ./scripts/launchd/com.kaitosawada.llama.server.plist;
       # };
+      ".config/nvim/lua/overseer/template" = {
+        source = ./overseer-template;
+        recursive = true;
+      };
     };
   };
 

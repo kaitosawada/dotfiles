@@ -24,6 +24,7 @@
     ./nvim-surround.nix
     # ./nvim-tree.nix
     ./obsidian.nix
+    ./overseer.nix
     ./render-markdown.nix
     # ./skkeleton.nix
     ./smear-cursor.nix

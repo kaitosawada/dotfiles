@@ -38,7 +38,10 @@ in
       "gt" = "lsp_type_definitions";
       "gi" = "lsp_implementations";
     };
-    extensions.fzf-native.enable = true;
+    extensions = {
+      fzf-native.enable = true;
+      ui-select.enable = true;
+    };
     enabledExtensions = [
       "smart_open"
       "noice"

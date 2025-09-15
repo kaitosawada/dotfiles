@@ -6,6 +6,20 @@
         "v"
         "o"
       ];
+      key = "<C-a>";
+      action = "<CMD>qall<CR>";
+      options = {
+        desc = "Close all tabs";
+        noremap = true;
+        silent = true;
+      };
+    }
+    {
+      mode = [
+        "n"
+        "v"
+        "o"
+      ];
       key = "<Up>";
       action = "<C-u>zz";
       options = {
