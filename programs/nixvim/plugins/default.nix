@@ -7,9 +7,8 @@
     ./bufferline.nix
     # ./cmp.nix
     # ./copilot-vim.nix
-    # ./codecompanion.nix
+    ./codecompanion.nix
     ./csvview.nix
-    # ./dressing.nix
     ./flash.nix
     ./gitsigns.nix
     ./image.nix
