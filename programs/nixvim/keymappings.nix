@@ -1,3 +1,4 @@
+{ helpers, ... }:
 {
   keymaps = [
     {
@@ -111,7 +112,30 @@
     {
       mode = "n";
       key = "gx";
-      action = ":execute '!open ' . shellescape(expand('<cfile>'))<CR>";
+      action = helpers.mkRaw ''
+        function()
+          local target = vim.fn.expand("<cfile>")
+          if target == nil or target == "" then
+            vim.notify("カーソル下に対象がありません", vim.log.levels.WARN)
+            return
+          end
+
+          if target:match("^https?://") then
+            -- OSごとに既定ハンドラで開く
+            if vim.fn.has("mac") == 1 then
+              vim.fn.jobstart({ "open", target }, { detach = true })
+            elseif vim.fn.has("unix") == 1 then
+              vim.fn.jobstart({ "xdg-open", target }, { detach = true })
+            elseif vim.fn.has("win32") == 1 then
+              vim.fn.jobstart({ "cmd", "/c", "start", "", target }, { detach = true })
+            else
+              vim.notify("未対応OSです", vim.log.levels.ERROR)
+            end
+          else
+            vim.cmd("edit " .. vim.fn.fnameescape(target))
+          end
+        end
+      '';
       options = {
         desc = "リンクを開く";
         noremap = true;
