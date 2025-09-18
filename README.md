@@ -12,7 +12,7 @@ sh <(wget -qO- https://nixos.org/nix/install) --daemon # linux
 
 # Clone this dotfiles repository
 # linuxの場合はnixpkgs#gitも
-nix shell nixpkgs#gh nixpkgs#ghq --extra-experimental-features "nix-command flakes"
+nix shell nixpkgs#gh nixpkgs#ghq nixpkgs#git --extra-experimental-features "nix-command flakes"
 gh auth login # ssh
 ghq get ssh://git@github.com/kaitosawada/dotfiles.git
 # home-manager switchでも必要かも？
