@@ -6,7 +6,8 @@ home-managerはnix profileで管理しています。
 
 ```sh
 # Nix Installation
-sh <(curl -L https://nixos.org/nix/install) # (linux) --daemon
+sh <(curl -L https://nixos.org/nix/install) # macos
+sh <(wget -qO- https://nixos.org/nix/install) --daemon # linux
 # linuxの場合は一度exit
 
 # Clone this dotfiles repository
