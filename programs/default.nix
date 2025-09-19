@@ -7,6 +7,7 @@
     ./direnv.nix
     ./fzf.nix
     ./gh.nix
+    # ./ghostty.nix
     ./git.nix
     ./lazygit.nix
     ./lsd.nix

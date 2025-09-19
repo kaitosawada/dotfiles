@@ -139,7 +139,7 @@
       max-jobs = 8 
       cores = 8
       experimental-features = nix-command flakes
-      trusted-users = root kaitosawada kaito ubuntu
+      allow-unfree = true
     '';
   };
 }

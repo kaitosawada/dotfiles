@@ -7,7 +7,7 @@
     ./bufferline.nix
     # ./cmp.nix
     # ./copilot-vim.nix
-    ./codecompanion.nix
+    # ./codecompanion.nix
     ./csvview.nix
     ./flash.nix
     ./gitsigns.nix
@@ -33,7 +33,6 @@
     ./treesitter-context.nix
     ./trouble.nix
     ./tsc.nix
-    ./wakatime.nix
     ./web-devicons.nix
     ./which-key.nix
     ./windsurf-vim.nix
