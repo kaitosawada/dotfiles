@@ -69,7 +69,6 @@
       ripgrep
       sd
       imagemagick
-      libreoffice-bin
       ffmpeg # for markitdown-mcp
       tree-sitter # for nixvim swift grammar
 
