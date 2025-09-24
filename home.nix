@@ -138,7 +138,6 @@
       max-jobs = 8 
       cores = 8
       experimental-features = nix-command flakes
-      allow-unfree = true
     '';
   };
 }
