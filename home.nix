@@ -133,12 +133,11 @@
   };
 
   nix = {
-    package = pkgs.nixVersions.stable;
-    extraOptions = ''
-      max-jobs = 8 
-      cores = 8
-      experimental-features = nix-command flakes
-      allow-unfree = true
-    '';
+    package = pkgs.nix;
+    settings = {
+      "experimental-features" = [ "nix-command" "flakes" ];
+      cores = 8;
+      "max-jobs" = 8;
+    };
   };
 }
