@@ -40,10 +40,10 @@ let
   '';
 in
 {
-  home.activation.updateClaudeConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ${updateScript}
-  '';
+  # home.activation.updateClaudeConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  #   ${updateScript}
+  # '';
 
   # 設定変更時に自動更新するための依存関係
-  home.file.".claude-mcp-update".text = builtins.toJSON mcpServersConfig;
+  # home.file.".claude-mcp-update".text = builtins.toJSON mcpServersConfig;
 }
