@@ -11,23 +11,20 @@
     ./claude.nix
   ];
 
+  # claude-codeはnpm -gでインストールされます
   programs.mise = {
     enable = true;
-    enableBashIntegration = true;
-    enableZshIntegration = true;
     globalConfig = {
       tools = {
         # Node.js
         node = "24";
         "npm:yarn" = "latest";
         "npm:pnpm" = "latest";
-        "npm:@anthropic-ai/claude-code" = "latest";
-        "npm:@openai/codex" = "latest";
         "npm:@antfu/ni" = "latest";
         "npm:@bitwarden/cli" = "latest";
 
         # Python
-        python = "3.12";
+        python = "3.13";
         uv = "latest";
         pipx = "latest";
 
@@ -35,9 +32,6 @@
         "npm:playwright" = "latest";
         "npm:@playwright/mcp" = "latest";
         "pipx:markitdown-mcp" = "latest"; # ffmpeg is required for this
-
-        # AI Tools
-        "npm:@charmland/crush" = "latest";
       };
     };
   };
