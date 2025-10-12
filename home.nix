@@ -29,8 +29,8 @@
         pipx = "latest";
 
         # MCP Servers
-        "npm:playwright" = "latest";
-        "npm:@playwright/mcp" = "latest";
+        # "npm:playwright" = "latest";
+        # "npm:@playwright/mcp" = "latest";
         "pipx:markitdown-mcp" = "latest"; # ffmpeg is required for this
       };
     };

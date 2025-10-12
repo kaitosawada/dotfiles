@@ -1,7 +1,7 @@
 { ... }:
 {
   imports = [
-    ./awscli.nix
+    # ./awscli.nix
     ./bash.nix
     ./bat.nix
     ./direnv.nix
