@@ -23,7 +23,7 @@
     {
       mode = "n";
       key = "<leader>on";
-      action = "<cmd>ObsidianNew<CR>";
+      action = "<cmd>Obsidian new<CR>";
       options = {
         desc = "Obsidian: New Note";
       };
@@ -31,7 +31,7 @@
     {
       mode = "n";
       key = "<leader>oo";
-      action = "<cmd>ObsidianOpen<CR>";
+      action = "<cmd>Obsidian open<CR>";
       options = {
         desc = "Obsidian: Open Application";
       };
@@ -39,7 +39,7 @@
     {
       mode = "n";
       key = "<leader>ot";
-      action = "<cmd>ObsidianToday<CR>";
+      action = "<cmd>Obsidian today<CR>";
       options = {
         desc = "Obsidian: Open Today's Daily Note";
       };
@@ -47,7 +47,7 @@
     {
       mode = "n";
       key = "<leader>oy";
-      action = "<cmd>ObsidianYesterday<CR>";
+      action = "<cmd>Obsidian yesterday<CR>";
       options = {
         desc = "Obsidian: Open Yesterday's Daily Note";
       };
@@ -55,7 +55,7 @@
     {
       mode = "n";
       key = "<leader>ot";
-      action = "<cmd>ObsidianTomorrow<CR>";
+      action = "<cmd>Obsidian tomorrow<CR>";
       options = {
         desc = "Obsidian: Open Tomorrow's Daily Note";
       };
@@ -63,7 +63,7 @@
     {
       mode = "n";
       key = "<leader>os";
-      action = "<cmd>ObsidianSearch<CR>";
+      action = "<cmd>Obsidian search<CR>";
       options = {
         desc = "Obsidian: Search";
       };
@@ -71,15 +71,7 @@
     {
       mode = "n";
       key = "<leader>d";
-      action = "<cmd>ObsidianDailies<CR>";
-      options = {
-        desc = "Obsidian: Search Daily Notes";
-      };
-    }
-    {
-      mode = "v";
-      key = "<leader>ol";
-      action = "<cmd>ObsidianLinkNew<CR>";
+      action = "<cmd>Obsidian dailies<CR>";
       options = {
         desc = "Obsidian: Search Daily Notes";
       };
