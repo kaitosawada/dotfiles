@@ -2,7 +2,7 @@
 
 ## installation
 
-home-managerはnix profileで管理しています。
+home-manager自体はhome-managerではなくnix profileで手動で管理しています。
 
 ```sh
 # Nix Installation
@@ -27,17 +27,9 @@ exec $SHELL -l
 
 ## docker
 
-colimaを使っています。
+colimaを使っています。手動でcolimaを起動してください。
+docker.sockをリンクする必要があるかもしれません。
 
 ```sh
 sudo ln -sf $HOME/.colima/default/docker.sock /var/run/docker.sock
-```
-
-## llama-server
-
-llama.vimで補完してます。
-
-```sh
-llama-server --fim-qwen-3b-default
-llama-server --fim-qwen-7b-default
 ```
