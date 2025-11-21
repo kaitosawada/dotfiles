@@ -79,6 +79,9 @@
 
       # # llm
       # llama-cpp
+
+      # claude
+      claude-code
     ];
 
     sessionVariables = {

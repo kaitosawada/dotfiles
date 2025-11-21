@@ -2,9 +2,11 @@
 {
   programs.git = {
     enable = true;
-    userName = username;
-    userEmail = "kaito.sawada@proton.me";
-    extraConfig = {
+    settings = {
+      user = {
+        name = username;
+        email = "kaito.sawada@proton.me";
+      };
       pull.rebase = false;
       url."ssh://git@github.com/".insteadOf = "https://github.com/";
     };

@@ -1,4 +1,4 @@
-{ helpers, ... }:
+{ lib, ... }:
 {
   keymaps = [
     {
@@ -112,7 +112,7 @@
     {
       mode = "n";
       key = "gx";
-      action = helpers.mkRaw ''
+      action = lib.nixvim.mkRaw ''
         function()
           local target = vim.fn.expand("<cfile>")
           if target == nil or target == "" then

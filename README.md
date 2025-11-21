@@ -33,3 +33,9 @@ docker.sockをリンクする必要があるかもしれません。
 ```sh
 sudo ln -sf $HOME/.colima/default/docker.sock /var/run/docker.sock
 ```
+
+## nix profileでunfree packageを使う
+
+```sh
+nix registry add nixpkgs github:numtide/nixpkgs-unfree/nixos-unstable
+```
