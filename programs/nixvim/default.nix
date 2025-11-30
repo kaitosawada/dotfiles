@@ -20,6 +20,9 @@
     "Wq" = {
       command = "wq";
     };
+    "Q" = {
+      command = "q";
+    };
   };
 
   # extraConfigLuaPre = builtins.readFile lua/bitwarden.lua;

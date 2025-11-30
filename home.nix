@@ -92,7 +92,7 @@
     };
 
     shellAliases = {
-      n = "nvim";
+      n = ''nvim --listen "/tmp/nvim-$$.pipe"'';
       lg = "lazygit";
       load = "exec $SHELL -l";
       reload = ''export NIXPKGS_ALLOW_UNFREE=1 && home-manager switch --flake "$(ghq root)/github.com/kaitosawada/dotfiles#${username}-${system}" --impure && exec $SHELL -l && mise i'';

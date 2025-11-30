@@ -3,7 +3,9 @@ layout {
         plugin location="compact-bar"
     }
     pane split_direction="vertical" {
-        pane size="55%" command="nvim"
+        pane size="55%" command="zsh" {
+            args "-c" "nvim --listen /tmp/nvim-$ZELLIJ_SESSION_NAME.pipe"
+        }
         pane split_direction="horizontal" {
             pane size="60%"
             pane split_direction="vertical" {
