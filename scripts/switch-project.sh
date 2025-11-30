@@ -1,9 +1,24 @@
 function switch-project() {
   local repo
-  repo="$(ghq list | fzf --reverse)"
+  local candidates
+  candidates="$(ghq list)"
+
+  # ~/obsidian が存在すれば、その中のディレクトリも候補に追加
+  if [ -d "$HOME/obsidian" ]; then
+    local obsidian_dirs
+    obsidian_dirs="$(ls -1 "$HOME/obsidian" 2>/dev/null | sed 's|^|obsidian/|')"
+    [ -n "$obsidian_dirs" ] && candidates="$candidates"$'\n'"$obsidian_dirs"
+  fi
+
+  repo="$(echo "$candidates" | fzf --reverse)"
   [ -z "$repo" ] && return 1
 
-  local dir="$(ghq root)/$repo"
+  local dir
+  if [[ "$repo" == obsidian/* ]]; then
+    dir="$HOME/${repo}"
+  else
+    dir="$(ghq root)/$repo"
+  fi
   local session_name="$(basename "$repo")"
 
   if command -v zellij >/dev/null 2>&1; then

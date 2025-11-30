@@ -98,8 +98,6 @@
       reload = ''export NIXPKGS_ALLOW_UNFREE=1 && home-manager switch --flake "$(ghq root)/github.com/kaitosawada/dotfiles#${username}-${system}" --impure && exec $SHELL -l && mise i'';
       upgrade = "mise upgrade && nix flake update && nix store gc";
       t = ''zellij attach "$(basename $(pwd))" --create'';
-      o = "cd ~/obsidian/kaitosawada && nvim .";
-      todo = "nvim ~/obsidian/kaitosawada/tasks.md";
     };
 
     file = {
