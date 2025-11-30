@@ -9,6 +9,9 @@
     keybinds {
       unbind "Ctrl b"
       unbind "Ctrl p"
+      shared_except "locked" {
+        unbind "Ctrl g"
+      }
       shared_except "pane" "locked" {
         unbind "Ctrl p"
       }

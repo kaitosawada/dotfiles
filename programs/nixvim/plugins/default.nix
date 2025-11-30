@@ -25,7 +25,7 @@
     ./obsidian.nix
     ./overseer.nix
     ./render-markdown.nix
-    # ./skkeleton.nix
+    ./skkeleton.nix
     ./smear-cursor.nix
     ./telescope.nix
     ./todo-comments.nix

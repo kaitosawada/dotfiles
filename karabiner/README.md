@@ -1,0 +1,4 @@
+- terminalではIME off
+  - nvimではskkeleton
+  - claude codeではctrl-gでnvim編集
+- karabinar elementでjapanese_eisuu/kanaとskkeleton用のF7/F6を設定
