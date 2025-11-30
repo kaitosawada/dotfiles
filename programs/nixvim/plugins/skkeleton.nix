@@ -128,7 +128,6 @@ in
         "i"
         "n"
         "c"
-        "t"
       ];
       key = "<F6>";
       action = "<Plug>(skkeleton-disable)";

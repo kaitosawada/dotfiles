@@ -21,6 +21,12 @@ in
   # https://nix-community.github.io/nixvim/plugins/telescope/index.html
   plugins.telescope = {
     enable = true;
+    lazyLoad = {
+      enable = true;
+      settings = {
+        cmd = [ "Telescope" ];
+      };
+    };
     keymaps = {
       # "<leader>f" = "find_files";
       # "<leader>f" = "smart_open";
