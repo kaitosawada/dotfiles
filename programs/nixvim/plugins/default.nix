@@ -5,23 +5,19 @@
     ./auto-save.nix
     ./blink-cmp.nix
     ./bufferline.nix
-    # ./cmp.nix
-    # ./copilot-vim.nix
-    # ./codecompanion.nix
+    ./copilot-vim.nix
     ./csvview.nix
     ./flash.nix
     ./gitsigns.nix
     ./image.nix
     ./indent-blankline.nix
     ./lazygit.nix
-    # ./llama-vim.nix
     ./lsp-signature.nix
     ./lsp.nix
     ./lualine.nix
     ./lz-n.nix
     ./noice.nix
     ./nvim-surround.nix
-    # ./nvim-tree.nix
     ./obsidian.nix
     ./overseer.nix
     ./render-markdown.nix
@@ -35,7 +31,7 @@
     ./tsc.nix
     ./web-devicons.nix
     ./which-key.nix
-    ./windsurf-vim.nix
+    # ./windsurf-vim.nix
     ./yazi.nix
   ];
 }
