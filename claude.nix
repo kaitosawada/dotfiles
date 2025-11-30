@@ -1,6 +1,14 @@
 { pkgs, lib, ... }:
 
 let
+  claudeSettings = {
+    alwaysThinkingEnabled = true;
+    env = {
+      DISABLE_AUTOUPDATER = "1";
+      EDITOR = "nvim-minimal";
+    };
+  };
+
   mcpServersConfig = {
     mcpServers = {
       "playwright" = {
@@ -40,6 +48,11 @@ let
   '';
 in
 {
+  home.file.".claude/settings.json" = {
+    text = builtins.toJSON claudeSettings;
+    force = true;
+  };
+
   # home.activation.updateClaudeConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
   #   ${updateScript}
   # '';

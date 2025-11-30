@@ -9,7 +9,7 @@
     ./csvview.nix
     ./flash.nix
     ./gitsigns.nix
-    ./image.nix
+    # ./image.nix
     ./indent-blankline.nix
     ./lazygit.nix
     ./lsp-signature.nix

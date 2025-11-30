@@ -2,31 +2,10 @@
   plugins = {
     treesitter = {
       enable = true;
-      # lazyLoad = {
-      #   settings = {
-      #     ft = [
-      #       "lua"
-      #       "nix"
-      #       "rust"
-      #       "typescript"
-      #       "tsx"
-      #       "javascript"
-      #       "react-typescript"
-      #       "json"
-      #       "css"
-      #       "html"
-      #       "bash"
-      #       "c"
-      #       "java"
-      #       "markdown"
-      #       "python"
-      #       "query"
-      #       "regex"
-      #       "vim"
-      #       "yaml"
-      #     ];
-      #   };
-      # };
+      lazyLoad = {
+        enable = true;
+        settings.event = [ "BufReadPost" "BufNewFile" ];
+      };
       settings = {
         highlight = {
           enable = true;
