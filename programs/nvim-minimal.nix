@@ -87,8 +87,14 @@ let
         vim.api.nvim_create_user_command("Q", "q", {})
 
         -- ファイル末尾でinsertモード開始
-        vim.cmd("normal! G$")
-        vim.cmd("startinsert!")
+        vim.api.nvim_create_autocmd("VimEnter", {
+          callback = function()
+            vim.defer_fn(function()
+              vim.cmd("normal! G$")
+              vim.cmd("startinsert!")
+            end, 10)
+          end
+        })
         EOF
       '';
       packages.myPlugins = {
