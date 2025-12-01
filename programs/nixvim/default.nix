@@ -1,10 +1,19 @@
 {
+  pkgs,
+  ...
+}:
+{
   imports = [
     ./plugins
     ./keymappings.nix
     ./theme.nix
   ];
   enable = true;
+
+  # neovim内部でのみnodejsにパスを通す（zshの$PATHには影響しない）
+  extraPackages = with pkgs; [
+    nodejs
+  ];
 
   globals.mapleader = " ";
 

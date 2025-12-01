@@ -48,14 +48,8 @@
       };
 
       # Vue
-      volar = {
+      vue_ls = {
         enable = true; # Vue
-        # # volar formatter indent is broken, so we disable it in favor of prettier
-        # onAttach.function = ''
-        #   client.server_capabilities.document_formatting = false
-        #   client.server_capabilities.document_range_formatting = false
-        # '';
-        # onAttach.override = true;
       };
 
       # CSS / HTML
