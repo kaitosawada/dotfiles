@@ -24,8 +24,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "vim-denops";
       repo = "denops.vim";
-      rev = "4ff8f353ee54ee67288c1099242444ccb0ab5b69";
-      hash = "sha256-kqvNcCX4wlvb8BVrSF+WD5uGY8zHaS2mp75y8tenMnk=";
+      rev = "5cfca39988a36e42d81b925264fc846077a727e3";
+      hash = "sha256-4AACZ3h6uAqiXW24gUF1+uq7dnWA0w/PcxAeO4yxitc=";
     };
   };
 
@@ -34,8 +34,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "vim-skk";
       repo = "skkeleton";
-      rev = "8bb1b8782227291c8cbe2aa62a9af732557690cc";
-      hash = "sha256-V86J+8rg1/5ZUL9t0k2S5H+z7KZ1DZwLwmb5yM0+vts=";
+      rev = "71178b6debd9f1b3bb00abfd865ca642e82e24c7";
+      hash = "sha256-833WpBi0X6MhblLda1cp6dFU2zu+TYBgimlsBX+3rQo=";
     };
   };
 
@@ -46,8 +46,8 @@ let
       src = pkgs.fetchFromGitHub {
         owner = "delphinus";
         repo = "skkeleton_indicator.nvim";
-        rev = "d9b649d734ca7d3871c4f124004771d0213dc747";
-        hash = "sha256-xr2yTHsGclLvXPpRNYBFS+dIB0+RNUb27TlGq5apBig=";
+        rev = "f08532787cf842b996c8a5065be7e85cd3376c1f";
+        hash = "sha256-6pQdj7EcPZ5/F34Y6SERRxcgKO6KLVH/94Th78ucn2Y=";
       };
     }).overrideAttrs
       (oldAttrs: {
