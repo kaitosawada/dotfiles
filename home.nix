@@ -5,6 +5,10 @@
   pkgs,
   ...
 }:
+let
+  isDarwin = system == "aarch64-darwin" || system == "x86_64-darwin";
+  skkLib = import ./lib/skkeleton.nix { inherit pkgs; };
+in
 {
   imports = [
     ./programs
@@ -100,18 +104,30 @@
       t = ''zellij attach "$(basename $(pwd))" --create'';
     };
 
-    file = {
-      "Library/LaunchAgents/com.kaitosawada.colima.start.plist" = {
-        source = ./scripts/launchd/com.kaitosawada.colima.start.plist;
-      };
-      # "Library/LaunchAgents/com.kaitosawada.llama.server.plist" = {
-      #   source = ./scripts/launchd/com.kaitosawada.llama.server.plist;
-      # };
-      ".config/nvim/lua/overseer/template" = {
-        source = ./overseer-template;
-        recursive = true;
-      };
-    };
+    file =
+      {
+        "Library/LaunchAgents/com.kaitosawada.colima.start.plist" = {
+          source = ./scripts/launchd/com.kaitosawada.colima.start.plist;
+        };
+        # "Library/LaunchAgents/com.kaitosawada.llama.server.plist" = {
+        #   source = ./scripts/launchd/com.kaitosawada.llama.server.plist;
+        # };
+        ".config/nvim/lua/overseer/template" = {
+          source = ./overseer-template;
+          recursive = true;
+        };
+      }
+      // (
+        if isDarwin then
+          {
+            "Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.L" = {
+              source = "${skkLib.skkDict}/SKK-JISYO.L";
+              force = true;
+            };
+          }
+        else
+          { }
+      );
   };
 
   home.activation.enableLaunchAgents = {
