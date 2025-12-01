@@ -51,6 +51,7 @@
         rounded_corners true
       }
     }
+    scrollback_editor "nvim-minimal"
     session_serialization false
     mouse_mode false
   '';

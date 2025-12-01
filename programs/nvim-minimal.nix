@@ -34,18 +34,22 @@ let
         vim.keymap.set({"i", "n", "c"}, "<F7>", "<Plug>(skkeleton-enable)", { noremap = true, silent = true })
         vim.keymap.set({"i", "n", "c"}, "<F6>", "<Plug>(skkeleton-disable)", { noremap = true, silent = true })
         vim.keymap.set("i", "jj", "<Esc>", { noremap = true, silent = true })
+        vim.keymap.set({"n", "v"}, "gy", "\"*y", { noremap = true, silent = true })
 
         -- typo用コマンド
         vim.api.nvim_create_user_command("Wq", "wq", {})
         vim.api.nvim_create_user_command("Q", "q", {})
 
-        -- ファイル末尾でinsertモード開始
+        -- claude-prompt-*.md, *.dump のときファイル末尾でinsertモード開始
         vim.api.nvim_create_autocmd("VimEnter", {
           callback = function()
-            vim.defer_fn(function()
-              vim.cmd("normal! G$")
-              vim.cmd("startinsert!")
-            end, 10)
+            local filename = vim.fn.expand("%:t")
+            if filename:match("^claude%-prompt%-.*%.md$") then
+              vim.defer_fn(function()
+                vim.cmd("normal! G$")
+                vim.cmd("startinsert!")
+              end, 10)
+            end
           end
         })
         EOF
