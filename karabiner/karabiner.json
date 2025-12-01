@@ -1,0 +1,41 @@
+{
+    "description": "Ghostty: japanese_kana to F7, japanese_eisuu to F6",
+    "manipulators": [
+        {
+            "conditions": [
+                {
+                    "bundle_identifiers": [
+                        "com\\.mitchellh\\.ghostty"
+                    ],
+                    "type": "frontmost_application_if"
+                }
+            ],
+            "from": { "key_code": "japanese_kana" },
+            "to": [
+                { 
+                    "key_code": "f7",
+                    "modifiers": ["fn"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "conditions": [
+                {
+                    "bundle_identifiers": [
+                        "com\\.mitchellh\\.ghostty"
+                    ],
+                    "type": "frontmost_application_if"
+                }
+            ],
+            "from": { "key_code": "japanese_eisuu" },
+            "to": [
+                { 
+                    "key_code": "f6",
+                    "modifiers": ["fn"]
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}

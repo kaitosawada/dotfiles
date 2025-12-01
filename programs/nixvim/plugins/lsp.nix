@@ -6,6 +6,10 @@
   # https://github.com/nix-community/nixvim/blob/main/plugins/lsp/lsp-packages.nix
   plugins.lsp = {
     enable = true;
+    lazyLoad = {
+      enable = true;
+      settings.event = [ "BufReadPost" "BufNewFile" ];
+    };
     servers = {
       nixd.enable = true;
 

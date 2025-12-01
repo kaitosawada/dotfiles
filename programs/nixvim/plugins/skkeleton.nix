@@ -57,15 +57,15 @@ let
         '';
       });
 
-  cmp-skkeleton = pkgs.vimUtils.buildVimPlugin {
-    name = "cmp-skkeleton";
-    src = pkgs.fetchFromGitHub {
-      owner = "uga-rosa";
-      repo = "cmp-skkeleton";
-      rev = "2c268a407e9e843abd03c6fa77485541a4ddcd9a";
-      hash = "sha256-Odg0cmLML2L4YVcrMt7Lrie1BAl7aNEq6xqJN3/JhZs=";
-    };
-  };
+  # cmp-skkeleton = pkgs.vimUtils.buildVimPlugin {
+  #   name = "cmp-skkeleton";
+  #   src = pkgs.fetchFromGitHub {
+  #     owner = "uga-rosa";
+  #     repo = "cmp-skkeleton";
+  #     rev = "2c268a407e9e843abd03c6fa77485541a4ddcd9a";
+  #     hash = "sha256-Odg0cmLML2L4YVcrMt7Lrie1BAl7aNEq6xqJN3/JhZs=";
+  #   };
+  # };
 
 in
 # ddc = pkgs.vimUtils.buildVimPlugin {
@@ -105,7 +105,7 @@ in
     denops
     skkeleton
     skkeleton_indicator
-    cmp-skkeleton
+    # cmp-skkeleton
   ];
 
   keymaps = [
@@ -125,37 +125,9 @@ in
     }
     {
       mode = [
-        "t"
-      ];
-      key = "<F7>";
-      action = "<C-\\><C-n><Plug>(skkeleton-enable)";
-      options = {
-        desc = "skkeleton: Enable";
-        noremap = true;
-        silent = true;
-      };
-    }
-    {
-      mode = [
         "i"
         "n"
         "c"
-        "t"
-      ];
-      key = "<C-u>";
-      action = "<Plug>(skkeleton-enable)";
-      options = {
-        desc = "skkeleton: Enable";
-        noremap = true;
-        silent = true;
-      };
-    }
-    {
-      mode = [
-        "i"
-        "n"
-        "c"
-        "t"
       ];
       key = "<F6>";
       action = "<Plug>(skkeleton-disable)";

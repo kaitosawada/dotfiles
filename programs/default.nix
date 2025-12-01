@@ -11,6 +11,7 @@
     ./git.nix
     ./lazygit.nix
     ./lsd.nix
+    ./nvim-minimal.nix
     ./starship.nix
     ./tmux.nix
     ./wezterm
