@@ -38,7 +38,7 @@
     }
     {
       mode = "n";
-      key = "<leader>ot";
+      key = "<leader>od";
       action = "<cmd>Obsidian today<CR>";
       options = {
         desc = "Obsidian: Open Today's Daily Note";
