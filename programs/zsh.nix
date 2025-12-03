@@ -11,16 +11,12 @@
     syntaxHighlighting.enable = true;
 
     initContent = ''
-      bindkey -M viins 'jj' vi-cmd-mode
+      bindkey -e  # Use emacs keybindings
       ${builtins.readFile ../scripts/init-nix.sh}
       ${builtins.readFile ../scripts/switch-project.sh}
 
       if [ -d "$HOME/google-cloud-sdk/bin" ]; then
         export PATH="$HOME/google-cloud-sdk/bin:$PATH"
-      fi
-
-      if [ -d "$HOME/.tiup/bin" ]; then
-        export PATH="$HOME/.tiup/bin:$PATH"
       fi
     '';
   };
