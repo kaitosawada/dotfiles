@@ -41,13 +41,18 @@ let
         vim.api.nvim_create_user_command("Q", "q", {})
 
         -- claude-prompt-*.md, *.dump のときファイル末尾でinsertモード開始
-        vim.api.nvim_create_autocmd("VimEnter", {
+        vim.api.nvim_create_autocmd({"VimEnter", "BufReadPost"}, {
           callback = function()
             local filename = vim.fn.expand("%:t")
             if filename:match("^claude%-prompt%-.*%.md$") then
               vim.defer_fn(function()
                 vim.cmd("normal! G$")
                 vim.cmd("startinsert!")
+              end, 10)
+            elseif filename:match("%.dump$") then
+              vim.defer_fn(function()
+                vim.cmd("normal! G0")
+                vim.cmd("startinsert")
               end, 10)
             end
           end

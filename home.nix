@@ -3,6 +3,7 @@
   username,
   homeDirectory,
   pkgs,
+  lib,
   ...
 }:
 let
@@ -119,17 +120,7 @@ in
           recursive = true;
         };
       }
-      // (
-        if isDarwin then
-          {
-            "Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.L" = {
-              source = "${skkLib.skkDict}/SKK-JISYO.L";
-              force = true;
-            };
-          }
-        else
-          { }
-      );
+  ;
   };
 
   home.activation.enableLaunchAgents = {
@@ -141,6 +132,24 @@ in
         launchctl unload -wF "$HOME/Library/LaunchAgents/com.kaitosawada.colima.start.plist" 2>/dev/null || true
         launchctl load -w "$HOME/Library/LaunchAgents/com.kaitosawada.colima.start.plist" || true
         # launchctl load -w "$HOME/Library/LaunchAgents/com.kaitosawada.llama.server.plist" || true
+      fi
+    '';
+  };
+
+  home.activation.copyMacSKKDict = lib.mkIf isDarwin {
+    after = [ "writeBoundary" ];
+    before = [ ];
+    data = ''
+      dictDir="$HOME/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries"
+      dictFile="$dictDir/SKK-JISYO.L"
+      srcFile="${skkLib.skkDict}/SKK-JISYO.L"
+      mkdir -p "$dictDir"
+      if [ -L "$dictFile" ]; then
+        rm "$dictFile"
+      fi
+      if [ ! -f "$dictFile" ] || ! cmp -s "$srcFile" "$dictFile"; then
+        cp "$srcFile" "$dictFile"
+        echo "Copied SKK-JISYO.L to macSKK dictionaries"
       fi
     '';
   };
