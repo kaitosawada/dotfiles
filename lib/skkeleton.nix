@@ -56,7 +56,18 @@ let
           ${oldAttrs.neovimRequireCheckHook or ""}
         '';
       });
+  # 共通のLua設定
+  skkeletonConfigLua = ''
+    vim.fn["skkeleton#register_kanatable"]("rom", { jj = "escape" })
+    vim.fn["skkeleton#config"]({
+      eggLikeNewline = true,
+      globalDictionaries = { "${skkDict}/SKK-JISYO.L" }
+    })
+    vim.fn["skkeleton#register_keymap"]("input", ";", "disable")
+    vim.fn["skkeleton#register_keymap"]("input", "l", "henkanPoint")
+    require("skkeleton_indicator").setup()
+  '';
 in
 {
-  inherit skkDict denops skkeleton skkeleton_indicator;
+  inherit skkDict denops skkeleton skkeleton_indicator skkeletonConfigLua;
 }

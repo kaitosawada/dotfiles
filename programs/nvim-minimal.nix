@@ -1,7 +1,7 @@
 { pkgs, ... }:
 let
   skkPkgs = import ../lib/skkeleton.nix { inherit pkgs; };
-  inherit (skkPkgs) skkDict denops skkeleton skkeleton_indicator;
+  inherit (skkPkgs) denops skkeleton skkeleton_indicator skkeletonConfigLua;
 
   nvim-minimal-unwrapped = pkgs.neovim.override {
     configure = {
@@ -22,13 +22,7 @@ let
         vim.cmd("colorscheme duskfox")
 
         -- skkeleton設定
-        vim.fn["skkeleton#register_kanatable"]("rom", { jj = "escape" })
-        vim.fn["skkeleton#config"]({
-          globalDictionaries = { "${skkDict}/SKK-JISYO.L" }
-        })
-        vim.fn["skkeleton#register_keymap"]("input", ";", "disable")
-        vim.fn["skkeleton#register_keymap"]("input", "l", "henkanPoint")
-        require("skkeleton_indicator").setup()
+        ${skkeletonConfigLua}
 
         -- キーマップ
         vim.keymap.set({"i", "n", "c"}, "<F7>", "<Plug>(skkeleton-enable)", { noremap = true, silent = true })
@@ -52,7 +46,6 @@ let
             elseif filename:match("%.dump$") then
               vim.defer_fn(function()
                 vim.cmd("normal! G0")
-                vim.cmd("startinsert")
               end, 10)
             end
           end
