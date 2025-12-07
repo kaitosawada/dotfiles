@@ -52,7 +52,6 @@ let
             elseif filename:match("%.dump$") then
               vim.defer_fn(function()
                 vim.cmd("normal! G0")
-                vim.cmd("startinsert")
               end, 10)
             end
           end
