@@ -73,6 +73,12 @@ in
             "!dist/"
             "--glob"
             "!build/"
+            "--glob"
+            "!pnpm-lock.yaml"
+            "--glob"
+            "!package-lock.json"
+            "--glob"
+            "!yarn.lock"
           ];
         };
       };
