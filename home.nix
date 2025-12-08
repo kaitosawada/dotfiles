@@ -25,18 +25,11 @@ in
         node = "24";
         "npm:yarn" = "latest";
         "npm:pnpm" = "latest";
-        "npm:@antfu/ni" = "latest";
-        "npm:@bitwarden/cli" = "latest";
 
         # Python
         python = "3.13";
         uv = "latest";
         pipx = "latest";
-
-        # MCP Servers
-        # "npm:playwright" = "latest";
-        # "npm:@playwright/mcp" = "latest";
-        "pipx:markitdown-mcp" = "latest"; # ffmpeg is required for this
       };
     };
   };
@@ -68,8 +61,8 @@ in
       ripgrep
       sd
       imagemagick
-      ffmpeg # for markitdown-mcp
       tree-sitter # for nixvim swift grammar
+      ni # @antfu/ni
 
       # docker
       colima
@@ -100,11 +93,12 @@ in
       n = ''nvim --listen "/tmp/nvim-$$.pipe"'';
       lg = "lazygit";
       load = "exec $SHELL -l";
-      reload = ''export NIXPKGS_ALLOW_UNFREE=1 && home-manager switch --flake "$(ghq root)/github.com/kaitosawada/dotfiles#${username}-${system}" --impure && exec $SHELL -l && mise i'';
+      reload = ''export NIXPKGS_ALLOW_UNFREE=1 && home-manager switch --flake "$(ghq root)/github.com/kaitosawada/dotfiles#${username}-${system}" --impure && exec $SHELL -l'';
       upgrade = "mise upgrade && nix flake update && nix store gc";
       t = ''zellij attach "$(basename $(pwd))" --create'';
       todo = "(cd $HOME/obsidian/kaitosawada && claude)";
       tl = "(cd $HOME/obsidian/kaitosawada && claude -p 'todo list')";
+      zk = "zellij kill-all-sessions";
     };
 
     file =
@@ -112,9 +106,6 @@ in
         "Library/LaunchAgents/com.kaitosawada.colima.start.plist" = {
           source = ./scripts/launchd/com.kaitosawada.colima.start.plist;
         };
-        # "Library/LaunchAgents/com.kaitosawada.llama.server.plist" = {
-        #   source = ./scripts/launchd/com.kaitosawada.llama.server.plist;
-        # };
         ".config/nvim/lua/overseer/template" = {
           source = ./overseer-template;
           recursive = true;
