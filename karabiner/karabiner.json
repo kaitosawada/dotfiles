@@ -1,41 +1,161 @@
 {
-    "description": "Ghostty: japanese_kana to F7, japanese_eisuu to F6",
-    "manipulators": [
+    "profiles": [
         {
-            "conditions": [
+            "complex_modifications": {
+                "rules": [
+                    {
+                        "description": "Ghostty: japanese_kana to F7, japanese_eisuu to F6",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "com\\.mitchellh\\.ghostty"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": { "key_code": "japanese_kana" },
+                                "to": [{ "key_code": "f7" }],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "com\\.mitchellh\\.ghostty"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": { "key_code": "japanese_eisuu" },
+                                "to": [{ "key_code": "f6" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Crtl+D with Japanese Eisuu",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "s",
+                                    "modifiers": { "mandatory": ["control"] }
+                                },
+                                "to": [
+                                    { "key_code": "japanese_eisuu" },
+                                    {
+                                        "key_code": "s",
+                                        "modifiers": ["control"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "d",
+                                    "modifiers": { "mandatory": ["control"] }
+                                },
+                                "to": [
+                                    { "key_code": "japanese_eisuu" },
+                                    {
+                                        "key_code": "d",
+                                        "modifiers": ["control"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "j",
+                                    "modifiers": { "mandatory": ["control"] }
+                                },
+                                "to": [
+                                    { "key_code": "japanese_eisuu" },
+                                    {
+                                        "key_code": "j",
+                                        "modifiers": ["control"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "k",
+                                    "modifiers": { "mandatory": ["control"] }
+                                },
+                                "to": [
+                                    { "key_code": "japanese_eisuu" },
+                                    {
+                                        "key_code": "k",
+                                        "modifiers": ["control"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "j_pressed",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    },
+                                    {
+                                        "input_sources": [{ "language": "^ja$" }],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "from": { "key_code": "j" },
+                                "to": [
+                                    { "key_code": "delete_or_backspace" },
+                                    { "key_code": "japanese_eisuu" }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": { "key_code": "j" },
+                                "to": [
+                                    {
+                                        "set_variable": {
+                                            "name": "j_pressed",
+                                            "value": 1
+                                        }
+                                    },
+                                    { "key_code": "j" }
+                                ],
+                                "to_delayed_action": {
+                                    "to_if_canceled": [
+                                        {
+                                            "set_variable": {
+                                                "name": "j_pressed",
+                                                "value": 0
+                                            }
+                                        }
+                                    ],
+                                    "to_if_invoked": [
+                                        {
+                                            "set_variable": {
+                                                "name": "j_pressed",
+                                                "value": 0
+                                            }
+                                        }
+                                    ]
+                                },
+                                "type": "basic"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "fn_function_keys": [
                 {
-                    "bundle_identifiers": [
-                        "com\\.mitchellh\\.ghostty"
-                    ],
-                    "type": "frontmost_application_if"
+                    "from": { "key_code": "f5" },
+                    "to": [{ "key_code": "f5" }]
                 }
             ],
-            "from": { "key_code": "japanese_kana" },
-            "to": [
-                { 
-                    "key_code": "f7",
-                    "modifiers": ["fn"]
-                }
-            ],
-            "type": "basic"
-        },
-        {
-            "conditions": [
-                {
-                    "bundle_identifiers": [
-                        "com\\.mitchellh\\.ghostty"
-                    ],
-                    "type": "frontmost_application_if"
-                }
-            ],
-            "from": { "key_code": "japanese_eisuu" },
-            "to": [
-                { 
-                    "key_code": "f6",
-                    "modifiers": ["fn"]
-                }
-            ],
-            "type": "basic"
+            "name": "Default profile",
+            "selected": true,
+            "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" }
         }
     ]
 }

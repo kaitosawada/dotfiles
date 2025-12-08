@@ -9,6 +9,7 @@
     ./gh.nix
     # ./ghostty.nix
     ./git.nix
+    ./karabiner.nix
     ./lazygit.nix
     ./lsd.nix
     ./nvim-minimal.nix
