@@ -49,6 +49,8 @@ let
     "--glob"
     "!yarn.lock"
   ];
+  grep_additional_args_lua =
+    "{ " + builtins.concatStringsSep ", " (map (x: ''"${x}"'') grep_additional_args) + " }";
 in
 {
   # https://nix-community.github.io/nixvim/plugins/telescope/index.html
@@ -103,7 +105,6 @@ in
       extensions = {
         live_grep_args = {
           auto_quoting = true;
-          additional_args = grep_additional_args;
         };
       };
     };
@@ -132,7 +133,7 @@ in
         "n"
       ];
       key = "<leader>g";
-      action = "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>";
+      action = "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args({ additional_args = ${grep_additional_args_lua} })<cr>";
       options = {
         desc = "Telescope: live_grep_args";
         noremap = false;
