@@ -63,6 +63,7 @@ in
       imagemagick
       tree-sitter # for nixvim swift grammar
       ni # @antfu/ni
+      google-cloud-sdk # for gcloud CLI
 
       # docker
       colima

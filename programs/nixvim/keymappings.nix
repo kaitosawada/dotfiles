@@ -203,5 +203,16 @@
         silent = true;
       };
     }
+    # インサートモードでタブ削除（インデント減少）
+    {
+      mode = "i";
+      key = "<C-S-T>";
+      action = "<C-d>";
+      options = {
+        desc = "インデントを削除";
+        noremap = true;
+        silent = true;
+      };
+    }
   ];
 }
