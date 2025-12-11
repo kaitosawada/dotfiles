@@ -9,7 +9,6 @@
     ./csvview.nix
     ./flash.nix
     ./gitsigns.nix
-    # ./image.nix
     ./indent-blankline.nix
     ./lazygit.nix
     ./lsp-signature.nix
@@ -19,6 +18,7 @@
     ./noice.nix
     ./nvim-surround.nix
     ./obsidian.nix
+    ./octo.nix
     ./overseer.nix
     ./render-markdown.nix
     ./skkeleton.nix
@@ -31,7 +31,6 @@
     ./tsc.nix
     ./web-devicons.nix
     ./which-key.nix
-    # ./windsurf-vim.nix
     ./yazi.nix
   ];
 }

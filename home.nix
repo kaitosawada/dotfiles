@@ -100,6 +100,7 @@ in
       todo = "(cd $HOME/obsidian/kaitosawada && claude)";
       tl = "(cd $HOME/obsidian/kaitosawada && claude -p 'todo list')";
       zk = "zellij kill-all-sessions";
+      d = "gh dash";
     };
 
     file =

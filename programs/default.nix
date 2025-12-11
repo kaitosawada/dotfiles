@@ -7,6 +7,7 @@
     ./direnv.nix
     ./fzf.nix
     ./gh.nix
+    ./gh-dash.nix
     # ./ghostty.nix
     ./git.nix
     ./karabiner.nix
