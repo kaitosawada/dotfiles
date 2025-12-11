@@ -8,6 +8,7 @@
     ./copilot-vim.nix
     ./csvview.nix
     ./flash.nix
+    ./gh-dash.nix
     ./gitsigns.nix
     ./indent-blankline.nix
     ./lazygit.nix

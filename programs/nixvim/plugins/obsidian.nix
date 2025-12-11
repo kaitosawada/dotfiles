@@ -70,7 +70,7 @@
     }
     {
       mode = "n";
-      key = "<leader>d";
+      key = "<leader>ol";
       action = "<cmd>Obsidian dailies<CR>";
       options = {
         desc = "Obsidian: Search Daily Notes";
