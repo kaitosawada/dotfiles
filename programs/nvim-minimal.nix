@@ -28,7 +28,21 @@ let
         vim.keymap.set({"i", "n", "c"}, "<F7>", "<Plug>(skkeleton-enable)", { noremap = true, silent = true })
         vim.keymap.set({"i", "n", "c"}, "<F6>", "<Plug>(skkeleton-disable)", { noremap = true, silent = true })
         vim.keymap.set("i", "jj", "<Esc>", { noremap = true, silent = true })
+
+        -- 外部クリップボード連携
         vim.keymap.set({"n", "v"}, "gy", "\"*y", { noremap = true, silent = true })
+        vim.g.clipboard = {
+          name = "OSC 52",
+          copy = {
+            ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+            ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+          },
+          paste = {
+            ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+            ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+          },
+        }
+
 
         -- typo用コマンド
         vim.api.nvim_create_user_command("Wq", "wq", {})
