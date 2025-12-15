@@ -81,6 +81,9 @@ in
 
       # claude
       claude-code
+
+      # bitwarden
+      bitwarden-cli
     ];
 
     sessionVariables = {
