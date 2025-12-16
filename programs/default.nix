@@ -1,6 +1,7 @@
 { ... }:
 {
   imports = [
+    ./aerc.nix
     # ./awscli.nix
     ./bash.nix
     ./bat.nix
@@ -13,6 +14,7 @@
     ./karabiner.nix
     ./lazygit.nix
     ./lsd.nix
+    ./notmuch.nix
     ./nvim-minimal.nix
     ./starship.nix
     ./tmux.nix

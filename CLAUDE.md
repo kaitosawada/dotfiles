@@ -9,7 +9,7 @@ Build/Lint/Test
 - Dry-run check without applying:
   - home-manager build --flake ".#$(whoami)-$(uname -m)-$(uname | tr '[:upper:]' '[:lower:]')"
 - Format Nix files:
-  - nixfmt-rfc-style <file.nix>
+  - nix fmt
 - Update flake inputs:
   - nix flake update
 - Repo health script (custom):
