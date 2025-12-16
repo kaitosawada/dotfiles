@@ -34,7 +34,7 @@ in
       };
     };
     # See <https://mise.jdx.dev/configuration.html#settings-file-config-mise-settings-toml>
-    settings= {
+    settings = {
       experimental = true;
     };
   };
@@ -90,8 +90,8 @@ in
       python314
       uv
 
-      # # llm
-      # llama-cpp
+      # llm
+      llm
 
       # claude
       claude-code
@@ -118,19 +118,18 @@ in
       tl = "(cd $HOME/obsidian/kaitosawada && claude -p 'todo list')";
       zk = "zellij kill-all-sessions";
       d = "gh dash";
+      unlock = "bw unlock --raw > ~/.bw_session";
     };
 
-    file =
-      {
-        "Library/LaunchAgents/com.kaitosawada.colima.start.plist" = {
-          source = ./scripts/launchd/com.kaitosawada.colima.start.plist;
-        };
-        ".config/nvim/lua/overseer/template" = {
-          source = ./overseer-template;
-          recursive = true;
-        };
-      }
-  ;
+    file = {
+      "Library/LaunchAgents/com.kaitosawada.colima.start.plist" = {
+        source = ./scripts/launchd/com.kaitosawada.colima.start.plist;
+      };
+      ".config/nvim/lua/overseer/template" = {
+        source = ./overseer-template;
+        recursive = true;
+      };
+    };
   };
 
   home.activation.enableLaunchAgents = {
@@ -167,7 +166,10 @@ in
   nix = {
     package = pkgs.nix;
     settings = {
-      "experimental-features" = [ "nix-command" "flakes" ];
+      "experimental-features" = [
+        "nix-command"
+        "flakes"
+      ];
       cores = 8;
       "max-jobs" = 8;
     };

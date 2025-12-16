@@ -69,5 +69,11 @@ let
   '';
 in
 {
-  inherit skkDict denops skkeleton skkeleton_indicator skkeletonConfigLua;
+  inherit
+    skkDict
+    denops
+    skkeleton
+    skkeleton_indicator
+    skkeletonConfigLua
+    ;
 }

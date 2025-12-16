@@ -1,7 +1,12 @@
 { pkgs, ... }:
 let
   skkPkgs = import ../../../lib/skkeleton.nix { inherit pkgs; };
-  inherit (skkPkgs) denops skkeleton skkeleton_indicator skkeletonConfigLua;
+  inherit (skkPkgs)
+    denops
+    skkeleton
+    skkeleton_indicator
+    skkeletonConfigLua
+    ;
 in
 {
   extraConfigLua = skkeletonConfigLua;
