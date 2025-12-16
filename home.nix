@@ -17,20 +17,25 @@ in
   ];
 
   # claude-codeはnpm -gでインストールされます
+  # See <https://github.com/nix-community/home-manager/blob/master/modules/programs/mise.nix>
   programs.mise = {
     enable = true;
     globalConfig = {
       tools = {
-        # Node.js
-        node = "24";
-        "npm:yarn" = "latest";
-        "npm:pnpm" = "latest";
-
-        # Python
-        python = "3.13";
-        uv = "latest";
-        pipx = "latest";
+        # # Node.js
+        # node = "24";
+        # "npm:yarn" = "latest";
+        # "npm:pnpm" = "latest";
+        #
+        # # Python
+        # python = "3.13";
+        # uv = "latest";
+        # pipx = "latest";
       };
+    };
+    # See <https://mise.jdx.dev/configuration.html#settings-file-config-mise-settings-toml>
+    settings= {
+      experimental = true;
     };
   };
 
@@ -75,6 +80,15 @@ in
       # rust
       rustc
       cargo
+
+      # js
+      nodejs
+      yarn
+      pnpm
+
+      # python
+      python314
+      uv
 
       # # llm
       # llama-cpp
