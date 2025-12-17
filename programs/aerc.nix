@@ -59,11 +59,13 @@
       mbsync = {
         enable = true;
         create = "maildir";
+        patterns = [
+          "INBOX"
+          "[Gmail]/Sent Mail"
+          "[Gmail]/Drafts"
+        ];
         extraConfig.account = {
           CertificateFile = "/etc/ssl/cert.pem";
-        };
-        extraConfig.channel = {
-          MaxMessages = 2000;
         };
       };
 

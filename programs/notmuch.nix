@@ -24,7 +24,7 @@
     };
 
     hooks = {
-      preNew = "";
+      preNew = "mbsync -a";
       postNew = "";
     };
   };
