@@ -26,6 +26,7 @@
     ./smear-cursor.nix
     ./telescope.nix
     ./todo-comments.nix
+    ./toggleterm.nix
     ./treesitter.nix
     ./treesitter-context.nix
     ./trouble.nix

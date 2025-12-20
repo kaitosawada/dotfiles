@@ -53,6 +53,7 @@ in
 
       # languages
       deno
+      bun
       go
       biome
 
