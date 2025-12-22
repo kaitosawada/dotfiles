@@ -17,6 +17,7 @@
     ./lsd.nix
     ./notmuch.nix
     ./nvim-minimal.nix
+    ./ssh.nix
     ./starship.nix
     ./tmux.nix
     ./wezterm
