@@ -99,6 +99,7 @@ in
 
       # bitwarden
       bitwarden-cli
+      gnupg
     ];
 
     sessionVariables = {
