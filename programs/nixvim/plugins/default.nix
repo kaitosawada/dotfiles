@@ -20,7 +20,6 @@
     ./nvim-surround.nix
     ./obsidian.nix
     ./octo.nix
-    ./overseer.nix
     ./render-markdown.nix
     ./skkeleton.nix
     ./smear-cursor.nix
