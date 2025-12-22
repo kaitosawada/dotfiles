@@ -13,6 +13,10 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    himalaya = {
+      url = "github:pimalaya/himalaya";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -22,6 +26,7 @@
       nixvim,
       home-manager,
       treefmt-nix,
+      himalaya,
       ...
     }:
     let
@@ -47,6 +52,7 @@
           extraSpecialArgs = {
             inherit username system;
             homeDirectory = "${homeDir}/${username}";
+            himalayaPackage = himalaya.packages.${system}.default;
           };
           modules = [
             ./home.nix

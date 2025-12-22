@@ -56,6 +56,20 @@
         enable = true;
       };
 
+      himalaya = {
+        enable = true;
+        settings = {
+          # notmuchではなくIMAPバックエンドを使用
+          backend.type = "imap";
+          backend.host = "imap.gmail.com";
+          backend.port = 993;
+          backend.encryption.type = "tls";
+          backend.login = "k.sawada@ozonehl.com";
+          backend.auth.type = "password";
+          backend.auth.cmd = "bw get notes himalaya-gmail-app-password --session $(cat ~/.bw_session)";
+        };
+      };
+
       mbsync = {
         enable = true;
         create = "maildir";
