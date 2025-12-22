@@ -32,6 +32,7 @@ Code style guidelines
 
 Editor/AI rules
 - No Cursor or Copilot rules found in the repo. If added later (e.g., .cursor/rules or .github/copilot-instructions.md), mirror key constraints here.
+- Claude Code: Run `nix fmt` after editing Nix files. Do NOT run `reload`, `home-manager build`, or `home-manager switch` - the user will run these manually.
 
 Notes
 - Cross-platform: configs target x86_64-linux and aarch64-darwin; avoid platform-specific paths in shared modules.
