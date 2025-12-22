@@ -16,23 +16,9 @@ in
     ./claude.nix
   ];
 
-  # claude-codeはnpm -gでインストールされます
   # See <https://github.com/nix-community/home-manager/blob/master/modules/programs/mise.nix>
   programs.mise = {
     enable = true;
-    globalConfig = {
-      tools = {
-        # # Node.js
-        # node = "24";
-        # "npm:yarn" = "latest";
-        # "npm:pnpm" = "latest";
-        #
-        # # Python
-        # python = "3.13";
-        # uv = "latest";
-        # pipx = "latest";
-      };
-    };
     # See <https://mise.jdx.dev/configuration.html#settings-file-config-mise-settings-toml>
     settings = {
       experimental = true;
@@ -126,29 +112,6 @@ in
       d = "gh dash";
       unlock = "bw unlock --raw > ~/.bw_session";
     };
-
-    file = {
-      "Library/LaunchAgents/com.kaitosawada.colima.start.plist" = {
-        source = ./scripts/launchd/com.kaitosawada.colima.start.plist;
-      };
-      ".config/nvim/lua/overseer/template" = {
-        source = ./overseer-template;
-        recursive = true;
-      };
-    };
-  };
-
-  home.activation.enableLaunchAgents = {
-    after = [ "writeBoundary" ];
-    before = [ ];
-    data = ''
-      if command -v launchctl >/dev/null 2>&1; then
-        launchctl unload -wF "$HOME/Library/LaunchAgents/com.kaitosawada.llama.server.plist" 2>/dev/null || true
-        launchctl unload -wF "$HOME/Library/LaunchAgents/com.kaitosawada.colima.start.plist" 2>/dev/null || true
-        launchctl load -w "$HOME/Library/LaunchAgents/com.kaitosawada.colima.start.plist" || true
-        # launchctl load -w "$HOME/Library/LaunchAgents/com.kaitosawada.llama.server.plist" || true
-      fi
-    '';
   };
 
   home.activation.copyMacSKKDict = lib.mkIf isDarwin {
