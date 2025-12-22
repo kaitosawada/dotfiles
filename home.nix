@@ -99,7 +99,6 @@ in
 
       # bitwarden
       bitwarden-cli
-      gnupg
     ];
 
     sessionVariables = {
@@ -107,6 +106,11 @@ in
       LANG = "ja_JP.UTF-8";
       NIXPKGS_ALLOW_UNFREE = "1";
       DOCKER_HOST = "unix://$HOME/.colima/default/docker.sock";
+      SSH_AUTH_SOCK =
+        if isDarwin then
+          "${homeDirectory}/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock"
+        else
+          "${homeDirectory}/.bitwarden-ssh-agent.sock";
     };
 
     shellAliases = {
