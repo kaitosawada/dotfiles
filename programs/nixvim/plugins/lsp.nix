@@ -113,6 +113,13 @@
       sourcekit = {
         enable = true;
       };
+
+      glsl_analyzer = {
+        enable = true;
+      };
+      wgsl_analyzer = {
+        enable = true;
+      };
     };
     keymaps = {
       silent = true;
