@@ -14,6 +14,17 @@
       bindkey -e  # Use emacs keybindings
       ${builtins.readFile ../scripts/init-nix.sh}
       ${builtins.readFile ../scripts/switch-project.sh}
+
+      # Move latest downloaded file to current directory (or specified path)
+      mvl() {
+        local latest=$(ls -t ~/Downloads | head -1)
+        if [[ -z "$latest" ]]; then
+          echo "Downloadsにファイルがありません"
+          return 1
+        fi
+        echo "移動: $latest → ''${1:-.}"
+        mv ~/Downloads/"$latest" "''${1:-.}"
+      }
     '';
   };
 }
