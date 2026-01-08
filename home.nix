@@ -56,6 +56,7 @@ in
       tree-sitter # for nixvim swift grammar
       ni # @antfu/ni
       google-cloud-sdk # for gcloud CLI
+      caddy
 
       # docker
       colima
@@ -78,10 +79,11 @@ in
       uv
 
       # llm
-      llm
+      # llm
 
       # claude
       claude-code
+      gemini-cli
 
       # bitwarden
       bitwarden-cli
