@@ -38,6 +38,7 @@
         vim
         vimdoc
         toml
+        wgsl
         yaml
       ];
       settings = {
