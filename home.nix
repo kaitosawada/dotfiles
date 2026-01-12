@@ -110,6 +110,7 @@ in
       ++ lib.optionals (!isDarwin) [
         bitwarden-desktop
         obsidian
+        wtype # for sending keystrokes on Wayland
       ];
 
     sessionVariables = {
@@ -168,6 +169,12 @@ in
       keybindings = lib.mkOptionDefault {
         "Mod4+k" = "kill";
         "Mod4+Return" = "exec ghostty";
+        # Japanese input switching: kana/eisuu → F7/F6 only when Ghostty is focused
+        # Mac JP keyboard: kana=Hangul, eisuu=Hangul_Hanja
+        "Hangul" =
+          ''exec sh -c 'if [ "$(swaymsg -t get_tree | jq -r ".. | select(.focused? == true) | .app_id // empty" 2>/dev/null)" = "com.mitchellh.ghostty" ]; then wtype -k F7; fi' '';
+        "Hangul_Hanja" =
+          ''exec sh -c 'if [ "$(swaymsg -t get_tree | jq -r ".. | select(.focused? == true) | .app_id // empty" 2>/dev/null)" = "com.mitchellh.ghostty" ]; then wtype -k F6; fi' '';
       };
       output = {
         HDMI-A-1 = {
@@ -183,7 +190,7 @@ in
   nix = {
     # package = pkgs.nixVersions.stable;
     extraOptions = ''
-      max-jobs = 8 
+      max-jobs = 8
       cores = 8
       experimental-features = nix-command flakes
     '';
