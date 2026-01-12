@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   ...
 }:
 {
@@ -109,9 +110,9 @@
         installCargo = false;
       };
 
-      # swift
+      # swift (macOS only)
       sourcekit = {
-        enable = true;
+        enable = pkgs.stdenv.isDarwin;
       };
 
       glsl_analyzer = {
