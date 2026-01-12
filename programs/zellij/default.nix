@@ -4,13 +4,21 @@
     enableBashIntegration = false;
     enableZshIntegration = false;
   };
+  # Zellijの設定ファイル
+  # session, tabのキーバインドは削除
   home.file.".config/zellij/config.kdl".text = ''
     theme "catppuccin-macchiato"
     keybinds {
-      unbind "Ctrl b"
-      unbind "Ctrl p"
+      unbind "Ctrl t"
+      shared_except "locked" {
+        unbind "Ctrl b"
+        unbind "Ctrl g"
+      }
       shared_except "pane" "locked" {
         unbind "Ctrl p"
+      }
+      shared_except "session" {
+        unbind "Ctrl o"
       }
       normal {
         bind "Ctrl l" { GoToNextTab; }
@@ -48,6 +56,7 @@
         rounded_corners true
       }
     }
+    scrollback_editor "nvim-minimal"
     session_serialization false
     mouse_mode false
   '';

@@ -3,42 +3,25 @@
   username,
   homeDirectory,
   pkgs,
+  lib,
   ...
 }:
+let
+  isDarwin = system == "aarch64-darwin" || system == "x86_64-darwin";
+  skkLib = import ./lib/skkeleton.nix { inherit pkgs; };
+in
 {
   imports = [
     ./programs
     ./claude.nix
   ];
 
+  # See <https://github.com/nix-community/home-manager/blob/master/modules/programs/mise.nix>
   programs.mise = {
     enable = true;
-    enableBashIntegration = true;
-    enableZshIntegration = true;
-    globalConfig = {
-      tools = {
-        # Node.js
-        node = "24";
-        "npm:yarn" = "latest";
-        "npm:pnpm" = "latest";
-        "npm:@anthropic-ai/claude-code" = "latest";
-        "npm:@openai/codex" = "latest";
-        "npm:@antfu/ni" = "latest";
-        "npm:@bitwarden/cli" = "latest";
-
-        # Python
-        python = "system";
-        uv = "latest";
-        pipx = "latest";
-
-        # MCP Servers
-        "npm:playwright" = "latest";
-        "npm:@playwright/mcp" = "latest";
-        "pipx:markitdown-mcp" = "latest"; # ffmpeg is required for this
-
-        # AI Tools
-        "npm:@charmland/crush" = "latest";
-      };
+    # See <https://mise.jdx.dev/configuration.html#settings-file-config-mise-settings-toml>
+    settings = {
+      experimental = true;
     };
   };
 
@@ -73,6 +56,7 @@
 
       # languages
       deno
+      bun
       go
       biome
 
@@ -86,8 +70,10 @@
       ripgrep
       sd
       imagemagick
-      ffmpeg # for markitdown-mcp
       tree-sitter # for nixvim swift grammar
+      ni # @antfu/ni
+      google-cloud-sdk # for gcloud CLI
+      caddy
 
       # docker
       colima
@@ -100,8 +86,24 @@
       rustc
       cargo
 
-      # # llm
-      # llama-cpp
+      # js
+      nodejs
+      yarn
+      pnpm
+
+      # python
+      python314
+      uv
+
+      # llm
+      # llm
+
+      # claude
+      claude-code
+      gemini-cli
+
+      # bitwarden
+      bitwarden-cli
     ];
 
     sessionVariables = {
@@ -109,42 +111,42 @@
       LANG = "ja_JP.UTF-8";
       NIXPKGS_ALLOW_UNFREE = "1";
       DOCKER_HOST = "unix://$HOME/.colima/default/docker.sock";
+      SSH_AUTH_SOCK =
+        if isDarwin then
+          "${homeDirectory}/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock"
+        else
+          "${homeDirectory}/.bitwarden-ssh-agent.sock";
     };
 
     shellAliases = {
-      n = "nvim";
+      n = ''nvim --listen "/tmp/nvim-$$.pipe"'';
       lg = "lazygit";
       load = "exec $SHELL -l";
-      reload = ''export NIXPKGS_ALLOW_UNFREE=1 && home-manager switch --flake "$(ghq root)/github.com/kaitosawada/dotfiles#${username}-${system}" --impure && exec $SHELL -l && mise i'';
+      reload = ''export NIXPKGS_ALLOW_UNFREE=1 && home-manager switch --flake "$(ghq root)/github.com/kaitosawada/dotfiles#${username}-${system}" --impure && exec $SHELL -l'';
       upgrade = "mise upgrade && nix flake update && nix store gc";
       t = ''zellij attach "$(basename $(pwd))" --create'';
-      o = "cd ~/obsidian/kaitosawada && nvim .";
-      todo = "nvim ~/obsidian/kaitosawada/tasks.md";
-    };
-
-    file = {
-      "Library/LaunchAgents/com.kaitosawada.colima.start.plist" = {
-        source = ./scripts/launchd/com.kaitosawada.colima.start.plist;
-      };
-      # "Library/LaunchAgents/com.kaitosawada.llama.server.plist" = {
-      #   source = ./scripts/launchd/com.kaitosawada.llama.server.plist;
-      # };
-      ".config/nvim/lua/overseer/template" = {
-        source = ./overseer-template;
-        recursive = true;
-      };
+      todo = "(cd $HOME/obsidian/kaitosawada && claude)";
+      tl = "(cd $HOME/obsidian/kaitosawada && claude -p 'todo list')";
+      zk = "zellij kill-all-sessions";
+      d = "gh dash";
+      unlock = "bw unlock --raw > ~/.bw_session";
     };
   };
 
-  home.activation.enableLaunchAgents = {
+  home.activation.copyMacSKKDict = lib.mkIf isDarwin {
     after = [ "writeBoundary" ];
     before = [ ];
     data = ''
-      if command -v launchctl >/dev/null 2>&1; then
-        launchctl unload -wF "$HOME/Library/LaunchAgents/com.kaitosawada.llama.server.plist" 2>/dev/null || true
-        launchctl unload -wF "$HOME/Library/LaunchAgents/com.kaitosawada.colima.start.plist" 2>/dev/null || true
-        launchctl load -w "$HOME/Library/LaunchAgents/com.kaitosawada.colima.start.plist" || true
-        # launchctl load -w "$HOME/Library/LaunchAgents/com.kaitosawada.llama.server.plist" || true
+      dictDir="$HOME/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries"
+      dictFile="$dictDir/SKK-JISYO.L"
+      srcFile="${skkLib.skkDict}/SKK-JISYO.L"
+      mkdir -p "$dictDir"
+      if [ -L "$dictFile" ]; then
+        rm "$dictFile"
+      fi
+      if [ ! -f "$dictFile" ] || ! cmp -s "$srcFile" "$dictFile"; then
+        cp "$srcFile" "$dictFile"
+        echo "Copied SKK-JISYO.L to macSKK dictionaries"
       fi
     '';
   };
@@ -172,11 +174,20 @@
   };
 
   nix = {
-    package = pkgs.nixVersions.stable;
+    # package = pkgs.nixVersions.stable;
     extraOptions = ''
       max-jobs = 8 
       cores = 8
       experimental-features = nix-command flakes
     '';
+    package = pkgs.nix;
+    settings = {
+      "experimental-features" = [
+        "nix-command"
+        "flakes"
+      ];
+      cores = 8;
+      "max-jobs" = 8;
+    };
   };
 }

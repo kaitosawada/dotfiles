@@ -6,6 +6,13 @@
   # https://github.com/nix-community/nixvim/blob/main/plugins/lsp/lsp-packages.nix
   plugins.lsp = {
     enable = true;
+    lazyLoad = {
+      enable = true;
+      settings.event = [
+        "BufReadPost"
+        "BufNewFile"
+      ];
+    };
     servers = {
       nixd.enable = true;
 
@@ -48,14 +55,8 @@
       };
 
       # Vue
-      volar = {
+      vue_ls = {
         enable = true; # Vue
-        # # volar formatter indent is broken, so we disable it in favor of prettier
-        # onAttach.function = ''
-        #   client.server_capabilities.document_formatting = false
-        #   client.server_capabilities.document_range_formatting = false
-        # '';
-        # onAttach.override = true;
       };
 
       # CSS / HTML
@@ -110,6 +111,13 @@
 
       # swift
       sourcekit = {
+        enable = true;
+      };
+
+      glsl_analyzer = {
+        enable = true;
+      };
+      wgsl_analyzer = {
         enable = true;
       };
     };

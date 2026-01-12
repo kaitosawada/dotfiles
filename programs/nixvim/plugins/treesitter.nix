@@ -1,32 +1,46 @@
 {
+  pkgs,
+  ...
+}:
+{
   plugins = {
     treesitter = {
       enable = true;
-      # lazyLoad = {
-      #   settings = {
-      #     ft = [
-      #       "lua"
-      #       "nix"
-      #       "rust"
-      #       "typescript"
-      #       "tsx"
-      #       "javascript"
-      #       "react-typescript"
-      #       "json"
-      #       "css"
-      #       "html"
-      #       "bash"
-      #       "c"
-      #       "java"
-      #       "markdown"
-      #       "python"
-      #       "query"
-      #       "regex"
-      #       "vim"
-      #       "yaml"
-      #     ];
-      #   };
-      # };
+      lazyLoad = {
+        enable = true;
+        settings.event = [
+          "BufReadPost"
+          "BufNewFile"
+        ];
+      };
+      grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+        bash
+        c
+        html
+        css
+        javascript
+        jsdoc
+        json
+        lua
+        luadoc
+        luap
+        nix
+        rust
+        swift
+        java
+        markdown
+        markdown_inline
+        python
+        query
+        regex
+        tsx
+        typescript
+        vim
+        vimdoc
+        toml
+        wgsl
+        yaml
+      ];
       settings = {
         highlight = {
           enable = true;
@@ -40,35 +54,7 @@
         folding = {
           enable = true;
         };
-        ensure_installed = [
-          "bash"
-          "c"
-          "html"
-          "css"
-          "javascript"
-          "jsdoc"
-          "json"
-          "lua"
-          "luadoc"
-          "luap"
-          "nix"
-          "rust"
-          "swift"
-          "java"
-          "markdown"
-          "markdown_inline"
-          "python"
-          "query"
-          "regex"
-          "swift"
-          "tsx"
-          "typescript"
-          "vim"
-          "vimdoc"
-          "toml"
-          "yaml"
-        ];
-        auto_install = true;
+        auto_install = false;
         incremental_selection = {
           enable = true;
           keymaps = {

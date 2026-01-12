@@ -1,5 +1,5 @@
 {
-  plugins.windsurf-vim = {
+  plugins.octo = {
     enable = true;
   };
 }

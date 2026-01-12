@@ -1,4 +1,4 @@
-{ helpers, ... }:
+{ lib, ... }:
 {
   keymaps = [
     {
@@ -112,7 +112,7 @@
     {
       mode = "n";
       key = "gx";
-      action = helpers.mkRaw ''
+      action = lib.nixvim.mkRaw ''
         function()
           local target = vim.fn.expand("<cfile>")
           if target == nil or target == "" then
@@ -199,6 +199,17 @@
       action = "<C-\\><C-n>";
       options = {
         desc = "Terminal to Normal Mode";
+        noremap = true;
+        silent = true;
+      };
+    }
+    # インサートモードでタブ削除（インデント減少）
+    {
+      mode = "i";
+      key = "<C-S-T>";
+      action = "<C-d>";
+      options = {
+        desc = "インデントを削除";
         noremap = true;
         silent = true;
       };

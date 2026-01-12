@@ -1,10 +1,19 @@
 {
+  pkgs,
+  ...
+}:
+{
   imports = [
     ./plugins
     ./keymappings.nix
     ./theme.nix
   ];
   enable = true;
+
+  # neovim内部でのみnodejsにパスを通す（zshの$PATHには影響しない）
+  extraPackages = with pkgs; [
+    nodejs
+  ];
 
   globals.mapleader = " ";
 
@@ -20,9 +29,11 @@
     "Wq" = {
       command = "wq";
     };
+    "Q" = {
+      command = "q";
+    };
   };
 
-  # extraConfigLuaPre = builtins.readFile lua/bitwarden.lua;
   extraConfigLua = ''
     vim.g.clipboard = {
       name = 'OSC 52',

@@ -11,17 +11,20 @@
     syntaxHighlighting.enable = true;
 
     initContent = ''
-      bindkey -M viins 'jj' vi-cmd-mode
+      bindkey -e  # Use emacs keybindings
       ${builtins.readFile ../scripts/init-nix.sh}
       ${builtins.readFile ../scripts/switch-project.sh}
 
-      if [ -d "$HOME/google-cloud-sdk/bin" ]; then
-        export PATH="$HOME/google-cloud-sdk/bin:$PATH"
-      fi
-
-      if [ -d "$HOME/.tiup/bin" ]; then
-        export PATH="$HOME/.tiup/bin:$PATH"
-      fi
+      # Move latest downloaded file to current directory (or specified path)
+      mvl() {
+        local latest=$(ls -t ~/Downloads | head -1)
+        if [[ -z "$latest" ]]; then
+          echo "Downloadsにファイルがありません"
+          return 1
+        fi
+        echo "移動: $latest → ''${1:-.}"
+        mv ~/Downloads/"$latest" "''${1:-.}"
+      }
     '';
   };
 }

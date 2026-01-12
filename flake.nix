@@ -2,7 +2,7 @@
   description = "My personal NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     flake-utils.url = "github:numtide/flake-utils";
     home-manager = {
@@ -11,6 +11,10 @@
     };
     nixvim = {
       url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    himalaya = {
+      url = "github:pimalaya/himalaya";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -22,6 +26,7 @@
       nixvim,
       home-manager,
       treefmt-nix,
+      himalaya,
       ...
     }:
     let
@@ -47,6 +52,7 @@
           extraSpecialArgs = {
             inherit username system;
             homeDirectory = "${homeDir}/${username}";
+            himalayaPackage = himalaya.packages.${system}.default;
           };
           modules = [
             ./home.nix
