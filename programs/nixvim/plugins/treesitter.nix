@@ -1,7 +1,40 @@
 {
   pkgs,
+  lib,
   ...
 }:
+let
+  commonGrammars = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+    bash
+    c
+    html
+    css
+    javascript
+    jsdoc
+    json
+    lua
+    luadoc
+    luap
+    nix
+    rust
+    java
+    markdown
+    markdown_inline
+    python
+    query
+    regex
+    tsx
+    typescript
+    vim
+    vimdoc
+    toml
+    wgsl
+    yaml
+  ];
+  darwinGrammars = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+    swift
+  ];
+in
 {
   plugins = {
     treesitter = {
@@ -13,34 +46,7 @@
           "BufNewFile"
         ];
       };
-      grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-        bash
-        c
-        html
-        css
-        javascript
-        jsdoc
-        json
-        lua
-        luadoc
-        luap
-        nix
-        rust
-        swift
-        java
-        markdown
-        markdown_inline
-        python
-        query
-        regex
-        tsx
-        typescript
-        vim
-        vimdoc
-        toml
-        wgsl
-        yaml
-      ];
+      grammarPackages = commonGrammars ++ lib.optionals pkgs.stdenv.isDarwin darwinGrammars;
       settings = {
         highlight = {
           enable = true;
