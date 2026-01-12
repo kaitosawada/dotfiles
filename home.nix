@@ -106,6 +106,9 @@ in
 
         # bitwarden
         bitwarden-cli
+        
+        # cloudflare
+        cloudflared
       ]
       ++ lib.optionals (!isDarwin) [
         bitwarden-desktop
