@@ -109,6 +109,7 @@ in
       ]
       ++ lib.optionals (!isDarwin) [
         bitwarden-desktop
+        obsidian
       ];
 
     sessionVariables = {
