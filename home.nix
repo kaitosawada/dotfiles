@@ -106,7 +106,7 @@ in
 
         # bitwarden
         bitwarden-cli
-        
+
         # cloudflare
         cloudflared
       ]
@@ -161,7 +161,7 @@ in
     '';
   };
 
-  wayland.windowManager.sway = {
+  wayland.windowManager.sway = lib.mkIf (!isDarwin) {
     enable = true;
     systemd.enable = true;
     package = null;
