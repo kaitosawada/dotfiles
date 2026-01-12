@@ -27,7 +27,7 @@
         "npm:@bitwarden/cli" = "latest";
 
         # Python
-        python = "3.12";
+        python = "system";
         uv = "latest";
         pipx = "latest";
 
@@ -53,6 +53,23 @@
       # git
       git
       ghq
+
+      # linux
+      gcc
+      gnupg
+      python312
+      # zlib
+      # bzip2
+      # xz
+      # readline
+      # sqlite
+      # openssl
+      # libffi
+      # ncurses
+      # tk
+      # gdbm
+      # tcl
+      # pkg-config
 
       # languages
       deno
@@ -130,6 +147,28 @@
         # launchctl load -w "$HOME/Library/LaunchAgents/com.kaitosawada.llama.server.plist" || true
       fi
     '';
+  };
+
+  wayland.windowManager.sway = {
+    enable = true;
+    systemd.enable = true;
+    package = null;
+    config = {
+      modifier = "Mod4";
+      terminal = "ghostty";
+      # https://nix-community.github.io/home-manager/options.xhtml#opt-wayland.windowManager.sway.config.keybindings
+      keybindings = {
+        "Mod4+k" = "kill";
+      };
+      output = {
+        HDMI-A-1 = {
+          scale = "1.5";
+        };
+      };
+      # startup = {
+      #   command = "ghostty";
+      # };
+    };
   };
 
   nix = {
