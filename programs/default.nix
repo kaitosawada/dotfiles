@@ -14,7 +14,7 @@
     ./karabiner.nix
     ./lazygit.nix
     ./lsd.nix
-    ./notmuch.nix
+    # ./notmuch.nix
     ./nvim-minimal.nix
     ./ssh.nix
     ./starship.nix
