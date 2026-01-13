@@ -27,7 +27,7 @@
       }
 
       # SSH via Cloudflare Access tunnel
-      cfssh() {
+      sshcf() {
         ssh -o ProxyCommand="cloudflared access ssh --hostname %h" "$@"
       }
     '';
