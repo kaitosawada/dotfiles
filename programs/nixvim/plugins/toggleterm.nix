@@ -88,14 +88,5 @@
         silent = true;
       };
     }
-    {
-      mode = "t";
-      key = "<Esc><Esc>";
-      action = "<C-\\><C-n><cmd>ToggleTerm<CR>";
-      options = {
-        desc = "Close floating terminal";
-        silent = true;
-      };
-    }
   ];
 }
