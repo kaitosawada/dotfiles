@@ -109,6 +109,9 @@ in
         
         # cloudflare
         cloudflared
+
+        # sync p2p
+        syncthing
       ]
       ++ lib.optionals (!isDarwin) [
         bitwarden-desktop
