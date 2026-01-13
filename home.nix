@@ -19,10 +19,6 @@ in
   # See <https://github.com/nix-community/home-manager/blob/master/modules/programs/mise.nix>
   programs.mise = {
     enable = true;
-    # See <https://mise.jdx.dev/configuration.html#settings-file-config-mise-settings-toml>
-    settings = {
-      experimental = true;
-    };
   };
 
   home = {
@@ -64,7 +60,6 @@ in
 
         # nix
         nix-search-cli
-        nixfmt-rfc-style
 
         # tools
         gnumake
@@ -106,7 +101,7 @@ in
 
         # bitwarden
         bitwarden-cli
-        
+
         # cloudflare
         cloudflared
 
@@ -164,7 +159,7 @@ in
     '';
   };
 
-  wayland.windowManager.sway = {
+  wayland.windowManager.sway = lib.mkIf (!isDarwin) {
     enable = true;
     systemd.enable = true;
     package = null;
