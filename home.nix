@@ -30,64 +30,91 @@ in
     homeDirectory = homeDirectory;
     stateVersion = "24.11";
 
-    packages = with pkgs; [
-      wget
+    packages =
+      with pkgs;
+      [
+        wget
 
-      # git
-      git
-      ghq
+        # git
+        git
+        ghq
 
-      # languages
-      deno
-      bun
-      go
-      biome
+        # linux
+        gcc
+        gnupg
+        python312
+        # zlib
+        # bzip2
+        # xz
+        # readline
+        # sqlite
+        # openssl
+        # libffi
+        # ncurses
+        # tk
+        # gdbm
+        # tcl
+        # pkg-config
 
-      # nix
-      nix-search-cli
-      nixfmt-rfc-style
+        # languages
+        deno
+        bun
+        go
+        biome
 
-      # tools
-      gnumake
-      jq
-      ripgrep
-      sd
-      imagemagick
-      tree-sitter # for nixvim swift grammar
-      ni # @antfu/ni
-      google-cloud-sdk # for gcloud CLI
-      caddy
+        # nix
+        nix-search-cli
+        nixfmt-rfc-style
 
-      # docker
-      colima
-      docker
-      docker-compose
-      docker-buildx
-      docker-credential-helpers
+        # tools
+        gnumake
+        jq
+        ripgrep
+        sd
+        imagemagick
+        tree-sitter # for nixvim swift grammar
+        ni # @antfu/ni
+        google-cloud-sdk # for gcloud CLI
+        caddy
 
-      # rust
-      rustc
-      cargo
+        # docker
+        colima
+        docker
+        docker-compose
+        docker-buildx
+        docker-credential-helpers
 
-      # js
-      nodejs
-      yarn
-      pnpm
+        # rust
+        rustc
+        cargo
 
-      # python
-      python314
-      uv
+        # js
+        nodejs
+        yarn
+        pnpm
 
-      # llm
-      # llm
+        # python
+        # python314
+        # uv
 
-      # claude
-      claude-code
-      gemini-cli
+        # llm
+        # llm
 
-      # bitwarden
-      bitwarden-cli
-    ];
+        # claude
+        claude-code
+        gemini-cli
+
+        # bitwarden
+        bitwarden-cli
+
+        # cloudflare
+        cloudflared
+      ]
+      ++ lib.optionals (!isDarwin) [
+        bitwarden-desktop
+        obsidian
+        wtype # for sending keystrokes on Wayland
+      ];
 
     sessionVariables = {
       EDITOR = "nvim";
@@ -134,7 +161,42 @@ in
     '';
   };
 
+  wayland.windowManager.sway = lib.mkIf (!isDarwin) {
+    enable = true;
+    systemd.enable = true;
+    package = null;
+    config = {
+      modifier = "Mod4";
+      terminal = "ghostty";
+      # https://nix-community.github.io/home-manager/options.xhtml#opt-wayland.windowManager.sway.config.keybindings
+      keybindings = lib.mkOptionDefault {
+        "Mod4+k" = "kill";
+        "Mod4+Return" = "exec ghostty";
+        # Japanese input switching: kana/eisuu → F7/F6 only when Ghostty is focused
+        # Mac JP keyboard: kana=Hangul, eisuu=Hangul_Hanja
+        "Hangul" =
+          ''exec sh -c 'if [ "$(swaymsg -t get_tree | jq -r ".. | select(.focused? == true) | .app_id // empty" 2>/dev/null)" = "com.mitchellh.ghostty" ]; then wtype -k F7; fi' '';
+        "Hangul_Hanja" =
+          ''exec sh -c 'if [ "$(swaymsg -t get_tree | jq -r ".. | select(.focused? == true) | .app_id // empty" 2>/dev/null)" = "com.mitchellh.ghostty" ]; then wtype -k F6; fi' '';
+      };
+      output = {
+        HDMI-A-1 = {
+          scale = "1.5";
+        };
+      };
+      # startup = {
+      #   command = "ghostty";
+      # };
+    };
+  };
+
   nix = {
+    # package = pkgs.nixVersions.stable;
+    extraOptions = ''
+      max-jobs = 8
+      cores = 8
+      experimental-features = nix-command flakes
+    '';
     package = pkgs.nix;
     settings = {
       "experimental-features" = [

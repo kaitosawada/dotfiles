@@ -25,8 +25,8 @@ in
       "github.com" = lib.hm.dag.entryBefore [ "*" ] {
         extraOptions = {
           AddKeysToAgent = "yes";
-          UseKeychain = if isDarwin then "yes" else "no";
-        };
+        }
+        // lib.optionalAttrs isDarwin { UseKeychain = "yes"; };
       };
 
       "i-* mi-*" = {
