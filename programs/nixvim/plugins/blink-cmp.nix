@@ -22,18 +22,22 @@
         default = [
           "lsp"
           "path"
-          "snippets"
+          # "snippets"
           "buffer"
-          # "codeium"
         ];
-        # providers = {
-        #   codeium = {
-        #     name = "Codeium";
-        #     module = "codeium.blink";
-        #     async = true;
-        #     score_offset = -7;
-        #   };
-        # };
+        providers = {
+          path = {
+            opts = {
+              get_cwd = {
+                __raw = ''
+                  function(_)
+                    return vim.fn.getcwd()
+                  end,
+                '';
+              };
+            };
+          };
+        };
       };
     };
   };
