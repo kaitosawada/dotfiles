@@ -18,6 +18,7 @@
     ./nvim-minimal.nix
     ./ssh.nix
     ./starship.nix
+    ./syncthing.nix
     ./tmux.nix
     ./wezterm
     ./yazi.nix
