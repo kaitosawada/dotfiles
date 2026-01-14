@@ -6,7 +6,7 @@
       workspaces = [
         {
           name = "personal";
-          path = "~/obsidian/kaitosawada";
+          path = "~/obsidian/private";
         }
       ];
       daily_notes = {
