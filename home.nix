@@ -107,7 +107,6 @@ in
       ]
       ++ lib.optionals (!isDarwin) [
         bitwarden-desktop
-        obsidian
         wtype # for sending keystrokes on Wayland
       ];
 
