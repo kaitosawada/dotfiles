@@ -38,7 +38,6 @@ in
         # linux
         gcc
         gnupg
-        python312
         # zlib
         # bzip2
         # xz
@@ -89,8 +88,8 @@ in
         pnpm
 
         # python
-        # python314
-        # uv
+        python314
+        uv
 
         # llm
         # llm
