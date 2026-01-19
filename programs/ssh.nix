@@ -44,7 +44,10 @@ in
         };
       };
 
-      "*" = lib.hm.dag.entryAfter [ "github.com" "i-* mi-*" "*.teinei.life" ] {
+      "*" = lib.hm.dag.entryAfter [ "github.com" "i-* mi-*" "*.teinei.life" ] { };
+
+      "bitwarden-agent" = lib.hm.dag.entryAfter [ "*" ] {
+        match = ''host * exec "test -S ${bitwardenAgentSocket}"'';
         extraOptions = {
           IdentityAgent = ''"${bitwardenAgentSocket}"'';
         };
