@@ -37,8 +37,13 @@ in
         };
       };
 
-      "*" = lib.hm.dag.entryAfter [ "github.com" "i-* mi-*" ] {
+      "*.life" = {
+        proxyCommand = "cloudflared access ssh --hostname %h";
+      };
+
+      "*" = lib.hm.dag.entryAfter [ "github.com" "i-* mi-*" "*.life" ] {
         extraOptions = {
+          ForwardAgent = "yes";
           IdentityAgent = ''"${bitwardenAgentSocket}"'';
         };
       };

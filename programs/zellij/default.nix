@@ -13,6 +13,7 @@
       shared_except "locked" {
         unbind "Ctrl b"
         unbind "Ctrl g"
+        bind "Super r" { SwitchToMode "normal"; }
       }
       shared_except "pane" "locked" {
         unbind "Ctrl p"
@@ -21,6 +22,7 @@
         unbind "Ctrl o"
       }
       normal {
+        bind "Super r" { SwitchToMode "locked"; }
         bind "Ctrl l" { GoToNextTab; }
         bind "Ctrl h" { GoToPreviousTab; }
         bind "Ctrl j" { FocusNextPane; }
