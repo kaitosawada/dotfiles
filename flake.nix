@@ -69,9 +69,26 @@
             ]
         ) systems
       );
+      mkNixosConfig =
+        hostname:
+        nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./nixos/configuration.nix
+          ];
+          specialArgs = {
+            inherit hostname;
+          };
+        };
     in
     {
       inherit homeConfigurations;
+
+      nixosConfigurations = {
+        # Add your hosts here, e.g.:
+        # myhost = mkNixosConfig "myhost";
+        nixos = mkNixosConfig "nixos";
+      };
     }
     // flake-utils.lib.eachDefaultSystem (
       system:
