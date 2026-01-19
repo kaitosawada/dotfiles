@@ -105,7 +105,7 @@ in
         cloudflared
       ]
       ++ lib.optionals (!isDarwin) [
-        bitwarden-desktop
+        # bitwarden-desktop
         wtype # for sending keystrokes on Wayland
       ];
 
