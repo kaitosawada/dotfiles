@@ -26,88 +26,66 @@ in
     homeDirectory = homeDirectory;
     stateVersion = "24.11";
 
-    packages =
-      with pkgs;
-      [
-        wget
+    packages = with pkgs; [
+      wget
 
-        # git
-        git
-        ghq
+      # git
+      git
+      ghq
 
-        # linux
-        gcc
-        gnupg
-        # zlib
-        # bzip2
-        # xz
-        # readline
-        # sqlite
-        # openssl
-        # libffi
-        # ncurses
-        # tk
-        # gdbm
-        # tcl
-        # pkg-config
+      # languages
+      deno
+      bun
+      go
+      biome
 
-        # languages
-        deno
-        bun
-        go
-        biome
+      # nix
+      nix-search-cli
 
-        # nix
-        nix-search-cli
+      # tools
+      gnumake
+      jq
+      ripgrep
+      sd
+      imagemagick
+      tree-sitter # for nixvim swift grammar
+      ni # @antfu/ni
+      google-cloud-sdk # for gcloud CLI
+      caddy
 
-        # tools
-        gnumake
-        jq
-        ripgrep
-        sd
-        imagemagick
-        tree-sitter # for nixvim swift grammar
-        ni # @antfu/ni
-        google-cloud-sdk # for gcloud CLI
-        caddy
+      # docker
+      colima
+      docker
+      docker-compose
+      docker-buildx
+      docker-credential-helpers
 
-        # docker
-        colima
-        docker
-        docker-compose
-        docker-buildx
-        docker-credential-helpers
+      # rust
+      rustc
+      cargo
 
-        # rust
-        rustc
-        cargo
+      # js
+      nodejs
+      yarn
+      pnpm
 
-        # js
-        nodejs
-        yarn
-        pnpm
+      # python
+      python314
+      uv
 
-        # python
-        python314
-        uv
+      # llm
+      # llm
 
-        # llm
-        # llm
+      # claude
+      claude-code
+      gemini-cli
 
-        # claude
-        claude-code
-        gemini-cli
+      # bitwarden
+      bitwarden-cli
 
-        # bitwarden
-        bitwarden-cli
-
-        # cloudflare
-        cloudflared
-      ]
-      ++ lib.optionals (!isDarwin) [
-        # bitwarden-desktop
-        wtype # for sending keystrokes on Wayland
-      ];
+      # cloudflare
+      cloudflared
+    ];
 
     sessionVariables = {
       EDITOR = "nvim";

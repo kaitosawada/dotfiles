@@ -180,6 +180,25 @@
     slurp
     wl-clipboard
     mako
+
+    bitwarden-desktop
+    wtype # for sending keystrokes on Wayland
+
+    # linux
+    gcc
+    gnupg
+    # zlib
+    # bzip2
+    # xz
+    # readline
+    # sqlite
+    # openssl
+    # libffi
+    # ncurses
+    # tk
+    # gdbm
+    # tcl
+    # pkg-config
   ];
 
   system.stateVersion = "25.05"; # Did you read the comment?
