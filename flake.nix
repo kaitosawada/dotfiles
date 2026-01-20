@@ -23,7 +23,7 @@
       home-manager,
       treefmt-nix,
       ...
-    }:
+    }@inputs:
     let
       systems = [
         "x86_64-linux"
@@ -45,7 +45,7 @@
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = {
-            inherit username system;
+            inherit username system inputs;
             homeDirectory = "${homeDir}/${username}";
           };
           modules = [

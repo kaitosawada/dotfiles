@@ -1,52 +1,13 @@
 {
-  pkgs,
-  ...
-}:
-{
   imports = [
+    ./config.nix
     ./plugins
     ./keymappings.nix
     ./theme.nix
   ];
   enable = true;
 
-  # neovim内部でのみnodejsにパスを通す（zshの$PATHには影響しない）
-  extraPackages = with pkgs; [
-    nodejs
-  ];
-
-  globals.mapleader = " ";
-
-  opts = {
-    tabstop = 2;
-    shiftwidth = 2;
-    expandtab = true;
-    number = true;
-    laststatus = 3;
-  };
-
-  userCommands = {
-    "Wq" = {
-      command = "wq";
-    };
-    "Q" = {
-      command = "q";
-    };
-  };
-
   extraConfigLua = ''
-    vim.g.clipboard = {
-      name = 'OSC 52',
-      copy = {
-        ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-        ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
-      },
-      paste = {
-        ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
-        ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
-      },
-    }
-
     -- ファイルの外部変更を自動的に読み込む
     vim.opt.autoread = true
 

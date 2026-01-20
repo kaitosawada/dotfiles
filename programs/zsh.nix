@@ -25,11 +25,6 @@
         echo "移動: $latest → ''${1:-.}"
         mv ~/Downloads/"$latest" "''${1:-.}"
       }
-
-      # SSH via Cloudflare Access tunnel
-      sshcf() {
-        ssh -o ProxyCommand="cloudflared access ssh --hostname %h" "$@"
-      }
     '';
   };
 }

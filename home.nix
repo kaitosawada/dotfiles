@@ -38,7 +38,6 @@ in
         # linux
         gcc
         gnupg
-        python312
         # zlib
         # bzip2
         # xz
@@ -89,8 +88,8 @@ in
         pnpm
 
         # python
-        # python314
-        # uv
+        python314
+        uv
 
         # llm
         # llm
@@ -106,7 +105,7 @@ in
         cloudflared
       ]
       ++ lib.optionals (!isDarwin) [
-        bitwarden-desktop
+        # bitwarden-desktop
         wtype # for sending keystrokes on Wayland
       ];
 
@@ -115,11 +114,6 @@ in
       LANG = "ja_JP.UTF-8";
       NIXPKGS_ALLOW_UNFREE = "1";
       DOCKER_HOST = "unix://$HOME/.colima/default/docker.sock";
-      SSH_AUTH_SOCK =
-        if isDarwin then
-          "${homeDirectory}/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock"
-        else
-          "${homeDirectory}/.bitwarden-ssh-agent.sock";
     };
 
     shellAliases = {

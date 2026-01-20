@@ -19,6 +19,9 @@ in
 
     extraConfig = ''
       Include ${homeDirectory}/.colima/ssh_config
+
+      Match host * exec "SSH_AUTH_SOCK=${bitwardenAgentSocket} ssh-add -l >/dev/null 2>&1 || test $? -eq 1"
+        IdentityAgent "${bitwardenAgentSocket}"
     '';
 
     matchBlocks = {
@@ -37,11 +40,14 @@ in
         };
       };
 
-      "*" = lib.hm.dag.entryAfter [ "github.com" "i-* mi-*" ] {
+      "*.teinei.life" = {
+        proxyCommand = "cloudflared access ssh --hostname %h";
         extraOptions = {
-          IdentityAgent = ''"${bitwardenAgentSocket}"'';
+          ForwardAgent = "yes";
         };
       };
+
+      "*" = lib.hm.dag.entryAfter [ "github.com" "i-* mi-*" "*.teinei.life" ] { };
     };
   };
 }
