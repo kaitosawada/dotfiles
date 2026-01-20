@@ -79,6 +79,7 @@
         ingress = {
           "ssh.teinei.life" = "ssh://localhost:22";
           "home.teinei.life" = "http://localhost:8123";
+          "immich.teinei.life" = "http://localhost:2283";
         };
       };
     };
@@ -118,6 +119,13 @@
       };
       default_config = { };
     };
+  };
+
+  services.immich = {
+    enable = true;
+    mediaLocation = "/var/lib/immich";
+    host = "127.0.0.1";
+    port = 2283;
   };
 
   networking.firewall.allowedTCPPorts = [ 8123 ];
