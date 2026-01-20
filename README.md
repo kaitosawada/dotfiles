@@ -39,3 +39,14 @@ sudo ln -sf $HOME/.colima/default/docker.sock /var/run/docker.sock
 ```sh
 nix registry add nixpkgs github:numtide/nixpkgs-unfree/nixos-unstable
 ```
+
+## nixos
+
+```sh
+# 1. hardware-configuration.nix をリポジトリにコピー（初回のみ）
+cp /etc/nixos/hardware-configuration.nix ~/ghq/github.com/kaitosawada/dotfiles/nixos/
+
+# 2. このflakeからシステムをリビルド
+sudo nixos-rebuild switch --flake ~/ghq/github.com/kaitosawada/dotfiles#nixos
+
+```
