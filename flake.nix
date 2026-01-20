@@ -13,6 +13,10 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -74,10 +78,11 @@
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
+            inputs.sops-nix.nixosModules.sops
             ./nixos/configuration.nix
           ];
           specialArgs = {
-            inherit hostname;
+            inherit inputs hostname;
           };
         };
     in

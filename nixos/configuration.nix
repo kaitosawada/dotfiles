@@ -15,6 +15,13 @@
     ./hardware-configuration.nix
   ];
 
+  # sops-nix configuration
+  sops = {
+    defaultSopsFile = ./secrets/secrets.yaml;
+    age.keyFile = "/var/lib/sops-nix/key.txt";
+    secrets.user-password.neededForUsers = true;
+  };
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -158,7 +165,7 @@
     uid = 1000;
     home = "/home/kaitosawada";
     shell = pkgs.zsh;
-    hashedPassword = "$y$j9T$N4R93zGmVqZ4ib3QbVJQs.$YV4yP63s6kgh1rfYntzPAwDCpu2LTtS7mzLiWeWtlxD";
+    hashedPasswordFile = config.sops.secrets.user-password.path;
   };
 
   programs.firefox.enable = true;
