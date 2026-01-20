@@ -124,11 +124,14 @@
   services.immich = {
     enable = true;
     mediaLocation = "/var/lib/immich";
-    host = "127.0.0.1";
+    host = "0.0.0.0";
     port = 2283;
   };
 
-  networking.firewall.allowedTCPPorts = [ 8123 ];
+  networking.firewall.allowedTCPPorts = [
+    8123
+    2283
+  ];
 
   services.displayManager = {
     defaultSession = "sway";
