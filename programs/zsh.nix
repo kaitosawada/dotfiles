@@ -1,4 +1,18 @@
 {
+  system,
+  homeDirectory,
+  lib,
+  ...
+}:
+let
+  isDarwin = system == "aarch64-darwin" || system == "x86_64-darwin";
+  bitwardenAgentSocket =
+    if isDarwin then
+      "${homeDirectory}/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock"
+    else
+      "${homeDirectory}/.bitwarden-ssh-agent.sock";
+in
+{
   programs.zsh = {
     enable = true;
     autocd = true;
@@ -11,6 +25,11 @@
     syntaxHighlighting.enable = true;
 
     initContent = ''
+      # SSH経由で接続した場合はforwardされたagentを使い、ローカルの場合のみbitwardenを使う
+      if [[ -z "$SSH_CONNECTION" ]]; then
+        export SSH_AUTH_SOCK="${bitwardenAgentSocket}"
+      fi
+
       bindkey -e  # Use emacs keybindings
       ${builtins.readFile ../scripts/init-nix.sh}
       ${builtins.readFile ../scripts/switch-project.sh}
