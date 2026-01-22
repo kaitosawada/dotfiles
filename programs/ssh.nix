@@ -13,6 +13,7 @@ let
       "${homeDirectory}/.bitwarden-ssh-agent.sock";
 in
 {
+  home.sessionVariables.SSH_AUTH_SOCK = bitwardenAgentSocket;
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
