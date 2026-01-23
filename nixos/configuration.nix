@@ -13,6 +13,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./home-server.nix
   ];
 
   # sops-nix configuration
@@ -20,12 +21,16 @@
     defaultSopsFile = ./secrets/secrets.yaml;
     age.keyFile = "/var/lib/sops-nix/key.txt";
     secrets.user-password.neededForUsers = true;
+    secrets.caddy-cloudflare-token = {
+      owner = "caddy";
+    };
   };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # TODO: マシンに依存
   networking.hostName = "EM680-nixos"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -50,12 +55,6 @@
     useXkbConfig = true; # use xkb.options in tty.
   };
 
-  # スリープ/サスペンドを無効化
-  systemd.targets.sleep.enable = false;
-  systemd.targets.suspend.enable = false;
-  systemd.targets.hibernate.enable = false;
-  systemd.targets.hybrid-sleep.enable = false;
-
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
@@ -68,70 +67,6 @@
       gdm.enable = true;
     };
   };
-
-  services.cloudflared = {
-    enable = true;
-    tunnels = {
-      "3f74daeb-ba49-4db4-8ada-b141a013897e" = {
-        credentialsFile = "/home/kaitosawada/.cloudflared/3f74daeb-ba49-4db4-8ada-b141a013897e.json";
-        default = "http_status:404";
-        warp-routing.enabled = true;
-        ingress = {
-          "ssh.teinei.life" = "ssh://localhost:22";
-          "home.teinei.life" = "http://localhost:8123";
-          "immich.teinei.life" = "http://localhost:2283";
-        };
-      };
-    };
-  };
-
-  services.openssh = {
-    enable = true;
-    settings = {
-      PasswordAuthentication = false; # 公開鍵認証のみ（推奨）
-      PermitRootLogin = "no"; # rootログイン禁止（推奨）
-    };
-  };
-
-  users.users.kaitosawada.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPriyNk0KUYzGZYFxPtpV/BvoKM/Phvc7DvIVjdBuJQX" # ここにBitwardenからコピーした公開鍵
-  ];
-
-  services.home-assistant = {
-    enable = true;
-    extraComponents = [
-      "switchbot"
-      "switchbot_cloud" # 初期設定に必要
-      "mobile_app"
-    ];
-    config = {
-      homeassistant = {
-        name = "Home";
-        unit_system = "metric";
-        time_zone = "Asia/Tokyo";
-      };
-      http = {
-        use_x_forwarded_for = true;
-        trusted_proxies = [
-          "127.0.0.1"
-          "::1"
-        ];
-      };
-      default_config = { };
-    };
-  };
-
-  services.immich = {
-    enable = true;
-    mediaLocation = "/var/lib/immich";
-    host = "0.0.0.0";
-    port = 2283;
-  };
-
-  networking.firewall.allowedTCPPorts = [
-    8123
-    2283
-  ];
 
   services.displayManager = {
     defaultSession = "sway";
@@ -158,9 +93,6 @@
     pulse.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.libinput.enable = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.kaitosawada = {
     isNormalUser = true;
@@ -170,9 +102,6 @@
       "input"
       "video"
     ]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [
-      # ghostty
-    ];
     uid = 1000;
     home = "/home/kaitosawada";
     shell = pkgs.zsh;
@@ -219,5 +148,5 @@
     # pkg-config
   ];
 
-  system.stateVersion = "25.05"; # Did you read the comment?
+  system.stateVersion = "25.05";
 }
