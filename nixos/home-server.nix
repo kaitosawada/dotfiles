@@ -32,14 +32,17 @@
     enable = true;
     config = ''
       . {
-        # ローカルオーバーライド
+        # ローカルオーバーライド（A + AAAAレコード）
         hosts {
           192.168.11.30 immich.teinei.life
           192.168.11.30 ssh.teinei.life
           192.168.11.30 home.teinei.life
+          2405:6581:3920:6400:236b:25c6:2746:8701 immich.teinei.life
+          2405:6581:3920:6400:236b:25c6:2746:8701 ssh.teinei.life
+          2405:6581:3920:6400:236b:25c6:2746:8701 home.teinei.life
           fallthrough
         }
-        
+
         # 上流に転送
         forward . 1.1.1.1 8.8.8.8
         cache 3600
