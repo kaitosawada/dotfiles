@@ -19,6 +19,7 @@ in
       tag.gpgsign = true;
       pull.rebase = false;
       url."ssh://git@github.com/".insteadOf = "https://github.com/";
+      ghq.root = "~/ghq";
     };
   };
 
