@@ -19,12 +19,38 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPriyNk0KUYzGZYFxPtpV/BvoKM/Phvc7DvIVjdBuJQX" # ここにBitwardenからコピーした公開鍵
   ];
 
-  # ネットワーク
-  networking.firewall = {
-    allowedUDPPorts = [ 53 ];
-    allowedTCPPorts = [
-      443
+  # ネットワーク（静的IP）
+  networking = {
+    interfaces.wlp1s0 = {
+      useDHCP = false;
+      ipv4.addresses = [
+        {
+          address = "192.168.11.30";
+          prefixLength = 24;
+        }
+      ];
+      ipv6.addresses = [
+        {
+          address = "2405:6581:3920:6400::30";
+          prefixLength = 64;
+        }
+      ];
+    };
+    defaultGateway = "192.168.11.1";
+    defaultGateway6 = {
+      address = "fe80::6ae1:dcff:fe7f:4fa0";
+      interface = "wlp1s0";
+    };
+    nameservers = [
+      "127.0.0.1"
+      "::1"
     ];
+    firewall = {
+      allowedUDPPorts = [ 53 ];
+      allowedTCPPorts = [
+        443
+      ];
+    };
   };
 
   # ローカルネットワークではcorednsとcaddyを使ってローカル経由で接続
@@ -37,9 +63,9 @@
           192.168.11.30 immich.teinei.life
           192.168.11.30 ssh.teinei.life
           192.168.11.30 home.teinei.life
-          2405:6581:3920:6400:236b:25c6:2746:8701 immich.teinei.life
-          2405:6581:3920:6400:236b:25c6:2746:8701 ssh.teinei.life
-          2405:6581:3920:6400:236b:25c6:2746:8701 home.teinei.life
+          2405:6581:3920:6400::30 immich.teinei.life
+          2405:6581:3920:6400::30 ssh.teinei.life
+          2405:6581:3920:6400::30 home.teinei.life
           fallthrough
         }
 
