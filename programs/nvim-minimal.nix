@@ -1,6 +1,6 @@
 { pkgs, inputs, ... }:
 let
-  nvimMinimal = inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvimWithModule {
+  nvimMinimal = inputs.nixvim.legacyPackages.${pkgs.stdenv.hostPlatform.system}.makeNixvimWithModule {
     inherit pkgs;
     module = {
       imports = [
