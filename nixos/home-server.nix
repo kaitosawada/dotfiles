@@ -48,6 +48,7 @@
     firewall = {
       allowedUDPPorts = [ 53 ];
       allowedTCPPorts = [
+        80
         443
       ];
     };
