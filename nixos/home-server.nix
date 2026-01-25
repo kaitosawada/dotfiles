@@ -48,6 +48,7 @@
     firewall = {
       allowedUDPPorts = [ 53 ];
       allowedTCPPorts = [
+        80
         443
       ];
     };
@@ -67,8 +68,10 @@
       address = [
         "/immich.teinei.life/192.168.11.30"
         "/immich.teinei.life/2405:6581:3920:6400::30"
-        "/ssh.teinei.life/192.168.11.30"
-        "/ssh.teinei.life/2405:6581:3920:6400::30"
+        # sshは~/.ssh/configでproxyを指定する関係上、常にcloudflareを経由したい
+        # その方がセキュリティ的にも問題ない
+        # "/ssh.teinei.life/192.168.11.30"
+        # "/ssh.teinei.life/2405:6581:3920:6400::30"
         "/home.teinei.life/192.168.11.30"
         "/home.teinei.life/2405:6581:3920:6400::30"
       ];
