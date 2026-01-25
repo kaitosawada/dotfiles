@@ -53,28 +53,32 @@
     };
   };
 
-  # ローカルネットワークではcorednsとcaddyを使ってローカル経由で接続
-  services.coredns = {
+  # ローカルネットワークではdnsmasqとcaddyを使ってローカル経由で接続
+  services.dnsmasq = {
     enable = true;
-    config = ''
-      . {
-        # ローカルオーバーライド（A + AAAAレコード）
-        hosts {
-          192.168.11.30 immich.teinei.life
-          192.168.11.30 ssh.teinei.life
-          192.168.11.30 home.teinei.life
-          2405:6581:3920:6400::30 immich.teinei.life
-          2405:6581:3920:6400::30 ssh.teinei.life
-          2405:6581:3920:6400::30 home.teinei.life
-          fallthrough
-        }
+    settings = {
+      # 上流DNS
+      server = [
+        "1.1.1.1"
+        "8.8.8.8"
+      ];
 
-        # 上流に転送
-        forward . 1.1.1.1 8.8.8.8
-        cache 3600
-        log
-      }
-    '';
+      # ローカルオーバーライド
+      address = [
+        "/immich.teinei.life/192.168.11.30"
+        "/immich.teinei.life/2405:6581:3920:6400::30"
+        "/ssh.teinei.life/192.168.11.30"
+        "/ssh.teinei.life/2405:6581:3920:6400::30"
+        "/home.teinei.life/192.168.11.30"
+        "/home.teinei.life/2405:6581:3920:6400::30"
+      ];
+
+      # キャッシュ設定
+      cache-size = 1000;
+
+      # ログ
+      log-queries = true;
+    };
   };
 
   services.caddy = {
