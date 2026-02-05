@@ -66,7 +66,8 @@
       html.enable = true; # HTML
 
       # etc.
-      marksman.enable = true; # Markdown
+      # TODO: Disabled due to Swift build failure in nixpkgs (marksman → dotnet → swift)
+      # marksman.enable = true; # Markdown
       dockerls.enable = true; # Docker
       bashls.enable = true; # Bash
       yamlls.enable = true; # YAML
@@ -111,9 +112,10 @@
       };
 
       # swift (macOS only)
-      sourcekit = {
-        enable = pkgs.stdenv.isDarwin;
-      };
+      # TODO: Disabled due to Swift build failure in nixpkgs
+      # sourcekit = {
+      #   enable = pkgs.stdenv.isDarwin;
+      # };
 
       glsl_analyzer = {
         enable = true;

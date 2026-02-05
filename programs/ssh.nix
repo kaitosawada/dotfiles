@@ -39,7 +39,14 @@ in
         };
       };
 
-      "*" = lib.hm.dag.entryAfter [ "github.com" "i-* mi-*" "*.teinei.life" ] { };
+      "*.ozonehl.dev" = {
+        proxyCommand = "cloudflared access ssh --hostname %h";
+        extraOptions = {
+          ForwardAgent = "yes";
+        };
+      };
+
+      "*" = lib.hm.dag.entryAfter [ "github.com" "i-* mi-*" "*.teinei.life" "*.ozonehl.dev" ] { };
     };
   };
 }

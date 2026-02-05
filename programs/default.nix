@@ -11,6 +11,7 @@
     ./gh-dash.nix
     # ./ghostty.nix
     ./git.nix
+    ./java.nix
     ./karabiner.nix
     ./lazygit.nix
     ./lsd.nix
