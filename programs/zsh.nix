@@ -31,6 +31,16 @@ in
       fi
 
       bindkey -e  # Use emacs keybindings
+
+      # Suppress function key escape sequences in zsh line editor
+      bindkey -s $'\e[15~' ""  # F5
+      bindkey -s $'\e[17~' ""  # F6
+      bindkey -s $'\e[18~' ""  # F7
+      bindkey -s $'\e[19~' ""  # F8
+      bindkey -s $'\e[20~' ""  # F9
+      bindkey -s $'\e[21~' ""  # F10
+      bindkey -s $'\e[23~' ""  # F11
+      bindkey -s $'\e[24~' ""  # F12
       ${builtins.readFile ../scripts/init-nix.sh}
       ${builtins.readFile ../scripts/switch-project.sh}
 
