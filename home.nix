@@ -73,9 +73,6 @@ in
       python314
       uv
 
-      # llm
-      # llm
-
       # claude
       claude-code
       gemini-cli
