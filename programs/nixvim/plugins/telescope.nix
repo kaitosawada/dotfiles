@@ -94,6 +94,43 @@ in
         "<C-f>" = {
           __raw = ''require("telescope.actions").send_to_qflist + require("telescope.actions").open_qflist'';
         };
+        # skkeletonの変換中(▽/▼)にEnterを押すとTelescopeのselect_defaultが
+        # 優先されて入力文字が消える問題の対策。
+        # 変換中はバッファローカルの<CR>マッピングを一時削除してskkeletonに
+        # 処理を委譲し、確定後にマッピングを再設定する。
+        "<CR>" = {
+          __raw = ''
+            (function()
+              local function cr_with_skkeleton(prompt_bufnr)
+                local ok, enabled = pcall(vim.fn["skkeleton#is_enabled"])
+                if ok and enabled == 1 then
+                  local lines = vim.api.nvim_buf_get_lines(prompt_bufnr, 0, 1, false)
+                  local prompt = lines[1] or ""
+                  -- ▽: 変換待ち, ▼: 候補選択中
+                  if prompt:find("▽") or prompt:find("▼") then
+                    pcall(vim.keymap.del, "i", "<CR>", { buffer = prompt_bufnr })
+                    vim.api.nvim_feedkeys(
+                      vim.api.nvim_replace_termcodes("<CR>", true, true, true),
+                      "m",
+                      false
+                    )
+                    -- skkeletonの処理完了後にマッピングを再設定
+                    vim.defer_fn(function()
+                      if vim.api.nvim_buf_is_valid(prompt_bufnr) then
+                        vim.keymap.set("i", "<CR>", function()
+                          cr_with_skkeleton(prompt_bufnr)
+                        end, { buffer = prompt_bufnr, noremap = true, silent = true })
+                      end
+                    end, 10)
+                    return
+                  end
+                end
+                require("telescope.actions").select_default(prompt_bufnr)
+              end
+              return cr_with_skkeleton
+            end)()
+          '';
+        };
       };
 
       pickers = {
