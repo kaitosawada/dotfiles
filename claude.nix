@@ -3,6 +3,18 @@
 let
   claudeSettings = {
     alwaysThinkingEnabled = true;
+    language = "japanese";
+    permissions = {
+      allow = [
+        "Bash(npm run lint)"
+        "Bash(npm run test *)"
+      ];
+      deny = [
+        "Read(./.env)"
+        "Read(./.env.*)"
+        "Read(./secrets/**)"
+      ];
+    };
     env = {
       DISABLE_AUTOUPDATER = "1";
       EDITOR = "nvim-minimal";
