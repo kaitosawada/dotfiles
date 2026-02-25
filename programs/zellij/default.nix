@@ -22,6 +22,7 @@
         unbind "Ctrl o"
       }
       normal {
+        bind "Super b" { ToggleFloatingPanes; }
         bind "Super r" { SwitchToMode "locked"; }
         bind "Ctrl l" { GoToNextTab; }
         bind "Ctrl h" { GoToPreviousTab; }
@@ -47,6 +48,7 @@
         bind "Super f" { ToggleFocusFullscreen; SwitchToMode "normal"; }
       }
       locked {
+        bind "Super r" { SwitchToMode "normal"; }
         bind "Super t" { NewTab; }
         bind "Super n" { NewPane; }
         bind "Ctrl q" { Detach; }

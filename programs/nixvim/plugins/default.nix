@@ -5,7 +5,8 @@
     ./auto-save.nix
     ./blink-cmp.nix
     ./bufferline.nix
-    ./copilot-vim.nix
+    ./copilot-chat.nix
+    ./copilot-lua.nix
     ./csvview.nix
     ./flash.nix
     ./gh-dash.nix

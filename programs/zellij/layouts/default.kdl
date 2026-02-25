@@ -4,10 +4,10 @@ layout {
     }
     pane split_direction="vertical" {
         pane name="claude" size="40%" command="zsh" {
-            args "-c" "claude --continue"
+            args "-c" "claude --continue || claude"
         }
         pane split_direction="horizontal" {
-            pane name="nvim" size="70%" command="zsh" {
+            pane name="nvim" size="80%" command="zsh" {
                 args "-c" "nvim --listen /tmp/nvim-$ZELLIJ_SESSION_NAME.pipe"
             }
             pane split_direction="vertical" {
