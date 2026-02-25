@@ -17,6 +17,14 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    agent-skills = {
+      url = "github:Kyure-A/agent-skills-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    anthropic-skills = {
+      url = "github:anthropics/skills";
+      flake = false;
+    };
   };
 
   outputs =
@@ -55,6 +63,7 @@
           modules = [
             ./home.nix
             nixvim.homeModules.nixvim
+            inputs.agent-skills.homeManagerModules.default
           ];
         };
 
