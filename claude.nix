@@ -6,8 +6,16 @@ let
     language = "japanese";
     permissions = {
       allow = [
-        "Bash(npm run lint)"
-        "Bash(npm run test *)"
+        "Bash(pnpm build:*)"
+        "Bash(pnpm add:*)"
+        "Bash(pnpm typecheck:*)"
+        "Bash(pnpm lint:*)"
+        "Bash(pnpm format:*)"
+        "WebSearch"
+        "Bash(tail:*)"
+        "Bash(head:*)"
+        "Bash(grep:*)"
+        "Bash(find:*)"
       ];
       deny = [
         "Read(./.env)"

@@ -12,6 +12,19 @@ let
         ./nixvim/plugins/flash.nix
       ];
 
+      keymaps = [
+        {
+          mode = "n";
+          key = "<CR>";
+          action = "<CMD>wq<CR>";
+          options = {
+            desc = "Save and quit";
+            noremap = true;
+            silent = true;
+          };
+        }
+      ];
+
       extraConfigLua = ''
         vim.api.nvim_create_autocmd({"VimEnter", "BufReadPost"}, {
           callback = function()
