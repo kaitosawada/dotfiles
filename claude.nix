@@ -27,6 +27,10 @@ let
       DISABLE_AUTOUPDATER = "1";
       EDITOR = "nvim-minimal";
     };
+    attribution = {
+      commit = "";
+      pr = "";
+    };
   };
 
   # mcpServersConfig = {
