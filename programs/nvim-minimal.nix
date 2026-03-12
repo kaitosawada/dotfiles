@@ -10,6 +10,8 @@ let
         ./nixvim/plugins/skkeleton.nix
         ./nixvim/plugins/blink-cmp.nix
         ./nixvim/plugins/flash.nix
+        ./nixvim/plugins/copilot-lua.nix
+        ./nixvim/plugins/copilot-chat.nix
       ];
 
       keymaps = [
@@ -19,6 +21,35 @@ let
           action = "<CMD>wq<CR>";
           options = {
             desc = "Save and quit";
+            noremap = true;
+            silent = true;
+          };
+        }
+        {
+          mode = "n";
+          key = "<leader>g";
+          action.__raw = ''
+            function()
+              local chat = require("CopilotChat")
+              local commit_buf = vim.api.nvim_get_current_buf()
+              chat.ask(
+                "変更内容に対してcommitizen規約に従ったコミットメッセージを日本語で書いてください。"
+                .. "タイトルは50文字以内、本文は72文字で折り返してください。"
+                .. "コードブロックのマーカーなしで、コミットメッセージのみを出力してください。",
+                {
+                  selection = require("CopilotChat.select").gitdiff,
+                  callback = function(response)
+                    local text = response.content or tostring(response)
+                    local lines = vim.split(text, "\n")
+                    vim.api.nvim_buf_set_lines(commit_buf, 0, 0, false, lines)
+                    chat.close()
+                  end,
+                }
+              )
+            end
+          '';
+          options = {
+            desc = "Generate commit message";
             noremap = true;
             silent = true;
           };
