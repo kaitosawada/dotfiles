@@ -30,7 +30,7 @@ in
         export SSH_AUTH_SOCK="${bitwardenAgentSocket}"
       fi
 
-      bindkey -e  # Use emacs keybindings
+      bindkey -v  # Use vi keybindings
 
       # Suppress function key escape sequences in zsh line editor
       bindkey -s $'\e[15~' ""  # F5

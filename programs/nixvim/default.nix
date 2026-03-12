@@ -11,15 +11,14 @@
     -- ファイルの外部変更を自動的に読み込む
     vim.opt.autoread = true
 
-    -- フォーカスを得た時、バッファに入った時に自動読み込みをチェック
+    -- フォーカスを得た時、バッファに入った時に自動読み込みをチェック（ターミナルバッファを除外）
     vim.api.nvim_create_autocmd({"FocusGained", "BufEnter"}, {
       pattern = "*",
-      command = "silent! checktime"
-    })
-
-    vim.api.nvim_create_autocmd({"FocusGained", "BufEnter"}, {
-      pattern = "*",
-      command = "checktime"
+      callback = function()
+        if vim.bo.buftype ~= "terminal" then
+          vim.cmd("silent! checktime")
+        end
+      end
     })
 
     -- ファイルが変更された時の通知（オプション）

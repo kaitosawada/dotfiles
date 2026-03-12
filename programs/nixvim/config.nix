@@ -2,6 +2,7 @@
   globals.mapleader = " ";
 
   opts = {
+    background = "dark";
     laststatus = 3;
     expandtab = true;
     number = true;
