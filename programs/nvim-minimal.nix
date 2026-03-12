@@ -32,12 +32,17 @@ let
             function()
               local chat = require("CopilotChat")
               local commit_buf = vim.api.nvim_get_current_buf()
+              local diff = vim.fn.system("git diff --staged")
+              if vim.v.shell_error ~= 0 or diff == "" then
+                vim.notify("staged diffがありません", vim.log.levels.WARN)
+                return
+              end
               chat.ask(
-                "変更内容に対してcommitizen規約に従ったコミットメッセージを日本語で書いてください。"
+                "以下のdiffに対してcommitizen規約に従ったコミットメッセージを日本語で書いてください。"
                 .. "タイトルは50文字以内、本文は72文字で折り返してください。"
-                .. "コードブロックのマーカーなしで、コミットメッセージのみを出力してください。",
+                .. "コードブロックのマーカーなしで、コミットメッセージのみを出力してください。\n\n"
+                .. diff,
                 {
-                  selection = require("CopilotChat.select").gitdiff,
                   callback = function(response)
                     local text = response.content or tostring(response)
                     local lines = vim.split(text, "\n")
