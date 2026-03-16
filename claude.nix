@@ -22,7 +22,8 @@ let
         "Bash(gcloud logs read:*)"
         "Bash(gcloud projects list)"
         "Bash(gcloud config get-value project)"
-        "Bash(gh:*)"
+        "Bash(gh run *)"
+        "Bash(gh clone *)"
       ];
       deny = [
         "Read(./.env)"
