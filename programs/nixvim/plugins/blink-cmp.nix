@@ -34,7 +34,7 @@
       end
 
       local cwd = vim.fn.getcwd()
-      local files = vim.fn.systemlist("git -C " .. vim.fn.shellescape(cwd) .. " ls-files 2>/dev/null")
+      local files = vim.fn.systemlist("git -c core.quotepath=false -C " .. vim.fn.shellescape(cwd) .. " ls-files 2>/dev/null")
       if vim.v.shell_error ~= 0 then
         files = vim.fn.globpath(cwd, "**/*", false, true)
         for i, f in ipairs(files) do
