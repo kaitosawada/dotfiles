@@ -21,6 +21,7 @@
       background-opacity = 0.9;
       macos-titlebar-style = "hidden";
       keybind = [
+        "cmd+f=unbind"
         "cmd+t=unbind"
         "cmd+w=unbind"
         "cmd+n=unbind"
