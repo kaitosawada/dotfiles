@@ -42,7 +42,7 @@ in
 
       # nix
       nix-search-cli
-      nixfmt-rfc-style
+      nixfmt
 
       # tools
       gnumake

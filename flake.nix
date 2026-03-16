@@ -66,6 +66,7 @@
             ./home.nix
             nixvim.homeModules.nixvim
             inputs.agent-skills.homeManagerModules.default
+            inputs.sops-nix.homeManagerModules.sops
           ];
         };
 

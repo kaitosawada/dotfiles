@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 let
   claudeSettings = {
@@ -22,6 +22,7 @@ let
         "Bash(gcloud logs read:*)"
         "Bash(gcloud projects list)"
         "Bash(gcloud config get-value project)"
+        "Bash(gh:*)"
       ];
       deny = [
         "Read(./.env)"
@@ -41,6 +42,7 @@ let
     env = {
       DISABLE_AUTOUPDATER = "1";
       EDITOR = "nvim-minimal";
+      GH_TOKEN = config.sops.placeholder."gh-token";
     };
     attribution = {
       commit = "";
@@ -48,6 +50,7 @@ let
     };
     sandbox = {
       enabled = true;
+      enableWeakerNetworkIsolation = true;
       allowUnsandboxedCommands = false;
       filesystem = {
         denyRead = [
@@ -77,58 +80,20 @@ let
         "find"
         "gcloud"
         "nixfmt"
+        "gh"
       ];
     };
   };
-
-  # mcpServersConfig = {
-  #   mcpServers = {
-  #     "playwright" = {
-  #       type = "stdio";
-  #       command = "mcp-server-playwright";
-  #       args = [ ];
-  #       env = { };
-  #     };
-  #     "markdownit" = {
-  #       type = "stdio";
-  #       command = "markitdown-mcp";
-  #       args = [ ];
-  #       env = { };
-  #     };
-  #   };
-  # };
-
-  # updateScript = pkgs.writeShellScript "update-claude-config" ''
-  #   CLAUDE_CONFIG="$HOME/.claude.json"
-  #
-  #   # 設定ファイルが存在しない場合は作成
-  #   if [[ ! -f "$CLAUDE_CONFIG" ]]; then
-  #     echo '{}' > "$CLAUDE_CONFIG"
-  #   fi
-  #
-  #   # 新しいmcpServers設定を一時ファイルに書き込み
-  #   cat > /tmp/mcp-servers.json << 'EOF'
-  #   ${builtins.toJSON mcpServersConfig}
-  #   EOF
-  #
-  #   # 既存の設定とマージ
-  #   ${pkgs.jq}/bin/jq -s '.[0] * .[1]' "$CLAUDE_CONFIG" /tmp/mcp-servers.json > "$CLAUDE_CONFIG.tmp"
-  #   mv "$CLAUDE_CONFIG.tmp" "$CLAUDE_CONFIG"
-  #
-  #   # 一時ファイルを削除
-  #   rm -f /tmp/mcp-servers.json
-  # '';
 in
 {
-  home.file.".claude/settings.json" = {
-    text = builtins.toJSON claudeSettings;
-    force = true;
+  sops.age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+
+  sops.secrets."gh-token" = {
+    sopsFile = ./secrets/home.yaml;
   };
 
-  # home.activation.updateClaudeConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-  #   ${updateScript}
-  # '';
-
-  # 設定変更時に自動更新するための依存関係
-  # home.file.".claude-mcp-update".text = builtins.toJSON mcpServersConfig;
+  sops.templates."claude-settings.json" = {
+    content = builtins.toJSON claudeSettings;
+    path = "${config.home.homeDirectory}/.claude/settings.json";
+  };
 }

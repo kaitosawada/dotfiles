@@ -40,59 +40,37 @@ sudo ln -sf $HOME/.colima/default/docker.sock /var/run/docker.sock
 nix registry add nixpkgs github:numtide/nixpkgs-unfree/nixos-unstable
 ```
 
-## nixos
+## sops-nix によるシークレット管理
 
-シークレット管理に sops-nix を使用しています。age 秘密鍵は Bitwarden に保存されています。
+age 秘密鍵は Bitwarden に保存されています。
 
 ### セットアップ
 
 ```sh
-# 1. Bitwarden から age 秘密鍵を取り出して配置
+# Bitwarden から age 秘密鍵を取り出して配置
+bw login  # Bitwarden にログイン (or `bw unlock`)
+mkdir -p ~/.config/sops/age
+bw get item "sops_age_secret_key" | jq -r '.notes' > ~/.config/sops/age/keys.txt
+chmod 600 ~/.config/sops/age/keys.txt
+```
+
+### home-manager 用シークレット
+
+`secrets/home.yaml` で管理。`sops.templates` を使って設定ファイルにシークレットを注入します。
+
+```sh
+# シークレットの編集（エディタが開く）
+nix-shell -p sops --run "sops secrets/home.yaml"
+```
+
+### NixOS 用シークレット
+
+```sh
+# NixOS 用の age 秘密鍵を配置
 sudo mkdir -p /var/lib/sops-nix
 sudo sh -c 'echo "AGE-SECRET-KEY-XXXXX" > /var/lib/sops-nix/key.txt'
 sudo chmod 600 /var/lib/sops-nix/key.txt
 
-# 2. hardware-configuration.nix をリポジトリにコピー（初回のみ）
-cp /etc/nixos/hardware-configuration.nix ~/ghq/github.com/kaitosawada/dotfiles/nixos/
-
-# 3. このflakeからシステムをリビルド
-sudo nixos-rebuild switch --flake ~/ghq/github.com/kaitosawada/dotfiles#nixos
-```
-
-### シークレットの編集・追加
-
-シークレットの編集には、ローカルに age 秘密鍵が必要です。
-
-```sh
-# 秘密鍵を配置（編集時のみ必要）
-mkdir -p ~/.config/sops/age
-echo "AGE-SECRET-KEY-XXXXX" > ~/.config/sops/age/keys.txt
-chmod 600 ~/.config/sops/age/keys.txt
-
-# シークレットを編集（エディタが開く）
+# シークレットの編集
 nix-shell -p sops --run "sops nixos/secrets/secrets.yaml"
-```
-
-シークレットファイルの形式（YAML）:
-
-```yaml
-user-password: "$y$j9T$..."  # mkpasswd で生成したハッシュ
-some-api-key: "secret-value"
-```
-
-configuration.nix での使用例:
-
-```nix
-sops.secrets.some-api-key = {};  # シークレットを定義
-
-# ファイルパスとして参照
-environment.etc."some-config".text = ''
-  API_KEY_FILE=${config.sops.secrets.some-api-key.path}
-'';
-```
-
-### パスワードハッシュの生成
-
-```sh
-nix-shell -p mkpasswd --run "mkpasswd -m yescrypt"
 ```
