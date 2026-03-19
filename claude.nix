@@ -68,6 +68,13 @@ let
           "oauth2.googleapis.com"
           "logging.googleapis.com"
           "cloudresourcemanager.googleapis.com"
+          "*.localhost"
+          "*.kenpo-web.com"
+          "*.ozonehl.dev"
+          "*.kenpo.co.jp"
+          "*.ozonehl.com"
+          "*.riebe.co.jp"
+          "*.hamieru.com"
         ];
       };
       allowedCommands = [
