@@ -20,6 +20,11 @@ in
   # See <https://github.com/nix-community/home-manager/blob/master/modules/programs/mise.nix>
   programs.mise = {
     enable = true;
+    globalConfig = {
+      tools = {
+        "npm:vite-plus" = "latest";
+      };
+    };
   };
 
   home = {
@@ -170,6 +175,7 @@ in
       ];
       cores = 8;
       "max-jobs" = 8;
+      warn-dirty = false;
     };
   };
 }
