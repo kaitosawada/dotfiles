@@ -94,6 +94,9 @@ in
         "<C-f>" = {
           __raw = ''require("telescope.actions").send_to_qflist + require("telescope.actions").open_qflist'';
         };
+        # skkeletonのCR挙動はextraConfigLuaのTextChangedI autocmdで
+        # ▽/▼の有無に応じてkakutei/disableを事前に切り替え済み。
+        # Telescopeのデフォルト(select_default)をそのまま使う。
       };
 
       pickers = {
@@ -110,13 +113,35 @@ in
     };
   };
 
-  # Telescopeの1行プロンプトではskkeletonのCR=newline(確定+改行)だと
-  # 改行で文字が見えなくなるため、kakutei(確定のみ)に切り替える。
+  # Telescopeプロンプトでskkeletonの<CR>挙動を動的に切り替える。
+  # ▽/▼あり → kakutei(確定のみ、改行なし)
+  # ▽/▼なし → disable(skkeletonを通さずvim/telescopeに<CR>を渡す)
+  # Telescope終了時にnewline(通常動作)に復元。
   extraConfigLua = ''
     vim.api.nvim_create_autocmd("FileType", {
       pattern = "TelescopePrompt",
       callback = function(args)
-        vim.fn["skkeleton#register_keymap"]("input", "<CR>", "kakutei")
+        local last_has_marker = false
+        -- 初期状態: 変換なし → disable
+        vim.fn["skkeleton#register_keymap"]("input", "<CR>", "disable")
+
+        vim.api.nvim_create_autocmd("TextChangedI", {
+          buffer = args.buf,
+          callback = function()
+            local lines = vim.api.nvim_buf_get_lines(args.buf, 0, 1, false)
+            local prompt = lines[1] or ""
+            local has_marker = prompt:find("▽") ~= nil or prompt:find("▼") ~= nil
+            if has_marker ~= last_has_marker then
+              last_has_marker = has_marker
+              if has_marker then
+                vim.fn["skkeleton#register_keymap"]("input", "<CR>", "kakutei")
+              else
+                vim.fn["skkeleton#register_keymap"]("input", "<CR>", "disable")
+              end
+            end
+          end,
+        })
+
         vim.api.nvim_create_autocmd("BufDelete", {
           buffer = args.buf,
           once = true,
