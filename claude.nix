@@ -24,6 +24,9 @@ let
         "Bash(gcloud config get-value project)"
         "Bash(gh run *)"
         "Bash(gh clone *)"
+        "WebFetch(domain:github.com)"
+        "WebFetch(domain:raw.githubusercontent.com)"
+        "WebFetch(domain:viteplus.dev)"
       ];
       deny = [
         "Read(./.env)"
