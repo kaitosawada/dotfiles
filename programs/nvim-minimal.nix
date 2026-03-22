@@ -38,13 +38,17 @@ let
                 return
               end
               chat.ask(
-                "以下のdiffに対してcommitizen規約に従ったコミットメッセージを日本語で書いてください。"
-                .. "タイトルは50文字以内、本文は72文字で折り返してください。"
-                .. "コードブロックのマーカーなしで、コミットメッセージのみを出力してください。\n\n"
+                "Write a commit message in Japanese for the following diff. "
+                .. "Follow the Commitizen convention. "
+                .. "Title must be under 50 characters. Wrap body at 72 characters. "
+                .. "Output ONLY the raw commit message text. "
+                .. "Do NOT wrap it in a code block or add any markdown formatting.\n\n"
                 .. diff,
                 {
                   callback = function(response)
                     local text = response.content or tostring(response)
+                    -- strip leading/trailing blank lines
+                    text = text:gsub("^%s*\n", ""):gsub("\n%s*$", "")
                     local lines = vim.split(text, "\n")
                     vim.api.nvim_buf_set_lines(commit_buf, 0, 0, false, lines)
                     chat.close()
