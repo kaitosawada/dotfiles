@@ -3,7 +3,8 @@
   plugins.copilot-chat = {
     enable = true;
     settings = {
-      model = "qwen3.5-9b";
+      model = "auto";
+      # model = "qwen3.5-9b";
       providers = {
         local = {
           get_models = {
