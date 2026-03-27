@@ -30,7 +30,7 @@ in
   home = {
     username = username;
     homeDirectory = homeDirectory;
-    stateVersion = "24.11";
+    stateVersion = "25.11";
 
     packages = with pkgs; [
       wget
@@ -83,6 +83,7 @@ in
       # claude
       claude-code
       gemini-cli
+      github-copilot-cli
 
       # bitwarden
       bitwarden-cli
