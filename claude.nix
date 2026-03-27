@@ -93,10 +93,13 @@ let
       filesystem = {
         allowWrite = [
           "~/.vite-plus"
+          "~/Library/Preferences/.wrangler"
         ];
         denyRead = [
           "~/.aws/credentials"
           "~/.ssh"
+          "~/.gnupg"
+          "~/.config/sops/age"
         ];
       };
       network = {
@@ -110,6 +113,7 @@ let
           "logging.googleapis.com"
           "cloudresourcemanager.googleapis.com"
           "nodejs.org"
+          "*.cloudflare.com"
 
           # Allow local development domains
           "*.localhost"
