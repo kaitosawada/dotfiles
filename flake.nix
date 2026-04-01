@@ -53,15 +53,6 @@
             config = {
               allowUnfree = true;
             };
-            overlays = [
-              (final: prev: {
-                direnv = prev.direnv.overrideAttrs (old: {
-                  env = (old.env or { }) // {
-                    CGO_ENABLED = 1;
-                  };
-                });
-              })
-            ];
           };
           homeDir = if system == "aarch64-darwin" || system == "x86_64-darwin" then "/Users" else "/home";
         in
