@@ -70,7 +70,6 @@ let
         "Read(**/*.pem)"
         "Read(**/*.key)"
         "Bash(rm -rf *)"
-        "Bash(curl *)"
         "Bash(wget *)"
         "Bash(git push *)"
         "Bash(chmod 777 *)"
@@ -114,6 +113,7 @@ let
           "cloudresourcemanager.googleapis.com"
           "nodejs.org"
           "*.cloudflare.com"
+          "*.github.com"
 
           # Allow local development domains
           "*.localhost"
