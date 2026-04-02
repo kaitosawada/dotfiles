@@ -102,6 +102,7 @@ let
         ];
       };
       network = {
+        allowLocalBinding = true;
         allowedDomains = [
           # Allow APIs and services used by Claude and development tools
           "api.openai.com"
