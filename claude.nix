@@ -155,4 +155,12 @@ in
     content = builtins.toJSON claudeSettings;
     path = "${config.home.homeDirectory}/.claude/settings.json";
   };
+
+  home.file.".claude/CLAUDE.md".text = ''
+    # Global Instructions
+
+    ## Git操作について
+    sandboxが有効なため、git commit・git push等のgit書き込み操作はユーザーが手動で行います。
+    コミットメッセージの提案は構いませんが、実際のgit commit/pushコマンドは実行しないでください。
+  '';
 }
