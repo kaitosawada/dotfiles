@@ -10,7 +10,11 @@
       "skill-creator"
       "mcp-builder"
       "pdf"
+      "execplan"
     ];
     targets.claude.enable = true;
+    sources.custom = {
+      path = ./.;
+    };
   };
 }

@@ -139,6 +139,7 @@ let
         "nixfmt"
         "gh"
         "vp"
+        "pnpm"
       ];
     };
   };
