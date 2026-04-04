@@ -90,6 +90,9 @@ in
 
       # cloudflare
       cloudflared
+
+      # wayland
+      fuzzel
     ];
 
     sessionVariables = {
@@ -137,12 +140,20 @@ in
     systemd.enable = true;
     package = null;
     config = {
+      defaultWorkspaceLayout = "tabbed";
       modifier = "Mod4";
       terminal = "ghostty";
       # https://nix-community.github.io/home-manager/options.xhtml#opt-wayland.windowManager.sway.config.keybindings
       keybindings = lib.mkOptionDefault {
-        "Mod4+k" = "kill";
-        "Mod4+Return" = "exec ghostty";
+        # "Mod4+k" = "kill";
+        # "Mod4+Return" = "exec ghostty";
+        "Mod4+a" = "exec wtype -M ctrl -k a";
+        "Mod4+c" = "exec wtype -M ctrl -k c";
+        "Mod4+v" = "exec wtype -M ctrl -k v";
+        "Mod4+x" = "exec wtype -M ctrl -k x";
+        "Mod4+z" = "exec wtype -M ctrl -k z";
+        "Mod4+d" = "nop";
+        "Mod4+g" = "exec fuzzel";
         # Japanese input switching: kana/eisuu → F7/F6 only when Ghostty is focused
         # Mac JP keyboard: kana=Hangul, eisuu=Hangul_Hanja
         "Hangul" =
