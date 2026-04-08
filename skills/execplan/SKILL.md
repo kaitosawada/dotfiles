@@ -125,6 +125,7 @@ After showing the plan, ask: "This is the plan. OK to proceed, or anything to ad
 
 ## Guidelines
 
+- **ユーザーへの質問には必ず `AskUserQuestion` ツールを使用すること。** Phase 1・Phase 2 での選択肢提示や確認はすべて `AskUserQuestion` ツール経由で行い、通常のテキスト出力で質問しない。これにより、ユーザーの回答が明確に構造化され、会話の流れが整理される。
 - Never produce the full plan before completing Phase 1 and 2. The interactive questioning IS the value.
 - Batch related questions into single messages — don't ask one question at a time, that's tedious.
 - Use the user's language and framing, not jargon they haven't used.

@@ -1,3 +1,4 @@
 .stfolder
 .pnpm-store/
 node_modules/
+mise.local.toml
