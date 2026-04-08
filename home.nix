@@ -32,68 +32,72 @@ in
     homeDirectory = homeDirectory;
     stateVersion = "25.11";
 
-    packages = with pkgs; [
-      wget
+    packages =
+      with pkgs;
+      [
+        wget
 
-      # git
-      git
-      ghq
+        # git
+        git
+        ghq
 
-      # languages
-      deno
-      bun
-      go
-      biome
+        # languages
+        deno
+        bun
+        go
+        biome
 
-      # nix
-      nix-search-cli
-      nixfmt
+        # nix
+        nix-search-cli
+        nixfmt
 
-      # tools
-      gnumake
-      jq
-      ripgrep
-      sd
-      imagemagick
-      tree-sitter # for nixvim swift grammar
-      ni # @antfu/ni
-      google-cloud-sdk # for gcloud CLI
-      caddy
+        # tools
+        gnumake
+        jq
+        ripgrep
+        sd
+        imagemagick
+        tree-sitter # for nixvim swift grammar
+        ni # @antfu/ni
+        google-cloud-sdk # for gcloud CLI
+        caddy
 
-      # docker
-      colima
-      docker
-      docker-compose
-      docker-buildx
-      docker-credential-helpers
+        # docker
+        colima
+        docker
+        docker-compose
+        docker-buildx
+        docker-credential-helpers
 
-      # rust
-      rustc
-      cargo
+        # rust
+        rustc
+        cargo
 
-      # js
-      nodejs
-      yarn
-      pnpm
+        # js
+        nodejs
+        yarn
+        pnpm
 
-      # python
-      python314
-      uv
+        # python
+        python314
+        uv
 
-      # claude
-      claude-code
-      gemini-cli
-      github-copilot-cli
+        # claude
+        claude-code
+        gemini-cli
+        github-copilot-cli
 
-      # bitwarden
-      bitwarden-cli
+        # bitwarden
+        bitwarden-cli
 
-      # cloudflare
-      cloudflared
+        # cloudflare
+        cloudflared
 
-      # wayland
-      fuzzel
-    ];
+      ]
+      ++ lib.optionals (!isDarwin) [
+        # wayland
+        fuzzel
+      ];
 
     sessionVariables = {
       EDITOR = "nvim";
