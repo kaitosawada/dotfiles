@@ -3,8 +3,8 @@
     enable = true;
     settings = {
       os = {
-        edit = "nvim --server \"$NVIM\" --remote-send '<C-\\><C-n>:bd!<CR>:execute \"edit \" . {{filename}}<CR>'";
-        editAtLine = "nvim --server \"$NVIM\" --remote-send '<C-\\><C-n>:bd!<CR>:execute \"edit +{{line}} \" . {{filename}}<CR>'";
+        edit = "nvim --server \"$NVIM\" --remote-send '<C-\\><C-n>:let buf=bufnr()<CR>:close<CR>:execute \"bd! \" . buf<CR>:execute \"edit \" . fnameescape({{filename}})<CR>'";
+        editAtLine = "nvim --server \"$NVIM\" --remote-send '<C-\\><C-n>:let buf=bufnr()<CR>:close<CR>:execute \"bd! \" . buf<CR>:execute \"edit +\" . {{line}} . \" \" . fnameescape({{filename}})<CR>'";
       };
       customCommands = [
         {
