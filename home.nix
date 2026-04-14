@@ -2,6 +2,7 @@
   system,
   username,
   homeDirectory,
+  inputs,
   pkgs,
   lib,
   ...
@@ -83,7 +84,7 @@ in
         uv
 
         # claude
-        claude-code
+        inputs.nix-claude-code.packages.${system}.claude
         gemini-cli
         github-copilot-cli
 
@@ -192,6 +193,8 @@ in
       cores = 8;
       "max-jobs" = 8;
       warn-dirty = false;
+      extra-substituters = [ "https://ryoppippi.cachix.org" ];
+      extra-trusted-public-keys = [ "ryoppippi.cachix.org-1:b2LbtWNvJeL/qb1B6TYOMK+apaCps4SCbzlPRfSQIms=" ];
     };
   };
 }
