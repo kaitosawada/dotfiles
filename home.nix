@@ -21,11 +21,11 @@ in
   # See <https://github.com/nix-community/home-manager/blob/master/modules/programs/mise.nix>
   programs.mise = {
     enable = true;
-    globalConfig = {
-      tools = {
-        "npm:vite-plus" = "latest";
-      };
-    };
+    # globalConfig = {
+    #   tools = {
+    #     "npm:vite-plus" = "latest";
+    #   };
+    # };
   };
 
   home = {
@@ -78,6 +78,7 @@ in
         nodejs
         yarn
         pnpm
+        inputs.nix-vite-plus.packages.${system}.vp
 
         # python
         python314
@@ -93,7 +94,6 @@ in
 
         # cloudflare
         cloudflared
-
       ]
       ++ lib.optionals (!isDarwin) [
         # wayland
