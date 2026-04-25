@@ -34,6 +34,11 @@
         bind "Ctrl q" { Detach; }
         bind "Ctrl Shift q" { Quit; }
         bind "Super f" { ToggleFocusFullscreen; }
+        bind "Super g" {
+          Run "lazygit" {
+            floating true
+          };
+        }
       }
       scroll {
         bind "Ctrl l" { GoToNextTab; SwitchToMode "normal"; }
@@ -46,6 +51,19 @@
         bind "Ctrl q" { Detach; }
         bind "Ctrl Shift q" { Quit; }
         bind "Super f" { ToggleFocusFullscreen; SwitchToMode "normal"; }
+        bind "m" {
+          LaunchOrFocusPlugin "session-manager" {
+            floating true
+          };
+          SwitchToMode "normal";
+        }
+        bind "g" {
+          Run "lazygit" {
+            floating true;
+            close_on_exit true;
+          };
+          SwitchToMode "normal";
+        }
       }
       locked {
         bind "Super r" { SwitchToMode "normal"; }
