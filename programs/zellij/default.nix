@@ -34,11 +34,6 @@
         bind "Ctrl q" { Detach; }
         bind "Ctrl Shift q" { Quit; }
         bind "Super f" { ToggleFocusFullscreen; }
-        bind "Super g" {
-          Run "lazygit" {
-            floating true
-          };
-        }
       }
       scroll {
         bind "Ctrl l" { GoToNextTab; SwitchToMode "normal"; }
