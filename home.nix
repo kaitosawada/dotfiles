@@ -78,7 +78,6 @@ in
         nodejs
         yarn
         pnpm
-        inputs.nix-vite-plus.packages.${system}.vp
 
         # python
         python314
@@ -95,9 +94,13 @@ in
         # cloudflare
         cloudflared
       ]
+      ++ lib.optionals isDarwin [
+        inputs.nix-vite-plus.packages.${system}.vp
+      ]
       ++ lib.optionals (!isDarwin) [
         # wayland
         fuzzel
+        spotify
       ];
 
     sessionVariables = {
