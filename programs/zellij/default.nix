@@ -61,6 +61,10 @@
           Run "lazygit" {
             floating true;
             close_on_exit true;
+            width "60%";
+            height "60%";
+            x "20%";
+            y "20%";
           };
           SwitchToMode "normal";
         }
