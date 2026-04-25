@@ -12,7 +12,7 @@
     ./gh-dash.nix
     ./gitsigns.nix
     ./indent-blankline.nix
-    ./lazygit.nix
+    # ./lazygit.nix
     ./lsp-signature.nix
     ./lsp.nix
     ./lualine.nix
