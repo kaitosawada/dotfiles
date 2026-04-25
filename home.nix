@@ -145,7 +145,7 @@ in
     systemd.enable = true;
     package = null;
     config = {
-      defaultWorkspaceLayout = "tabbed";
+      workspaceLayout = "tabbed";
       modifier = "Mod4";
       terminal = "ghostty";
       # https://nix-community.github.io/home-manager/options.xhtml#opt-wayland.windowManager.sway.config.keybindings
