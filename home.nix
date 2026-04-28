@@ -78,7 +78,6 @@ in
         nodejs
         yarn
         pnpm
-        inputs.nix-vite-plus.packages.${system}.vp
 
         # python
         python314
@@ -95,9 +94,13 @@ in
         # cloudflare
         cloudflared
       ]
+      ++ lib.optionals isDarwin [
+        inputs.nix-vite-plus.packages.${system}.vp
+      ]
       ++ lib.optionals (!isDarwin) [
         # wayland
         fuzzel
+        spotify
       ];
 
     sessionVariables = {
@@ -145,7 +148,7 @@ in
     systemd.enable = true;
     package = null;
     config = {
-      defaultWorkspaceLayout = "tabbed";
+      workspaceLayout = "tabbed";
       modifier = "Mod4";
       terminal = "ghostty";
       # https://nix-community.github.io/home-manager/options.xhtml#opt-wayland.windowManager.sway.config.keybindings
