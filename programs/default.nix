@@ -5,7 +5,7 @@
     # ./awscli.nix
     ./bash.nix
     ./bat.nix
-    ./direnv.nix
+    # ./direnv.nix
     ./fzf.nix
     ./gh.nix
     ./gh-dash.nix

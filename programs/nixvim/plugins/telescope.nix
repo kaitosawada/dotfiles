@@ -1,7 +1,8 @@
 { pkgs, ... }:
 let
   smart-open = pkgs.vimUtils.buildVimPlugin {
-    name = "smart-open";
+    pname = "smart-open";
+    version = "unstable";
     src = pkgs.fetchFromGitHub {
       owner = "danielfalk";
       repo = "smart-open.nvim";
@@ -18,7 +19,8 @@ let
   };
   # https://github.com/nvim-telescope/telescope-live-grep-args.nvim?tab=readme-ov-file#grep-argument-examples
   telescope-live-grep-args = pkgs.vimUtils.buildVimPlugin {
-    name = "telescope-live-grep-args";
+    pname = "telescope-live-grep-args";
+    version = "unstable";
     src = pkgs.fetchFromGitHub {
       owner = "nvim-telescope";
       repo = "telescope-live-grep-args.nvim";

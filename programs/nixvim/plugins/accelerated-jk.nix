@@ -1,7 +1,8 @@
 { pkgs, ... }:
 let
   accelerated-jk = pkgs.vimUtils.buildVimPlugin {
-    name = "accelerated-jk";
+    pname = "accelerated-jk";
+    version = "unstable";
     src = pkgs.fetchFromGitHub {
       owner = "rainbowhxch";
       repo = "accelerated-jk.nvim";

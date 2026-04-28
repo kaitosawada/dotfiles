@@ -1,7 +1,8 @@
 { pkgs, ... }:
 let
   tsc-nvim = pkgs.vimUtils.buildVimPlugin {
-    name = "tsc";
+    pname = "tsc";
+    version = "unstable";
     src = pkgs.fetchFromGitHub {
       owner = "dmmulroy";
       repo = "tsc.nvim";
