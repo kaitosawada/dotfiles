@@ -44,6 +44,17 @@ in
       ${builtins.readFile ../scripts/init-nix.sh}
       ${builtins.readFile ../scripts/switch-project.sh}
 
+      # Run cline ephemerally: kanban auto-install (npm install -g) is sandboxed
+      # to a tmp prefix and discarded on exit, so nothing leaks into the system.
+      cline() {
+        (
+          local tmpdir
+          tmpdir=$(mktemp -d -t cline-XXXXXX)
+          trap "rm -rf '$tmpdir'" EXIT
+          NPM_CONFIG_PREFIX="$tmpdir" PATH="$tmpdir/bin:$PATH" pnpm dlx cline "$@"
+        )
+      }
+
       # Move latest downloaded file to current directory (or specified path)
       mvl() {
         local latest=$(ls -t ~/Downloads | head -1)
