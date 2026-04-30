@@ -18,7 +18,8 @@ in
       commit.gpgsign = true;
       tag.gpgsign = true;
       pull.rebase = false;
-      url."ssh://git@github.com/".insteadOf = "https://github.com/";
+      # NOTE: なんでやってたんだっけ？
+      # url."ssh://git@github.com/".insteadOf = "https://github.com/";
       ghq.root = "~/ghq";
     };
   };

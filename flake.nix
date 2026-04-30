@@ -2,9 +2,9 @@
   description = "My personal NixOS configuration";
 
   inputs = {
-    # nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     # 2026-04-16 の時点の最新コミット
-    nixpkgs.url = "github:NixOS/nixpkgs/b86751bc4085f48661017fa226dee99fab6c651b";
+    # nixpkgs.url = "github:NixOS/nixpkgs/b86751bc4085f48661017fa226dee99fab6c651b";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     flake-utils.url = "github:numtide/flake-utils";
     home-manager = {
