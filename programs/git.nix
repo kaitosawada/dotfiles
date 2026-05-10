@@ -1,7 +1,7 @@
 { username, homeDirectory, ... }:
 let
   signingkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOnQQ7x8XAnirqz1MlR5kFbvZ5VL6MMaBZi5JmOdYEMB";
-  email = "mitosawada@gmail.com";
+  email = "75603046+kaitosawada@users.noreply.github.com";
   allowedSignersFile = "${homeDirectory}/.ssh/allowed_signers";
 in
 {
