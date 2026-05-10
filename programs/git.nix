@@ -17,9 +17,10 @@ in
       gpg.ssh.allowedSignersFile = allowedSignersFile;
       commit.gpgsign = true;
       tag.gpgsign = true;
-      pull.rebase = false;
-      # NOTE: なんでやってたんだっけ？
+      # NOTE: ssh rewriteなんでやってたんだっけ？
       # url."ssh://git@github.com/".insteadOf = "https://github.com/";
+      pull.rebase = true;
+      fetch.prune = true;
       ghq.root = "~/ghq";
     };
   };
