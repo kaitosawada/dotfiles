@@ -57,6 +57,11 @@ let
         "Bash(gcloud config get-value project)"
         "Bash(gh run *)"
         "Bash(gh clone *)"
+        "Bash(git commit --no-gpg-sign:*)"
+        "Bash(git add:*)"
+        "Bash(git status:*)"
+        "Bash(git diff:*)"
+        "Bash(git log:*)"
         "WebFetch(domain:github.com)"
         "WebFetch(domain:raw.githubusercontent.com)"
         "WebFetch(domain:viteplus.dev)"
@@ -160,7 +165,8 @@ in
     # Global Instructions
 
     ## Git操作について
-    sandboxが有効なため、git commit・git push等のgit書き込み操作はユーザーが手動で行います。
-    コミットメッセージの提案は構いませんが、実際のgit commit/pushコマンドは実行しないでください。
+    - 署名キーがBitwardenにありsandbox下では使えないため、`git commit`は必ず`--no-gpg-sign`を付けて実行してください(付けないと許可リストに無く、無駄なpromptが発生します)。
+    - `git push`は引き続きユーザーが手動で実行します。Claudeはpushしないでください。
+    - 主にworktreeでの並列作業を想定した運用です。最終的なmainへの取り込み(squash merge + 署名)はユーザーが行います。
   '';
 }
