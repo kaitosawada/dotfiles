@@ -8,6 +8,8 @@ let
       allow = [
         "Bash(pnpm build:*)"
         "Bash(pnpm add:*)"
+        "Bash(pnpm install:*)"
+        "Bash(pnpm i:*)"
         "Bash(pnpm typecheck:*)"
         "Bash(pnpm lint:*)"
         "Bash(pnpm format:*)"
@@ -91,13 +93,20 @@ let
       pr = "";
     };
     sandbox = {
-      enabled = true;
+      enabled = false;
       enableWeakerNetworkIsolation = true;
       allowUnsandboxedCommands = false;
       filesystem = {
         allowWrite = [
           "~/.vite-plus"
           "~/Library/Preferences/.wrangler"
+          # pnpm content-addressable store & global tools
+          "~/Library/pnpm"
+          # pnpm metadata / dlx cache
+          "~/Library/Caches/pnpm"
+          # pnpm install: deps may ship .vscode subdirs that the sandbox
+          # denies under CWD. Whitelist .vscode by name to override.
+          ".vscode"
         ];
         denyRead = [
           "~/.aws/credentials"
@@ -120,6 +129,10 @@ let
           "nodejs.org"
           "*.cloudflare.com"
           "*.github.com"
+          # pnpm install: prebuilt binaries / package tarballs
+          "objects.githubusercontent.com"
+          "release-assets.githubusercontent.com"
+          "codeload.github.com"
 
           # Allow local development domains
           "*.localhost"
