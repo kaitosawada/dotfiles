@@ -178,7 +178,7 @@ in
     # Global Instructions
 
     ## Git操作について
-    - agents/worktreeで作業している場合、worktreeでcommitした後、masterにマージしてください
-    - worktreeで作業していない場合、単にcommitしてください
+    - デフォルトブランチで作業していない場合、現在のブランチでcommitした後、デフォルトブランチにsquashマージしてください
+    - デフォルトブランチで作業している場合、単にcommitしてください
   '';
 }
