@@ -178,7 +178,7 @@ in
     # Global Instructions
 
     ## Git操作について
-    - agents/worktreeでmaster以外のブランチで作業する場合 -> PR作成までしてください
-    - masterで作業する場合 -> コミットしてpushしてください
+    - agents/worktreeで作業している場合、worktreeでcommitした後、masterにマージしてください
+    - worktreeで作業していない場合、単にcommitしてください
   '';
 }
