@@ -64,6 +64,7 @@ let
         "Bash(git status:*)"
         "Bash(git diff:*)"
         "Bash(git log:*)"
+        "Bash(copilot:*)"
         "WebFetch(domain:github.com)"
         "WebFetch(domain:raw.githubusercontent.com)"
         "WebFetch(domain:viteplus.dev)"
@@ -158,6 +159,7 @@ let
         "gh"
         "vp"
         "pnpm"
+        "copilot"
       ];
     };
   };
@@ -178,7 +180,10 @@ in
     # Global Instructions
 
     ## Git操作について
-    - デフォルトブランチで作業していない場合、現在のブランチでcommitした後、デフォルトブランチにsquashマージしてください
-    - デフォルトブランチで作業している場合、単にcommitしてください
+    - デフォルトブランチ以外で作業中の場合:
+      1. 現在のブランチで commit
+      2. `git diff <default-branch>...HEAD` を `copilot -p '<diff>を簡潔にレビューし指摘点のみ箇条書き。問題なければ LGTM のみ返答' --allow-all-tools` に渡してレビュー取得
+      3. LGTM ならデフォルトブランチへ squash merge。指摘があれば対応してから 2 を再実行
+    - デフォルトブランチで作業中の場合、単に commit
   '';
 }
