@@ -65,6 +65,7 @@ let
         "Bash(git diff:*)"
         "Bash(git log:*)"
         "Bash(copilot:*)"
+        "Bash(env -u GH_TOKEN copilot:*)"
         "WebFetch(domain:github.com)"
         "WebFetch(domain:raw.githubusercontent.com)"
         "WebFetch(domain:viteplus.dev)"
@@ -182,8 +183,11 @@ in
     ## Git操作について
     - デフォルトブランチ以外で作業中の場合:
       1. 現在のブランチで commit
-      2. `git diff <default-branch>...HEAD` を `copilot -p '<diff>を簡潔にレビューし指摘点のみ箇条書き。問題なければ LGTM のみ返答' --allow-all-tools` に渡してレビュー取得
-      3. LGTM ならデフォルトブランチへ squash merge。指摘があれば対応してから 2 を再実行
+      2. `git diff --stat <default-branch>...HEAD` で規模を確認。極端に大きい(目安: 30 ファイル超 or 2000 行超)場合は人間レビューを要請して停止
+      3. それ以下なら Copilot CLI にレビューさせる(全 diff は渡さず Copilot 自身に探索させる)。worktree 内の cwd から実行すること:
+         `env -u GH_TOKEN copilot -p 'ブランチ <branch> を <default-branch> との差分でレビュー。git diff --stat <default-branch>...<branch> で概観を掴み、気になるファイルだけ git diff <default-branch>...<branch> -- <path> で深掘り。指摘点のみ箇条書き、問題なければ LGTM のみ返答' --allow-all-tools`
+         (注: classic PAT の GH_TOKEN がセットされていると Copilot が拒否するため `env -u GH_TOKEN` で除外する)
+      4. LGTM ならデフォルトブランチへ squash merge。指摘があれば対応してから 2 を再実行
     - デフォルトブランチで作業中の場合、単に commit
   '';
 }
