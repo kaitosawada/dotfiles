@@ -178,8 +178,7 @@ in
     # Global Instructions
 
     ## Git操作について
-    - 署名キーがBitwardenにありsandbox下では使えないため、`git commit`は必ず`--no-gpg-sign`を付けて実行してください(付けないと許可リストに無く、無駄なpromptが発生します)。
-    - `git push`は引き続きユーザーが手動で実行します。Claudeはpushしないでください。
-    - 主にworktreeでの並列作業を想定した運用です。最終的なmainへの取り込み(squash merge + 署名)はユーザーが行います。
+    - agents/worktreeでmaster以外のブランチで作業する場合 -> PR作成までしてください
+    - masterで作業する場合 -> コミットしてpushしてください
   '';
 }
