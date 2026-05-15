@@ -8,9 +8,7 @@ let
         ./nixvim/theme.nix
         ./nixvim/keymappings.nix
         ./nixvim/plugins/skkeleton.nix
-        ./nixvim/plugins/blink-cmp.nix
         ./nixvim/plugins/flash.nix
-        ./nixvim/plugins/copilot-lua.nix
         ./nixvim/plugins/copilot-chat.nix
       ];
 
