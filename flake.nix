@@ -34,7 +34,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-vite-plus = {
-      url = "github:ryoppippi/nix-vite-plus";
+      # TODO: upstream へ pnpmDeps hash refresh の PR を出したら戻す
+      url = "github:kaitosawada/nix-vite-plus/fix/pnpm-deps-hash";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

@@ -144,15 +144,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1777445514,
-        "narHash": "sha256-IcaVj8t5YiiXONElemAMz92CvK/rCs/kKRjK1qcuUZw=",
-        "owner": "ryoppippi",
+        "lastModified": 1779078360,
+        "narHash": "sha256-E6x+GLls30nsYWji/W+KXtglWc+Pp69h2a+x+LUIZg4=",
+        "owner": "kaitosawada",
         "repo": "nix-vite-plus",
-        "rev": "c965c34f6d4c0381244b62fd44c2dcc258ca8e11",
+        "rev": "02a48d42d67b670e0b634c7a4b630be932e23911",
         "type": "github"
       },
       "original": {
-        "owner": "ryoppippi",
+        "owner": "kaitosawada",
+        "ref": "fix/pnpm-deps-hash",
         "repo": "nix-vite-plus",
         "type": "github"
       }
