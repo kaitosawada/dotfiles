@@ -16,37 +16,36 @@ in
       Include ${homeDirectory}/.colima/ssh_config
     '';
 
-    matchBlocks = {
-      "github.com" = lib.hm.dag.entryBefore [ "*" ] {
-        extraOptions = {
+    settings = {
+      "github.com" = lib.hm.dag.entryBefore [ "*" ] (
+        {
           AddKeysToAgent = "yes";
         }
-        // lib.optionalAttrs isDarwin { UseKeychain = "yes"; };
-      };
+        // lib.optionalAttrs isDarwin { UseKeychain = "yes"; }
+      );
 
       "i-* mi-*" = {
-        proxyCommand = ''sh -c "aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"'';
-        extraOptions = {
-          StrictHostKeyChecking = "no";
-          UserKnownHostsFile = "/dev/null";
-        };
+        ProxyCommand = ''sh -c "aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"'';
+        StrictHostKeyChecking = "no";
+        UserKnownHostsFile = "/dev/null";
       };
 
       "*.teinei.life" = {
-        proxyCommand = "cloudflared access ssh --hostname %h";
-        extraOptions = {
-          ForwardAgent = "yes";
-        };
+        ProxyCommand = "cloudflared access ssh --hostname %h";
+        ForwardAgent = "yes";
       };
 
       "*.ozonehl.dev" = {
-        proxyCommand = "cloudflared access ssh --hostname %h";
-        extraOptions = {
-          ForwardAgent = "yes";
-        };
+        ProxyCommand = "cloudflared access ssh --hostname %h";
+        ForwardAgent = "yes";
       };
 
-      "*" = lib.hm.dag.entryAfter [ "github.com" "i-* mi-*" "*.teinei.life" "*.ozonehl.dev" ] { };
+      "*" = lib.hm.dag.entryAfter [
+        "github.com"
+        "i-* mi-*"
+        "*.teinei.life"
+        "*.ozonehl.dev"
+      ] { };
     };
   };
 }
