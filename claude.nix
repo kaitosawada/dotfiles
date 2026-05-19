@@ -85,6 +85,9 @@ let
       ];
       disableBypassPermissionsMode = "disable";
     };
+    worktree = {
+      baseRef = "head";
+    };
     env = {
       DISABLE_AUTOUPDATER = "1";
       EDITOR = "nvim-minimal";
