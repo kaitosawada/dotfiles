@@ -83,9 +83,8 @@ in
         python314
         uv
 
-        # claude
+        # llm
         inputs.nix-claude-code.packages.${system}.claude
-        gemini-cli
         github-copilot-cli
 
         # bitwarden
