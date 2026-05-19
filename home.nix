@@ -86,6 +86,7 @@ in
         # llm
         inputs.nix-claude-code.packages.${system}.claude
         github-copilot-cli
+        cursor-cli
 
         # bitwarden
         bitwarden-cli
