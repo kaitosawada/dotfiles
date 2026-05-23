@@ -126,6 +126,8 @@ let
           "api.openai.com"
           "api.github.com"
           "registry.npmjs.org"
+          "jsr.io"
+          "npm.jsr.io"
           "github.com"
           "oauth2.googleapis.com"
           "logging.googleapis.com"
