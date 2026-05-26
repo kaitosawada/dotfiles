@@ -5,6 +5,7 @@
     # ./awscli.nix
     ./bash.nix
     ./bat.nix
+    ./colima.nix
     # ./direnv.nix
     ./fzf.nix
     ./gh.nix

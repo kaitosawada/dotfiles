@@ -64,7 +64,6 @@ in
         caddy
 
         # docker
-        colima
         docker
         docker-compose
         docker-buildx
@@ -107,7 +106,6 @@ in
       EDITOR = "nvim";
       LANG = "ja_JP.UTF-8";
       NIXPKGS_ALLOW_UNFREE = "1";
-      DOCKER_HOST = "unix://$HOME/.colima/default/docker.sock";
     };
 
     shellAliases = {
