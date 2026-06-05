@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ inputs, ... }:
 {
   imports = [
     # ./aerc.nix
@@ -32,5 +32,5 @@
     ./zsh.nix
   ];
 
-  programs.nixvim = import ./nixvim { inherit pkgs; };
+  programs.nixvim = import ./nixvim { inherit inputs; };
 }
