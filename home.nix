@@ -84,6 +84,7 @@ in
 
         # llm
         inputs.nix-claude-code.packages.${system}.claude
+        opencode
         github-copilot-cli
         cursor-cli
 
