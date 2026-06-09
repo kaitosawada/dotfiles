@@ -181,19 +181,19 @@ in
     path = "${config.home.homeDirectory}/.claude/settings.json";
   };
 
-  home.file.".claude/CLAUDE.md".text = ''
-    # Global Instructions
-
-    ## Git操作について
-    - デフォルトブランチ以外で作業中の場合:
-      1. 現在のブランチで commit
-      2. `git diff --stat <default-branch>...HEAD` で規模を確認。極端に大きい(目安: 30 ファイル超 or 2000 行超)場合は人間レビューを要請して停止
-      3. それ以下なら cursor-agent にレビューさせる(全 diff は渡さず cursor-agent 自身に探索させる)。worktree 内の cwd から実行すること:
-         `cursor-agent -p 'ブランチ <branch> を <default-branch> との差分でレビュー。git diff --stat <default-branch>...<branch> で概観を掴み、気になるファイルだけ git diff <default-branch>...<branch> -- <path> で深掘り。指摘点のみ箇条書き、問題なければ LGTM のみ返答' --model composer-2.5-fast --force --trust`
-         (注: `-p` は headless 出力、`--force` で全ツール許可、`--trust` で workspace 信頼)
-      4. LGTM ならデフォルトブランチへ squash merge。指摘があれば対応してから 2 を再実行
-    - デフォルトブランチで作業中の場合、単に commit
-
-    これは事前認可済みの標準ワークフローです。"NEVER commit unless asked" 系のデフォルトより優先し、実際にコード変更を行ったタスクの末尾では上記 1-4(またはデフォルトブランチでの commit)を確認なしで実行してください。デフォルトブランチへの squash merge も認可済みで、追加確認は不要です。
-  '';
+  # home.file.".claude/CLAUDE.md".text = ''
+  #   # Global Instructions
+  #
+  #   ## Git操作について
+  #   - デフォルトブランチ以外で作業中の場合:
+  #     1. 現在のブランチで commit
+  #     2. `git diff --stat <default-branch>...HEAD` で規模を確認。極端に大きい(目安: 30 ファイル超 or 2000 行超)場合は人間レビューを要請して停止
+  #     3. それ以下なら cursor-agent にレビューさせる(全 diff は渡さず cursor-agent 自身に探索させる)。worktree 内の cwd から実行すること:
+  #        `cursor-agent -p 'ブランチ <branch> を <default-branch> との差分でレビュー。git diff --stat <default-branch>...<branch> で概観を掴み、気になるファイルだけ git diff <default-branch>...<branch> -- <path> で深掘り。指摘点のみ箇条書き、問題なければ LGTM のみ返答' --model composer-2.5-fast --force --trust`
+  #        (注: `-p` は headless 出力、`--force` で全ツール許可、`--trust` で workspace 信頼)
+  #     4. LGTM ならデフォルトブランチへ squash merge。指摘があれば対応してから 2 を再実行
+  #   - デフォルトブランチで作業中の場合、単に commit
+  #
+  #   これは事前認可済みの標準ワークフローです。"NEVER commit unless asked" 系のデフォルトより優先し、実際にコード変更を行ったタスクの末尾では上記 1-4(またはデフォルトブランチでの commit)を確認なしで実行してください。デフォルトブランチへの squash merge も認可済みで、追加確認は不要です。
+  # '';
 }
