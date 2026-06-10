@@ -79,7 +79,6 @@ let
         "Read(**/*.key)"
         "Bash(rm -rf *)"
         "Bash(wget *)"
-        "Bash(git push *)"
         "Bash(chmod 777 *)"
       ];
       disableBypassPermissionsMode = "disable";
