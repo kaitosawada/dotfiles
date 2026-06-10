@@ -18,6 +18,7 @@
     ./lsd.nix
     # ./notmuch.nix
     ./nvim-minimal.nix
+    ./opencode.nix
     ./ssh.nix
     ./starship.nix
     ./syncthing.nix
