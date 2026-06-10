@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   imports = [
     ./config.nix
@@ -6,6 +7,7 @@
     ./theme.nix
   ];
   enable = true;
+  nixpkgs.source = pkgs.path;
 
   extraConfigLua = ''
     -- ファイルの外部変更を自動的に読み込む
