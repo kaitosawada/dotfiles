@@ -1,5 +1,11 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  inputs,
+  system,
+  ...
+}:
 let
+  pi-coding-agent = inputs.llm-agents.packages.${system}.pi;
   websearchExtension = pkgs.writeText "websearch.ts" ''
     import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
     import { Type } from "typebox";
@@ -116,7 +122,7 @@ let
 
   piWrapped = pkgs.writeShellScriptBin "pi" ''
     export EDITOR="nvim-minimal"
-    exec ${pkgs.pi-coding-agent}/bin/pi "$@"
+    exec ${pi-coding-agent}/bin/pi "$@"
   '';
 in
 {
