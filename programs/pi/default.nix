@@ -10,6 +10,8 @@ let
   # awesome-pi-coding-agent などの npm パッケージを追加可能
   piPackages = [
     "npm:pi-web-access@0.10.7"
+    "npm:pi-subagents@0.28.0"
+    "npm:pi-lean-ctx@3.8.7"
   ];
 
   # buildNpmPackage で npm パッケージを nix store にビルドし、
@@ -18,9 +20,10 @@ let
   #       `pi install` や `pi update` は使えない
   piExtensionsNpm = pkgs.buildNpmPackage {
     pname = "pi-extensions";
-    version = "0.10.7";
+    version = "0.2.0";
     src = ./npm;
-    npmDepsHash = "sha256-9v/F4d6yv/hEUjhK+qASApjmKSEN2S63dfV0JSgsw4Q=";
+    npmDepsHash = "sha256-r1PU5VYhEuWFPzje9MHPK6O0i2nN5iDX2pVL7iIXEYo=";
+    npmFlags = [ "--legacy-peer-deps" ];
     dontBuild = true;
     installPhase = ''
       mkdir -p $out
@@ -36,6 +39,57 @@ let
     export EDITOR="nvim-minimal"
     exec ${pi-coding-agent}/bin/pi "$@"
   '';
+
+  # pi-lean-ctx が呼び出す lean-ctx バイナリ
+  # 公式 GitHub release から取得
+  lean-ctx = pkgs.stdenv.mkDerivation rec {
+    pname = "lean-ctx";
+    version = "3.8.7";
+
+    src =
+      let
+        platform =
+          {
+            "aarch64-darwin" = {
+              target = "aarch64-apple-darwin";
+              hash = "sha256-p3JGAV7ose8jSCmGEGyfsG+uScKY0fzBJB7Fok3Z+Mc=";
+            };
+            "x86_64-darwin" = {
+              target = "x86_64-apple-darwin";
+              hash = "sha256-C2h6ScelBfy08BVPlu5LqYU01h3/l7e3Ui0xod5MCNM=";
+            };
+            "x86_64-linux" = {
+              target = "x86_64-unknown-linux-musl";
+              hash = "sha256-hip1Lq9wKF9+CJor4FcTyOimmwVBH5YmE4Yvpn4Sab0=";
+            };
+          }
+          .${system} or (throw "lean-ctx: unsupported system ${system}");
+      in
+      pkgs.fetchurl {
+        url = "https://github.com/yvgude/lean-ctx/releases/download/v${version}/lean-ctx-${platform.target}.tar.gz";
+        inherit (platform) hash;
+      };
+
+    dontUnpack = true;
+    dontBuild = true;
+
+    installPhase = ''
+      mkdir -p $out/bin
+      tar -xzf $src -C $out/bin
+    '';
+
+    meta = {
+      description = "LeanCTX context intelligence binary for AI agents";
+      homepage = "https://leanctx.com";
+      license = pkgs.lib.licenses.asl20;
+      platforms = [
+        "aarch64-darwin"
+        "x86_64-darwin"
+        "x86_64-linux"
+      ];
+      sourceProvenance = [ pkgs.lib.sourceTypes.binaryNativeCode ];
+    };
+  };
 in
 {
   programs.pi-coding-agent = {
@@ -48,7 +102,10 @@ in
     source = piExtensionsNpm;
   };
 
-  # settings.json の packages 経由で pi-web-access を読み込む
+  # pi-lean-ctx の MCP bridge / CLI から呼び出される lean-ctx バイナリ
+  home.packages = [ lean-ctx ];
+
+  # settings.json の packages 経由で pi 拡張を読み込む
   # API key は環境変数（EXA_API_KEY / PERPLEXITY_API_KEY / GEMINI_API_KEY）
   # または ~/.pi/web-search.json で設定する
   home.file.".pi/agent/settings.json" = {
