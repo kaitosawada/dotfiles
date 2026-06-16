@@ -11,7 +11,7 @@ switch:
 	exec $$SHELL -l
 
 build:
-	home-manager build --flake "$(FLAKE_TARGET)"
+	home-manager build --flake "$(FLAKE_TARGET)" --no-out-link
 
 fmt:
 	nixfmt $$(find . -name '*.nix')
