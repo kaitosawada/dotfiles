@@ -19,6 +19,7 @@
     # ./notmuch.nix
     ./nvim-minimal.nix
     ./opencode.nix
+    ./pi.nix
     ./ssh.nix
     ./starship.nix
     ./syncthing.nix

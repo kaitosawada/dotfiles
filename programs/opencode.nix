@@ -7,6 +7,31 @@ let
       messages_first = "home";
     };
   };
+
+  opencodeConfig = builtins.toJSON {
+    "$schema" = "https://opencode.ai/config.json";
+    autoupdate = false;
+    share = "manual";
+    compaction = {
+      auto = true;
+      prune = false;
+    };
+    permission = {
+      websearch = "allow";
+      webfetch = "allow";
+      question = "allow";
+    };
+    watcher = {
+      ignore = [
+        "node_modules/**"
+        "dist/**"
+        ".git/**"
+        "target/**"
+        "result/**"
+        "*.tmp"
+      ];
+    };
+  };
 in
 {
   home.packages = [
@@ -17,4 +42,6 @@ in
   ];
 
   xdg.configFile."opencode/tui.json".text = tuiConfig;
+
+  xdg.configFile."opencode/opencode.jsonc".text = opencodeConfig;
 }
