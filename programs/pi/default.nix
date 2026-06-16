@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   inputs,
   system,
@@ -57,6 +58,21 @@ in
       defaultProvider = "fireworks";
       defaultModel = "accounts/fireworks/models/kimi-k2p7-code";
     };
+  };
+
+  # Exa API key for pi-web-access
+  # secrets/home.yaml に "exa-api-key" が定義されていることを前提
+  sops.secrets."exa-api-key" = {
+    sopsFile = ../../secrets/home.yaml;
+  };
+
+  # pi-web-access の設定ファイル
+  # sops で復号した Exa API key を書き出す
+  sops.templates."pi-web-search.json" = {
+    content = builtins.toJSON {
+      exaApiKey = config.sops.placeholder."exa-api-key";
+    };
+    path = "${config.home.homeDirectory}/.pi/web-search.json";
   };
 
   # Respond in Japanese
