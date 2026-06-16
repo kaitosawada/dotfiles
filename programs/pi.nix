@@ -140,7 +140,6 @@ in
       defaultThinkingLevel = "medium";
       defaultProvider = "fireworks";
       defaultModel = "accounts/fireworks/models/kimi-k2p7-code";
-      lastChangelogVersion = "0.79.1";
     };
   };
 
