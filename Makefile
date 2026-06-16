@@ -1,5 +1,5 @@
 SOPS_AGE_KEY_FILE := $(HOME)/.config/sops/age/keys.txt
-FLAKE_TARGET := .#$(shell whoami)-$(shell uname -m)-$(shell uname | tr '[:upper:]' '[:lower:]')
+FLAKE_TARGET := $(addprefix .#,$(shell whoami)-$(shell uname -m | sed 's/arm64/aarch64/')-$(shell uname | tr '[:upper:]' '[:lower:]'))
 
 export SOPS_AGE_KEY_FILE
 export NIXPKGS_ALLOW_UNFREE = 1
