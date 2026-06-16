@@ -25,6 +25,7 @@ make check
 
 1. `make fmt`
 2. `make build` (validates the config compiles)
+3. Commit the changes with a clear message
 
 Do NOT run `home-manager switch` — the user handles that manually.
 
