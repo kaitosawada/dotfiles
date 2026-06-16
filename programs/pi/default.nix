@@ -5,10 +5,16 @@
   ...
 }:
 let
+  # pi パッケージを宣言的に管理するリスト
+  # awesome-pi-coding-agent などの npm パッケージを追加可能
   piPackages = [
     "npm:pi-web-access@0.10.7"
   ];
 
+  # buildNpmPackage で npm パッケージを nix store にビルドし、
+  # ~/.pi/agent/npm 以下に配置する
+  # 注意: このディレクトリは nix store への symlink なので、
+  #       `pi install` や `pi update` は使えない
   piExtensionsNpm = pkgs.buildNpmPackage {
     pname = "pi-extensions";
     version = "0.10.7";
@@ -36,12 +42,14 @@ in
     package = piWrapped;
   };
 
-  # Pi npm package directory
+  # pi パッケージの実体を nix store から配置
   home.file.".pi/agent/npm" = {
     source = piExtensionsNpm;
   };
 
-  # Pi settings.json with pi-web-access package
+  # settings.json の packages 経由で pi-web-access を読み込む
+  # API key は環境変数（EXA_API_KEY / PERPLEXITY_API_KEY / GEMINI_API_KEY）
+  # または ~/.pi/web-search.json で設定する
   home.file.".pi/agent/settings.json" = {
     text = builtins.toJSON {
       packages = piPackages;
