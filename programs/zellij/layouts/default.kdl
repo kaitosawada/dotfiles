@@ -4,7 +4,8 @@ layout {
     }
     pane split_direction="vertical" {
         pane name="claude" size="40%" command="zsh" {
-            args "-c" "OPENCODE_ENABLE_EXA=1 opencode"
+            // args "-c" "OPENCODE_ENABLE_EXA=1 opencode"
+            args "-c" "pi"
         }
         pane split_direction="horizontal" {
             pane name="nvim" size="70%" command="zsh" {
