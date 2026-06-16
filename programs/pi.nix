@@ -148,4 +148,11 @@ in
   home.file.".pi/agent/extensions/websearch.ts" = {
     source = websearchExtension;
   };
+
+  # Respond in Japanese
+  home.file.".pi/agent/APPEND_SYSTEM.md" = {
+    text = ''
+      回答は日本語で行ってください。
+    '';
+  };
 }
