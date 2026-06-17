@@ -10,7 +10,7 @@ let
   # awesome-pi-coding-agent などの npm パッケージを追加可能
   piPackages = [
     "npm:pi-web-access@0.10.7"
-    "npm:pi-subagents@0.28.0"
+    "npm:@gotgenes/pi-subagents@16.3.1"
     "npm:pi-lean-ctx@3.8.7"
   ];
 
@@ -22,7 +22,7 @@ let
     pname = "pi-extensions";
     version = "0.2.0";
     src = ./npm;
-    npmDepsHash = "sha256-r1PU5VYhEuWFPzje9MHPK6O0i2nN5iDX2pVL7iIXEYo=";
+    npmDepsHash = "sha256-1WItim0hrFFOjYlzsxQkc6t4r8NPI6dpH6iYLDTcIXs=";
     npmFlags = [ "--legacy-peer-deps" ];
     dontBuild = true;
     installPhase = ''
