@@ -18,6 +18,7 @@
     ./lsd.nix
     # ./notmuch.nix
     ./nvim-minimal.nix
+    ./omp.nix
     ./opencode.nix
     ./pi
     ./ssh.nix
