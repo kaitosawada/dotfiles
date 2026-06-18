@@ -138,4 +138,9 @@ in
       回答は日本語で行ってください。
     '';
   };
+
+  # PR assistant extension
+  home.file.".pi/agent/extensions/pr-assistant.ts" = {
+    source = ./extensions/pr-assistant.ts;
+  };
 }
