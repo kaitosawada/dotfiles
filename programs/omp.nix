@@ -25,6 +25,13 @@ in
     # Oh My Pi (omp) configuration
     # Documentation: https://github.com/can1357/oh-my-pi/tree/main/docs
     # Official site: https://ohmypi.xyz
+
+    statusLine:
+      segmentOptions:
+        path:
+          abbreviate: true
+          maxLength: 20
+          stripWorkPrefix: true
   '';
 
   home.file.".omp/agent/models.yml".text = ''
