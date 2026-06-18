@@ -8,9 +8,13 @@
 }:
 let
   omp = inputs.llm-agents.packages.${system}.omp;
+  ompWrapped = pkgs.writeShellScriptBin "omp" ''
+    export EDITOR="nvim-minimal"
+    exec ${omp}/bin/omp "$@"
+  '';
 in
 {
-  home.packages = [ omp ];
+  home.packages = [ ompWrapped ];
 
   programs.zsh.initContent = lib.mkIf config.programs.zsh.enable ''
     # Oh My Pi (omp) shell completions
@@ -26,7 +30,7 @@ in
   home.file.".omp/agent/models.yml".text = ''
     # Custom model definitions for Oh My Pi
     # See docs/models.md for the full schema
-    # providers:
+    providers: {}
     #   openai:
     #     baseUrl: https://api.openai.com/v1
     #     api: openai-completions
