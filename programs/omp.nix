@@ -43,4 +43,25 @@ in
     #     api: openai-completions
     #     apiKey: ''${OPENAI_API_KEY}
   '';
+
+  home.file.".omp/agent/config.yml".text = ''
+    providers:
+      webSearch: exa
+    symbolPreset: nerd
+    theme:
+      dark: titanium
+      light: dark-twilight
+    setupVersion: 1
+    modelRoles:
+      default: fireworks/kimi-k2.7-code:medium
+      smol: fireworks/deepseek-v4-pro:medium
+      plan: anthropic/claude-opus-4-8:xhigh
+  '';
+
+  home.file.".omp/agent/APPEND_SYSTEM.md".text = ''
+    # Oh My Pi (omp) system prompt
+    # This file is appended to the system prompt for all agents
+    # You can customize it to change the behavior of the agents
+    Please respond in Japanese. Use です/ます調 for explanations.
+  '';
 }
