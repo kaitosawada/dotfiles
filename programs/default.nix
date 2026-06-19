@@ -20,7 +20,7 @@
     ./nvim-minimal.nix
     ./omp.nix
     ./opencode.nix
-    ./pi
+    # ./pi
     ./ssh.nix
     ./starship.nix
     ./syncthing.nix
