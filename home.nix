@@ -83,10 +83,10 @@ in
         uv
 
         # llm
-        inputs.nix-claude-code.packages.${system}.claude
-        inputs.opencode.packages.${system}.default
+        # inputs.nix-claude-code.packages.${system}.claude
+        # inputs.opencode.packages.${system}.default
         github-copilot-cli
-        cursor-cli
+        # cursor-cli
 
         # bitwarden
         bitwarden-cli

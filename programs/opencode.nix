@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, system, inputs, ... }:
 let
   tuiConfig = builtins.toJSON {
     "$schema" = "https://opencode.ai/tui.json";
@@ -32,12 +32,13 @@ let
       ];
     };
   };
+  opencode = inputs.llm-agents.packages.${system}.opencode;
 in
 {
   home.packages = [
     (pkgs.writeShellScriptBin "opencode" ''
       export EDITOR="nvim-minimal"
-      exec ${pkgs.opencode}/bin/opencode "$@"
+      exec ${opencode}/bin/opencode "$@"
     '')
   ];
 
