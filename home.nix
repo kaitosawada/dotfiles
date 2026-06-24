@@ -87,6 +87,7 @@ in
         # inputs.opencode.packages.${system}.default
         inputs.llm-agents.packages.${system}.cursor-agent
         github-copilot-cli
+        openspec
 
         # bitwarden
         bitwarden-cli
