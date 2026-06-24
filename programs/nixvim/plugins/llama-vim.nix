@@ -1,7 +1,8 @@
 { pkgs, ... }:
 let
   llama-vim = pkgs.vimUtils.buildVimPlugin {
-    name = "llama.vim";
+    pname = "llama.vim";
+    version = "unstable";
     src = pkgs.fetchFromGitHub {
       owner = "ggml-org";
       repo = "llama.vim";

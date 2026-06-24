@@ -3,7 +3,8 @@ let
   inherit (import ../../../lib/skkeleton.nix { inherit pkgs; }) skkDict;
 
   denops = pkgs.vimUtils.buildVimPlugin {
-    name = "denops.vim";
+    pname = "denops.vim";
+    version = "unstable";
     src = pkgs.fetchFromGitHub {
       owner = "vim-denops";
       repo = "denops.vim";
@@ -13,7 +14,8 @@ let
   };
 
   skkeleton = pkgs.vimUtils.buildVimPlugin {
-    name = "skkeleton";
+    pname = "skkeleton";
+    version = "unstable";
     src = pkgs.fetchFromGitHub {
       owner = "vim-skk";
       repo = "skkeleton";
@@ -25,7 +27,8 @@ let
   # build時にテストが失敗するので除外
   skkeleton_indicator =
     (pkgs.vimUtils.buildVimPlugin {
-      name = "skkeleton_indicator";
+      pname = "skkeleton_indicator";
+      version = "unstable";
       src = pkgs.fetchFromGitHub {
         owner = "delphinus";
         repo = "skkeleton_indicator.nvim";

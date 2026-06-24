@@ -1,0 +1,9 @@
+{
+  "name": "pi-extensions",
+  "private": true,
+  "dependencies": {
+    "pi-web-access": "0.10.7",
+    "@gotgenes/pi-subagents": "16.3.1",
+    "pi-lean-ctx": "3.8.7"
+  }
+}

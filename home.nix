@@ -64,7 +64,6 @@ in
         caddy
 
         # docker
-        colima
         docker
         docker-compose
         docker-buildx
@@ -83,10 +82,11 @@ in
         python314
         uv
 
-        # claude
-        inputs.nix-claude-code.packages.${system}.claude
-        gemini-cli
+        # llm
+        # inputs.nix-claude-code.packages.${system}.claude
+        # inputs.opencode.packages.${system}.default
         github-copilot-cli
+        # cursor-cli
 
         # bitwarden
         bitwarden-cli
@@ -107,7 +107,6 @@ in
       EDITOR = "nvim";
       LANG = "ja_JP.UTF-8";
       NIXPKGS_ALLOW_UNFREE = "1";
-      DOCKER_HOST = "unix://$HOME/.colima/default/docker.sock";
     };
 
     shellAliases = {
@@ -196,9 +195,13 @@ in
       cores = 8;
       "max-jobs" = 8;
       warn-dirty = false;
-      extra-substituters = [ "https://ryoppippi.cachix.org" ];
+      extra-substituters = [
+        "https://ryoppippi.cachix.org"
+        "https://cache.numtide.com"
+      ];
       extra-trusted-public-keys = [
         "ryoppippi.cachix.org-1:b2LbtWNvJeL/qb1B6TYOMK+apaCps4SCbzlPRfSQIms="
+        "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
       ];
     };
   };

@@ -1,7 +1,7 @@
 { username, homeDirectory, ... }:
 let
   signingkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOnQQ7x8XAnirqz1MlR5kFbvZ5VL6MMaBZi5JmOdYEMB";
-  email = "mitosawada@gmail.com";
+  email = "75603046+kaitosawada@users.noreply.github.com";
   allowedSignersFile = "${homeDirectory}/.ssh/allowed_signers";
 in
 {
@@ -17,8 +17,10 @@ in
       gpg.ssh.allowedSignersFile = allowedSignersFile;
       commit.gpgsign = true;
       tag.gpgsign = true;
-      pull.rebase = false;
-      url."ssh://git@github.com/".insteadOf = "https://github.com/";
+      # NOTE: ssh rewriteなんでやってたんだっけ？
+      # url."ssh://git@github.com/".insteadOf = "https://github.com/";
+      pull.rebase = true;
+      fetch.prune = true;
       ghq.root = "~/ghq";
     };
   };

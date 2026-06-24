@@ -8,9 +8,7 @@ let
         ./nixvim/theme.nix
         ./nixvim/keymappings.nix
         ./nixvim/plugins/skkeleton.nix
-        ./nixvim/plugins/blink-cmp.nix
         ./nixvim/plugins/flash.nix
-        ./nixvim/plugins/copilot-lua.nix
         ./nixvim/plugins/copilot-chat.nix
       ];
 
@@ -68,15 +66,10 @@ let
       extraConfigLua = ''
         vim.api.nvim_create_autocmd({"VimEnter", "BufReadPost"}, {
           callback = function()
-            local filename = vim.fn.expand("%:t")
-            if filename:match("^claude%-prompt%-.*%.md$") then
+            local filepath = vim.fn.expand("%:p")
+            if not filepath:match("%.git/COMMIT_EDITMSG$") then
               vim.defer_fn(function()
                 vim.cmd("normal! G$")
-                vim.cmd("startinsert!")
-              end, 10)
-            elseif filename:match("%.dump$") then
-              vim.defer_fn(function()
-                vim.cmd("normal! G0")
               end, 10)
             end
           end

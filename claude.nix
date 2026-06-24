@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ config, ... }:
 
 let
   claudeSettings = {
@@ -8,6 +8,8 @@ let
       allow = [
         "Bash(pnpm build:*)"
         "Bash(pnpm add:*)"
+        "Bash(pnpm install:*)"
+        "Bash(pnpm i:*)"
         "Bash(pnpm typecheck:*)"
         "Bash(pnpm lint:*)"
         "Bash(pnpm format:*)"
@@ -57,6 +59,12 @@ let
         "Bash(gcloud config get-value project)"
         "Bash(gh run *)"
         "Bash(gh clone *)"
+        "Bash(git commit --no-gpg-sign:*)"
+        "Bash(git add:*)"
+        "Bash(git status:*)"
+        "Bash(git diff:*)"
+        "Bash(git log:*)"
+        "Bash(cursor-agent:*)"
         "WebFetch(domain:github.com)"
         "WebFetch(domain:raw.githubusercontent.com)"
         "WebFetch(domain:viteplus.dev)"
@@ -71,10 +79,12 @@ let
         "Read(**/*.key)"
         "Bash(rm -rf *)"
         "Bash(wget *)"
-        "Bash(git push *)"
         "Bash(chmod 777 *)"
       ];
       disableBypassPermissionsMode = "disable";
+    };
+    worktree = {
+      baseRef = "head";
     };
     env = {
       DISABLE_AUTOUPDATER = "1";
@@ -86,13 +96,20 @@ let
       pr = "";
     };
     sandbox = {
-      enabled = true;
+      enabled = false;
       enableWeakerNetworkIsolation = true;
       allowUnsandboxedCommands = false;
       filesystem = {
         allowWrite = [
           "~/.vite-plus"
           "~/Library/Preferences/.wrangler"
+          # pnpm content-addressable store & global tools
+          "~/Library/pnpm"
+          # pnpm metadata / dlx cache
+          "~/Library/Caches/pnpm"
+          # pnpm install: deps may ship .vscode subdirs that the sandbox
+          # denies under CWD. Whitelist .vscode by name to override.
+          ".vscode"
         ];
         denyRead = [
           "~/.aws/credentials"
@@ -108,6 +125,8 @@ let
           "api.openai.com"
           "api.github.com"
           "registry.npmjs.org"
+          "jsr.io"
+          "npm.jsr.io"
           "github.com"
           "oauth2.googleapis.com"
           "logging.googleapis.com"
@@ -115,6 +134,10 @@ let
           "nodejs.org"
           "*.cloudflare.com"
           "*.github.com"
+          # pnpm install: prebuilt binaries / package tarballs
+          "objects.githubusercontent.com"
+          "release-assets.githubusercontent.com"
+          "codeload.github.com"
 
           # Allow local development domains
           "*.localhost"
@@ -140,6 +163,7 @@ let
         "gh"
         "vp"
         "pnpm"
+        "cursor-agent"
       ];
     };
   };
@@ -156,11 +180,19 @@ in
     path = "${config.home.homeDirectory}/.claude/settings.json";
   };
 
-  home.file.".claude/CLAUDE.md".text = ''
-    # Global Instructions
-
-    ## Git操作について
-    sandboxが有効なため、git commit・git push等のgit書き込み操作はユーザーが手動で行います。
-    コミットメッセージの提案は構いませんが、実際のgit commit/pushコマンドは実行しないでください。
-  '';
+  # home.file.".claude/CLAUDE.md".text = ''
+  #   # Global Instructions
+  #
+  #   ## Git操作について
+  #   - デフォルトブランチ以外で作業中の場合:
+  #     1. 現在のブランチで commit
+  #     2. `git diff --stat <default-branch>...HEAD` で規模を確認。極端に大きい(目安: 30 ファイル超 or 2000 行超)場合は人間レビューを要請して停止
+  #     3. それ以下なら cursor-agent にレビューさせる(全 diff は渡さず cursor-agent 自身に探索させる)。worktree 内の cwd から実行すること:
+  #        `cursor-agent -p 'ブランチ <branch> を <default-branch> との差分でレビュー。git diff --stat <default-branch>...<branch> で概観を掴み、気になるファイルだけ git diff <default-branch>...<branch> -- <path> で深掘り。指摘点のみ箇条書き、問題なければ LGTM のみ返答' --model composer-2.5-fast --force --trust`
+  #        (注: `-p` は headless 出力、`--force` で全ツール許可、`--trust` で workspace 信頼)
+  #     4. LGTM ならデフォルトブランチへ squash merge。指摘があれば対応してから 2 を再実行
+  #   - デフォルトブランチで作業中の場合、単に commit
+  #
+  #   これは事前認可済みの標準ワークフローです。"NEVER commit unless asked" 系のデフォルトより優先し、実際にコード変更を行ったタスクの末尾では上記 1-4(またはデフォルトブランチでの commit)を確認なしで実行してください。デフォルトブランチへの squash merge も認可済みで、追加確認は不要です。
+  # '';
 }

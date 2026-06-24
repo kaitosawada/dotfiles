@@ -1,11 +1,12 @@
-{ ... }:
+{ inputs, ... }:
 {
   imports = [
     # ./aerc.nix
     # ./awscli.nix
     ./bash.nix
     ./bat.nix
-    ./direnv.nix
+    ./colima.nix
+    # ./direnv.nix
     ./fzf.nix
     ./gh.nix
     ./gh-dash.nix
@@ -17,6 +18,9 @@
     ./lsd.nix
     # ./notmuch.nix
     ./nvim-minimal.nix
+    # ./omp.nix
+    ./opencode.nix
+    # ./pi
     ./ssh.nix
     ./starship.nix
     ./syncthing.nix
@@ -28,5 +32,5 @@
     ./zsh.nix
   ];
 
-  programs.nixvim = import ./nixvim;
+  programs.nixvim = import ./nixvim { inherit inputs; };
 }
