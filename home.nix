@@ -83,7 +83,7 @@ in
         uv
 
         # llm
-        # inputs.nix-claude-code.packages.${system}.claude
+        inputs.nix-claude-code.packages.${system}.claude
         # inputs.opencode.packages.${system}.default
         inputs.llm-agents.packages.${system}.cursor-agent
         github-copilot-cli
