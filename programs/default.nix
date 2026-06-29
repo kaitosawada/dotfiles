@@ -21,6 +21,7 @@
     # ./omp.nix
     ./opencode.nix
     # ./pi
+    ./rclone.nix
     ./ssh.nix
     ./starship.nix
     ./syncthing.nix

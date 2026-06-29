@@ -1,4 +1,9 @@
-{ pkgs, system, inputs, ... }:
+{
+  pkgs,
+  system,
+  inputs,
+  ...
+}:
 let
   tuiConfig = builtins.toJSON {
     "$schema" = "https://opencode.ai/tui.json";
