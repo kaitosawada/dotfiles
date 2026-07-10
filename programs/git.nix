@@ -1,8 +1,6 @@
-{ username, homeDirectory, ... }:
+{ username, ... }:
 let
-  signingkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOnQQ7x8XAnirqz1MlR5kFbvZ5VL6MMaBZi5JmOdYEMB";
   email = "75603046+kaitosawada@users.noreply.github.com";
-  allowedSignersFile = "${homeDirectory}/.ssh/allowed_signers";
 in
 {
   programs.git = {
@@ -11,12 +9,8 @@ in
       core.editor = "nvim-minimal";
       user = {
         name = username;
-        inherit email signingkey;
+        inherit email;
       };
-      gpg.format = "ssh";
-      gpg.ssh.allowedSignersFile = allowedSignersFile;
-      commit.gpgsign = true;
-      tag.gpgsign = true;
       # NOTE: ssh rewriteなんでやってたんだっけ？
       # url."ssh://git@github.com/".insteadOf = "https://github.com/";
       pull.rebase = true;
@@ -24,6 +18,4 @@ in
       ghq.root = "~/ghq";
     };
   };
-
-  home.file.".ssh/allowed_signers".text = "${email} ${signingkey}";
 }

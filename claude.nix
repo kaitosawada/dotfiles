@@ -59,7 +59,6 @@ let
         "Bash(gcloud config get-value project)"
         "Bash(gh run *)"
         "Bash(gh clone *)"
-        "Bash(git commit --no-gpg-sign:*)"
         "Bash(git add:*)"
         "Bash(git status:*)"
         "Bash(git diff:*)"
