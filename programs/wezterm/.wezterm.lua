@@ -52,17 +52,22 @@ config.inactive_pane_hsb = {
   brightness = 0.8,
 }
 config.keys = {
+  -- Pass through to herdr (cmd+t = new tab, cmd+n = split pane)
   {
     key = "t",
     mods = "CMD",
-    action = wezterm.action { SpawnCommandInNewTab = {
-      cwd = os.getenv("HOME"),
-    } }
+    action = wezterm.action.DisableDefaultAssignment,
   },
+  {
+    key = "n",
+    mods = "CMD",
+    action = wezterm.action.DisableDefaultAssignment,
+  },
+  -- WezTerm-native new tab when needed
   {
     key = "t",
     mods = "CMD|SHIFT",
-    action = wezterm.action { SpawnCommandInNewTab = {} }
+    action = wezterm.action { SpawnCommandInNewTab = {} },
   },
 }
 
