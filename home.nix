@@ -105,7 +105,7 @@ in
       ];
 
     sessionVariables = {
-      EDITOR = "nvim";
+      EDITOR = "nvim-minimal";
       LANG = "ja_JP.UTF-8";
       NIXPKGS_ALLOW_UNFREE = "1";
     };
