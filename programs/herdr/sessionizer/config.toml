@@ -1,0 +1,41 @@
+[projects]
+# ghq host/owner layout: expand each owner, then list repos one level down
+roots = ["~/ghq/*/*"]
+git_only = true
+depth = 1
+
+[layout]
+placement = "overlay"
+focus = "nvim"
+
+[tabs.dev]
+label = "dev"
+
+# Mirrors ~/.config/herdr/layouts/default.json:
+# left cursor-agent (40%) | right nvim (70%) over two empty panes (30%)
+[[tabs.dev.panes]]
+id = "claude"
+title = "claude"
+command = "cursor-agent"
+
+[[tabs.dev.panes]]
+id = "nvim"
+from = "claude"
+title = "nvim"
+split = "right"
+ratio = 0.6
+command = "nvim"
+
+[[tabs.dev.panes]]
+id = "term1"
+from = "nvim"
+title = "term"
+split = "down"
+ratio = 0.3
+
+[[tabs.dev.panes]]
+id = "term2"
+from = "term1"
+title = "term"
+split = "right"
+ratio = 0.5
