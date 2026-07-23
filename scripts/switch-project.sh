@@ -1,55 +1,39 @@
-# Apply ~/.config/herdr/layouts/default.json to a herdr tab via socket API.
+# Build the default herdr layout via sequential pane splits.
+# Prefer this over layout.apply: apply spawns PTYs at full client size, so nvim
+# keeps &columns/&lines of the whole terminal. Splits resize the PTY correctly.
+#
+# Layout (same as sessionizer/config.toml and layouts/default.json):
+#   left cursor-agent (40%) | right nvim (70% height) over two term panes (30%)
+# herdr --ratio is the share the *source* pane keeps (not the new pane).
 function herdr-apply-layout() {
-  local tab_id="$1"
+  local root_pane="$1"
   local cwd="$2"
-  local session="$3"
-  local layout_file="${HERDR_LAYOUT:-$HOME/.config/herdr/layouts/default.json}"
-  [ -f "$layout_file" ] || return 0
 
-  local root
-  root="$(
-    jq -c --arg cwd "$cwd" --arg session "$session" '
-      def inject:
-        if type != "object" then .
-        elif .type == "pane" then
-          .cwd = $cwd
-          | if (.command | type) == "array" then
-              .command |= map(gsub("__SESSION__"; $session))
-            else .
-            end
-        elif .type == "split" then
-          .first |= inject | .second |= inject
-        else .
-        end;
-      inject
-    ' "$layout_file"
-  )" || return 1
+  herdr pane rename "$root_pane" claude >/dev/null || true
+  herdr pane run "$root_pane" cursor-agent >/dev/null || true
 
-  jq -nc --arg tab_id "$tab_id" --argjson root "$root" \
-    '{id:"layout-apply",method:"layout.apply",params:{tab_id:$tab_id,focus:true,root:$root}}' \
-    | python3 -c '
-import json, os, socket, sys
+  local nvim_pane term1_pane term2_pane
+  nvim_pane="$(
+    herdr pane split "$root_pane" --direction right --ratio 0.4 --cwd "$cwd" --focus \
+      | jq -r '.result.pane.pane_id // empty'
+  )"
+  [ -n "$nvim_pane" ] || return 1
+  herdr pane rename "$nvim_pane" nvim >/dev/null || true
+  herdr pane run "$nvim_pane" nvim >/dev/null || true
 
-req = json.load(sys.stdin)
-sock_path = os.environ.get("HERDR_SOCKET_PATH") or os.path.expanduser(
-    "~/.config/herdr/herdr.sock"
-)
-s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-s.connect(sock_path)
-s.sendall((json.dumps(req) + "\n").encode())
-buf = b""
-while True:
-    chunk = s.recv(65536)
-    if not chunk:
-        break
-    buf += chunk
-    if b"\n" in buf:
-        break
-s.close()
-resp = json.loads(buf.decode().split("\n", 1)[0])
-if "error" in resp:
-    raise SystemExit(resp["error"].get("message", "layout.apply failed"))
-'
+  term1_pane="$(
+    herdr pane split "$nvim_pane" --direction down --ratio 0.7 --cwd "$cwd" --no-focus \
+      | jq -r '.result.pane.pane_id // empty'
+  )"
+  [ -n "$term1_pane" ] || return 1
+  herdr pane rename "$term1_pane" term >/dev/null || true
+
+  term2_pane="$(
+    herdr pane split "$term1_pane" --direction right --ratio 0.5 --cwd "$cwd" --no-focus \
+      | jq -r '.result.pane.pane_id // empty'
+  )"
+  [ -n "$term2_pane" ] || return 1
+  herdr pane rename "$term2_pane" term >/dev/null || true
 }
 
 function switch-project() {
@@ -94,11 +78,11 @@ function switch-project() {
     if [ -n "$wid" ]; then
       herdr workspace focus "$wid" >/dev/null
     else
-      local created tab_id
+      local created root_pane
       created="$(herdr workspace create --cwd "$dir_real" --label "$session_name" --focus)"
-      tab_id="$(echo "$created" | jq -r '.result.tab.tab_id // empty')"
-      if [ -n "$tab_id" ]; then
-        herdr-apply-layout "$tab_id" "$dir_real" "$session_name"
+      root_pane="$(echo "$created" | jq -r '.result.root_pane.pane_id // empty')"
+      if [ -n "$root_pane" ]; then
+        herdr-apply-layout "$root_pane" "$dir_real"
       fi
     fi
     return

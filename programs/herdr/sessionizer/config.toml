@@ -11,8 +11,10 @@ focus = "nvim"
 [tabs.dev]
 label = "dev"
 
-# Mirrors ~/.config/herdr/layouts/default.json:
+# Mirrors scripts/switch-project.sh herdr-apply-layout:
 # left cursor-agent (40%) | right nvim (70%) over two empty panes (30%)
+# herdr --ratio is the share the *source* pane keeps (not the new pane).
+# Sessionizer docs say "new pane share" but herdr CLI keeps the source share.
 [[tabs.dev.panes]]
 id = "claude"
 title = "claude"
@@ -23,7 +25,7 @@ id = "nvim"
 from = "claude"
 title = "nvim"
 split = "right"
-ratio = 0.6
+ratio = 0.4
 command = "nvim"
 
 [[tabs.dev.panes]]
@@ -31,7 +33,7 @@ id = "term1"
 from = "nvim"
 title = "term"
 split = "down"
-ratio = 0.3
+ratio = 0.7
 
 [[tabs.dev.panes]]
 id = "term2"

@@ -52,6 +52,8 @@
     };
   };
 
+  # Reference tree for the default layout. switch-project.sh builds this via
+  # sequential pane splits (layout.apply leaves nvim with a full-client PTY size).
   home.file.".config/herdr/layouts/default.json" = {
     source = ./layouts/default.json;
   };
