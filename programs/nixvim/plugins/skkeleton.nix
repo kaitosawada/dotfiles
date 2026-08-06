@@ -45,7 +45,10 @@ let
 in
 {
   extraConfigLua = ''
-    vim.fn["skkeleton#register_kanatable"]("rom", { jj = "escape" })
+    vim.fn["skkeleton#register_kanatable"]("rom", {
+      jj = "escape",
+      ["z:"] = { "→", "" },
+    })
     vim.fn["skkeleton#config"]({
       eggLikeNewline = true,
       globalDictionaries = { "${skkDict}/SKK-JISYO.L" }
