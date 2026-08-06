@@ -57,6 +57,7 @@ in
         jq
         ripgrep
         sd
+        ffmpeg
         imagemagick
         tree-sitter # for nixvim swift grammar
         ni # @antfu/ni
