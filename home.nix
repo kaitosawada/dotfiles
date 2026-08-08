@@ -123,6 +123,8 @@ in
       zk = "zellij kill-all-sessions";
       d = "gh dash";
       unlock = "bw unlock --raw > ~/.bw_session";
+      oc = "opencode";
+      c = "cursor-agent";
     };
   };
 
