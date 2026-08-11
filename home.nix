@@ -87,6 +87,7 @@ in
         inputs.nix-claude-code.packages.${system}.claude
         # inputs.opencode.packages.${system}.default
         inputs.llm-agents.packages.${system}.cursor-agent
+        inputs.llm-agents.packages.${system}.codex
         github-copilot-cli
         openspec
 
