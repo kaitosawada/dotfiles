@@ -36,6 +36,46 @@ function herdr-apply-layout() {
   herdr pane rename "$term2_pane" term >/dev/null || true
 }
 
+# herdr: 既存 workspace（同 cwd）へ focus、なければ create + default layout
+function herdr-ensure-workspace() {
+  local dir="$1"
+  local session_name="$2"
+
+  local dir_real
+  dir_real="$(cd "$dir" && pwd -P)" || return 1
+
+  local wid
+  wid="$(
+    herdr pane list 2>/dev/null | jq -r --arg dir "$dir_real" '
+      def norm: gsub("^/private"; "");
+      .result.panes[]?
+      | ((.cwd // .foreground_cwd // "") | norm) as $c
+      | select($c == ($dir | norm))
+      | .workspace_id
+    ' | head -n 1
+  )"
+
+  if [ -n "$wid" ]; then
+    herdr workspace focus "$wid" >/dev/null
+  else
+    local created root_pane
+    created="$(herdr workspace create --cwd "$dir_real" --label "$session_name" --focus)"
+    root_pane="$(echo "$created" | jq -r '.result.root_pane.pane_id // empty')"
+    if [ -n "$root_pane" ]; then
+      herdr-apply-layout "$root_pane" "$dir_real"
+    fi
+  fi
+}
+
+# カレントディレクトリで herdr の pane 構成だけを行う
+function herdr-here() {
+  if ! command -v herdr >/dev/null 2>&1 || ! herdr workspace list >/dev/null 2>&1; then
+    echo "herdr is not available" >&2
+    return 1
+  fi
+  herdr-ensure-workspace "$(pwd)" "$(basename "$(pwd)")"
+}
+
 function switch-project() {
   local repo
   local candidates
@@ -61,30 +101,7 @@ function switch-project() {
 
   # herdr: 既存 workspace（同 cwd）へ focus、なければ create + default layout
   if command -v herdr >/dev/null 2>&1 && herdr workspace list >/dev/null 2>&1; then
-    local dir_real
-    dir_real="$(cd "$dir" && pwd -P)" || return
-
-    local wid
-    wid="$(
-      herdr pane list 2>/dev/null | jq -r --arg dir "$dir_real" '
-        def norm: gsub("^/private"; "");
-        .result.panes[]?
-        | ((.cwd // .foreground_cwd // "") | norm) as $c
-        | select($c == ($dir | norm))
-        | .workspace_id
-      ' | head -n 1
-    )"
-
-    if [ -n "$wid" ]; then
-      herdr workspace focus "$wid" >/dev/null
-    else
-      local created root_pane
-      created="$(herdr workspace create --cwd "$dir_real" --label "$session_name" --focus)"
-      root_pane="$(echo "$created" | jq -r '.result.root_pane.pane_id // empty')"
-      if [ -n "$root_pane" ]; then
-        herdr-apply-layout "$root_pane" "$dir_real"
-      fi
-    fi
+    herdr-ensure-workspace "$dir" "$session_name"
     return
   fi
 
@@ -116,3 +133,4 @@ function switch-project() {
   fi
 }
 alias g=switch-project
+alias v=herdr-here

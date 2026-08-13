@@ -32,7 +32,7 @@ Do NOT run `home-manager switch` — the user handles that manually.
 ## Architecture
 
 - `flake.nix` — flake entry, declares inputs (home-manager, nixvim, sops-nix, nix-claude-code, etc.) and generates homeManagerConfigurations for `kaito`, `kaitosawada`, `ubuntu` across `x86_64-linux`, `aarch64-darwin`, `x86_64-darwin`
-- `home.nix` — top-level home config: imports `programs/`, `claude.nix`, `skills/`; defines system packages, shell aliases, session variables
+- `home.nix` — top-level home config: imports `programs/`, `claude.nix`; defines system packages, shell aliases, session variables
 - `programs/default.nix` — aggregates per-tool modules (each in `programs/<tool>.nix`); also imports nixvim config
 - `programs/nixvim/` — Neovim configuration via nixvim
 - `claude.nix` — generates `~/.claude/settings.json` via sops template (Claude Code sandbox, permissions, env vars)

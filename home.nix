@@ -15,7 +15,6 @@ in
   imports = [
     ./programs
     ./claude.nix
-    ./skills
   ];
 
   # See <https://github.com/nix-community/home-manager/blob/master/modules/programs/mise.nix>

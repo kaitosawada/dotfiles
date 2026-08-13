@@ -21,15 +21,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # https://github.com/Kyure-A/agent-skills-nix
-    agent-skills = {
-      url = "github:Kyure-A/agent-skills-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    anthropic-skills = {
-      url = "github:anthropics/skills";
-      flake = false;
-    };
     nix-claude-code = {
       url = "github:ryoppippi/nix-claude-code";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -80,7 +71,6 @@
           modules = [
             ./home.nix
             nixvim.homeModules.nixvim
-            inputs.agent-skills.homeManagerModules.default
             inputs.sops-nix.homeManagerModules.sops
           ];
         };
