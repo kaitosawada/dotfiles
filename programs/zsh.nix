@@ -31,6 +31,8 @@ in
       fi
 
       bindkey -v  # Use vi keybindings
+      KEYTIMEOUT=30  # jjで抜けるための猶予 (0.3s)
+      bindkey -M viins 'jj' vi-cmd-mode
 
       # Suppress function key escape sequences in zsh line editor
       bindkey -s $'\e[15~' ""  # F5
