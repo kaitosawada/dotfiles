@@ -6,6 +6,7 @@
     ./bash.nix
     ./bat.nix
     ./colima.nix
+    ./cursor-agent.nix
     # ./direnv.nix
     ./fzf.nix
     ./gh.nix
