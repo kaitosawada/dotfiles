@@ -25,6 +25,9 @@
         fetchInterval = 60;
         refreshInterval = 10;
       };
+      services = {
+        "git.ozonehl.dev" = "gitea:git.ozonehl.dev";
+      };
     };
   };
 }
