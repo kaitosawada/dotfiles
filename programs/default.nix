@@ -8,6 +8,7 @@
     ./colima.nix
     ./cursor-agent.nix
     # ./direnv.nix
+    ./forgejo.nix
     ./fzf.nix
     ./gh.nix
     ./gh-dash.nix
