@@ -57,6 +57,11 @@ in
         ripgrep
         sd
         ffmpeg
+        (writeShellApplication {
+          name = "to-mp4";
+          runtimeInputs = [ ffmpeg ];
+          text = builtins.readFile ./scripts/to-mp4.sh;
+        })
         imagemagick
         tree-sitter # for nixvim swift grammar
         ni # @antfu/ni
