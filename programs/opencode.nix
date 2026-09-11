@@ -26,9 +26,7 @@ let
       webfetch = "allow";
       question = "allow";
       edit = {
-        "/tmp/**" = "allow";
-        "/private/tmp/**" = "allow";
-        "/var/folders/**" = "allow";
+        "/nix/store/**" = "deny";
       };
       external_directory = {
         "/tmp/**" = "allow";
