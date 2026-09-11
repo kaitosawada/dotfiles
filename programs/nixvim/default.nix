@@ -9,6 +9,7 @@
   enable = true;
 
   nixpkgs.source = inputs.nixpkgs;
+  nixpkgs.config.allowUnfree = true;
 
   extraConfigLua = ''
     -- ファイルの外部変更を自動的に読み込む
