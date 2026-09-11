@@ -3,6 +3,7 @@
   programs.herdr = {
     enable = true;
     settings = {
+      onboarding = false;
       keys = {
         # Custom commands ([[keys.command]] in TOML). Requires:
         #   herdr plugin install andrewchng/herdr-sessionizer --yes
