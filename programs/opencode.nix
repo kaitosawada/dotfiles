@@ -11,6 +11,7 @@ let
       editor_open = "ctrl+g";
       messages_first = "home";
     };
+    theme = "system";
   };
 
   opencodeConfig = builtins.toJSON {

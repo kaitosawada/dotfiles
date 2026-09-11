@@ -5,7 +5,7 @@
   ...
 }:
 let
-  isDarwin = pkgs.stdenv.isDarwin;
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
 in
 {
   programs.ssh = {

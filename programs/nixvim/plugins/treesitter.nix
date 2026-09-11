@@ -46,7 +46,7 @@ in
           "BufNewFile"
         ];
       };
-      grammarPackages = commonGrammars ++ lib.optionals pkgs.stdenv.isDarwin darwinGrammars;
+      grammarPackages = commonGrammars ++ lib.optionals pkgs.stdenv.hostPlatform.isDarwin darwinGrammars;
       settings = {
         highlight = {
           enable = true;
