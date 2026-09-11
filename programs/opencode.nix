@@ -25,6 +25,17 @@ let
       websearch = "allow";
       webfetch = "allow";
       question = "allow";
+      edit = {
+        "/tmp/**" = "allow";
+        "/private/tmp/**" = "allow";
+        "/var/folders/**" = "allow";
+      };
+      external_directory = {
+        "/tmp/**" = "allow";
+        "/private/tmp/**" = "allow";
+        "/var/folders/**" = "allow";
+        "/nix/store/**" = "allow";
+      };
     };
     watcher = {
       ignore = [
