@@ -100,7 +100,8 @@ in
         # cloudflare
         cloudflared
 
-        sentry-cli
+        # sentry (new CLI, via NUR)
+        nur.repos.congee.sentry
       ]
       ++ lib.optionals isDarwin [
         inputs.nix-vite-plus.packages.${system}.vp
@@ -131,7 +132,6 @@ in
       unlock = "bw unlock --raw > ~/.bw_session";
       oc = "opencode";
       c = "cursor-agent";
-      sentry = "sentry-cli";
     };
   };
 

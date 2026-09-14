@@ -29,6 +29,10 @@
       url = "github:ryoppippi/nix-vite-plus";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # opencode = {
     #   url = "github:anomalyco/opencode";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -59,6 +63,7 @@
             config = {
               allowUnfree = true;
             };
+            overlays = [ inputs.nur.overlays.default ];
           };
           homeDir = if system == "aarch64-darwin" || system == "x86_64-darwin" then "/Users" else "/home";
         in
