@@ -99,6 +99,8 @@ in
 
         # cloudflare
         cloudflared
+
+        sentry-cli
       ]
       ++ lib.optionals isDarwin [
         inputs.nix-vite-plus.packages.${system}.vp
@@ -129,8 +131,15 @@ in
       unlock = "bw unlock --raw > ~/.bw_session";
       oc = "opencode";
       c = "cursor-agent";
+      sentry = "sentry-cli";
     };
   };
+
+  home.activation.pruneHomeManagerGenerations = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    $DRY_RUN_CMD ${pkgs.nix}/bin/nix-env \
+      --profile "$HOME/.local/state/nix/profiles/home-manager" \
+      --delete-generations +10
+  '';
 
   home.activation.copyMacSKKDict = lib.mkIf isDarwin {
     after = [ "writeBoundary" ];
@@ -189,6 +198,10 @@ in
 
   nix = {
     # package = pkgs.nixVersions.stable;
+    gc = {
+      automatic = true;
+      dates = "weekly";
+    };
     extraOptions = ''
       max-jobs = 8
       cores = 8
