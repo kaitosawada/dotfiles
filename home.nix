@@ -62,6 +62,14 @@ in
           runtimeInputs = [ ffmpeg ];
           text = builtins.readFile ./scripts/to-mp4.sh;
         })
+        (writeShellApplication {
+          name = "ssh-path";
+          runtimeInputs = [
+            netcat
+            cloudflared
+          ];
+          text = builtins.readFile ./scripts/ssh-path;
+        })
         imagemagick
         tree-sitter # for nixvim swift grammar
         ni # @antfu/ni

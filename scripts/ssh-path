@@ -1,0 +1,67 @@
+# Resolve a machine-settings logical host to a reachable SSH transport.
+#
+# Usage:
+#   ssh-path <host> [port]          run as an ssh ProxyCommand
+#   ssh-path --print <host> [port]  print the chosen path and exit
+#
+# Preference order: LAN -> NetBird -> Cloudflare Tunnel.
+# The logical host names match nixosConfigurations in machine-settings.
+
+set -euo pipefail
+
+mode=run
+if [[ ${1:-} == --print ]]; then
+  mode=print
+  shift
+fi
+
+host=${1:-}
+port=${2:-22}
+
+if [[ -z $host ]]; then
+  echo "usage: ssh-path [--print] <host> [port]" >&2
+  exit 2
+fi
+
+case $host in
+gmktec)
+  lan=
+  netbird=gmktec.netbird.cloud
+  tunnel=gmktec.ssh.teinei.life
+  ;;
+em680)
+  lan=192.168.11.30
+  netbird=em680.netbird.cloud
+  tunnel=ssh.teinei.life
+  ;;
+topton)
+  lan=10.68.0.1
+  netbird=topton.netbird.cloud
+  tunnel=topton.ssh.teinei.life
+  ;;
+*)
+  echo "ssh-path: unknown host: $host" >&2
+  exit 2
+  ;;
+esac
+
+reachable() {
+  [[ -n ${1:-} ]] && nc -z -w 2 "$1" "$port" 2>/dev/null
+}
+
+for candidate in "$lan" "$netbird"; do
+  if reachable "$candidate"; then
+    if [[ $mode == print ]]; then
+      echo "$candidate"
+    else
+      exec nc "$candidate" "$port"
+    fi
+    exit 0
+  fi
+done
+
+if [[ $mode == print ]]; then
+  echo tunnel
+else
+  exec cloudflared access ssh --hostname "$tunnel"
+fi

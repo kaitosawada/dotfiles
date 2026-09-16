@@ -40,11 +40,17 @@ in
         ForwardAgent = "yes";
       };
 
+      # machine-settings hosts. ssh-path picks LAN -> NetBird -> Cloudflare.
+      "gmktec em680 topton" = {
+        ProxyCommand = "ssh-path %h %p";
+      };
+
       "*" = lib.hm.dag.entryAfter [
         "github.com"
         "i-* mi-*"
         "*.teinei.life"
         "*.ozonehl.dev"
+        "gmktec em680 topton"
       ] { };
     };
   };
