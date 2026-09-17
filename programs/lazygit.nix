@@ -17,8 +17,8 @@
         autoRefresh = true;
       };
       os = {
-        edit = "nvim --server /tmp/nvim-$ZELLIJ_SESSION_NAME.pipe --remote {{filename}}";
-        editAtLine = "nvim --server /tmp/nvim-$ZELLIJ_SESSION_NAME.pipe --remote-send ':edit +{{line}} {{filename}}<CR>'";
+        edit = "lazygit-editor {{filename}}";
+        editAtLine = "lazygit-editor {{filename}} {{line}}";
       };
       refresher = {
         externalChangeCheckInterval = 2;

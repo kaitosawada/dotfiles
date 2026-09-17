@@ -40,6 +40,7 @@ in
         # git
         git
         ghq
+        neovim-remote
 
         # languages
         deno
@@ -69,6 +70,10 @@ in
             cloudflared
           ];
           text = builtins.readFile ./scripts/ssh-path;
+        })
+        (writeShellApplication {
+          name = "lazygit-editor";
+          text = builtins.readFile ./scripts/lazygit-editor.sh;
         })
         imagemagick
         tree-sitter # for nixvim swift grammar
@@ -127,7 +132,7 @@ in
     };
 
     shellAliases = {
-      n = ''nvim --listen "/tmp/nvim-$$.pipe"'';
+      n = ''nvim --listen "/tmp/nvim-''${ZELLIJ_SESSION_NAME:-$$}.pipe"'';
       lg = "lazygit";
       load = "exec $SHELL -l";
       reload = ''export NIXPKGS_ALLOW_UNFREE=1 && home-manager switch --flake "$(ghq root)/github.com/kaitosawada/dotfiles#${username}-${system}" --impure && exec $SHELL -l'';
