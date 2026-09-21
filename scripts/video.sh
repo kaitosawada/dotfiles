@@ -1,10 +1,11 @@
 # Compress a video to H.264/AAC MP4 at or below a target size.
 #
-# Usage: to-mp4 <input> <max-mb> [output.mp4]
+# Usage: video [-s FACTOR] <input> <max-mb> [output.mp4]
 
 usage() {
-  echo "Usage: to-mp4 <input> <max-mb> [output.mp4]" >&2
+  echo "Usage: video [-s FACTOR] <input> <max-mb> [output.mp4]" >&2
   echo "  Encode INPUT as H.264/AAC MP4 no larger than MAX-MB megabytes." >&2
+  echo "  -s, --scale FACTOR  Scale resolution by FACTOR (e.g. 1/2, 0.5, 2)." >&2
   echo "  Default output: <stem>-<max-mb>mb.mp4 next to the input." >&2
   exit 2
 }
@@ -21,46 +22,94 @@ human_mb() {
   awk -v s="$1" 'BEGIN { printf "%.2f", s / 1024 / 1024 }'
 }
 
-if [[ $# -lt 1 || "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+scale=
+positionals=()
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -s | --scale)
+      if [[ $# -lt 2 ]]; then
+        usage
+      fi
+      scale=$2
+      shift 2
+      ;;
+    -s=* | --scale=*)
+      scale=${1#*=}
+      shift
+      ;;
+    -h | --help)
+      usage
+      ;;
+    -*)
+      echo "video: unknown option: $1" >&2
+      usage
+      ;;
+    *)
+      positionals+=("$1")
+      shift
+      ;;
+  esac
+done
+
+if [[ ${#positionals[@]} -lt 1 ]]; then
   usage
 fi
-if [[ $# -lt 2 ]]; then
+if [[ ${#positionals[@]} -lt 2 ]]; then
   usage
 fi
 
-input=$1
-max_mb=$2
+input=${positionals[0]}
+max_mb=${positionals[1]}
+
+scale_val=
+scale_tag=
+if [[ -n "$scale" ]]; then
+  if ! awk -v f="$scale" 'BEGIN { exit !(f ~ /^[0-9]+(\.[0-9]+)?(\/[0-9]+(\.[0-9]+)?)?$/) }'; then
+    echo "video: invalid scale: $scale" >&2
+    exit 1
+  fi
+  scale_val=$(awk -v f="$scale" 'BEGIN { split(f, a, "/"); d = (a[2] == "" ? 1 : a[2]); printf "%.6f", a[1] / d }')
+  if ! awk -v v="$scale_val" 'BEGIN { exit !(v > 0) }'; then
+    echo "video: scale must be positive: $scale" >&2
+    exit 1
+  fi
+  scale_tag=s${scale//\//_}
+fi
 
 if ! awk -v n="$max_mb" 'BEGIN { exit !(n ~ /^[0-9]+(\.[0-9]+)?$/ && n > 0) }'; then
-  echo "to-mp4: max-mb must be a positive number" >&2
+  echo "video: max-mb must be a positive number" >&2
   exit 1
 fi
 
 if [[ ! -f "$input" ]]; then
-  echo "to-mp4: input not found: $input" >&2
+  echo "video: input not found: $input" >&2
   exit 1
 fi
 
 stem=${input##*/}
 stem=${stem%.*}
 input_dir=$(dirname "$input")
-output=${3:-"$input_dir/${stem}-${max_mb}mb.mp4"}
+suffix=${max_mb}mb
+if [[ -n "$scale_tag" ]]; then
+  suffix=${suffix}-${scale_tag}
+fi
+output=${positionals[2]:-"$input_dir/${stem}-${suffix}.mp4"}
 
 if [[ -e "$output" && ! -f "$output" ]]; then
-  echo "to-mp4: output is not a regular file: $output" >&2
+  echo "video: output is not a regular file: $output" >&2
   exit 1
 fi
 mkdir -p "$(dirname "$output")"
 
 duration=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$input")
 if [[ -z "$duration" || "$duration" == "N/A" ]]; then
-  echo "to-mp4: could not read duration from $input" >&2
+  echo "video: could not read duration from $input" >&2
   exit 1
 fi
 
 height=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of default=noprint_wrappers=1:nokey=1 "$input")
 if [[ -z "$height" || "$height" == "N/A" ]]; then
-  echo "to-mp4: no video stream in $input" >&2
+  echo "video: no video stream in $input" >&2
   exit 1
 fi
 
@@ -86,7 +135,7 @@ try_remux() {
   [[ "$s" -le "$target_bytes" ]]
 }
 
-if [[ "$current" -le "$target_bytes" ]] && try_remux; then
+if [[ -z "$scale_val" && "$current" -le "$target_bytes" ]] && try_remux; then
   mv -f "$tmpout" "$output"
   echo "Wrote $output ($(human_mb "$(file_size "$output")") MB, remux)"
   exit 0
@@ -110,7 +159,9 @@ video_k=$(awk -v target="$target_bytes" -v dur="$duration" -v ak="$audio_k" '
 ')
 
 vf_args=()
-if [[ "$video_k" -lt 400 && "$height" -gt 480 ]]; then
+if [[ -n "$scale_val" ]]; then
+  vf_args=(-vf "scale=trunc(iw*${scale_val}/2)*2:trunc(ih*${scale_val}/2)*2")
+elif [[ "$video_k" -lt 400 && "$height" -gt 480 ]]; then
   vf_args=(-vf "scale=-2:480")
 elif [[ "$video_k" -lt 800 && "$height" -gt 720 ]]; then
   vf_args=(-vf "scale=-2:720")
@@ -127,7 +178,7 @@ encode() {
     audio_args=(-an)
   fi
 
-  echo "to-mp4: pass 1/2 (${vk} kbps video, ${audio_k} kbps audio)" >&2
+  echo "video: pass 1/2 (${vk} kbps video, ${audio_k} kbps audio)" >&2
   ffmpeg -y -hide_banner -loglevel error -stats \
     -i "$input" \
     -c:v libx264 -preset medium -profile:v high \
@@ -137,7 +188,7 @@ encode() {
     -pass 1 -passlogfile "$passlog" \
     -an -f null /dev/null
 
-  echo "to-mp4: pass 2/2" >&2
+  echo "video: pass 2/2" >&2
   ffmpeg -y -hide_banner -loglevel error -stats \
     -i "$input" \
     -c:v libx264 -preset medium -profile:v high \
@@ -162,7 +213,7 @@ while [[ "$attempt" -le "$max_attempts" ]]; do
   fi
 
   if [[ "$attempt" -eq "$max_attempts" ]]; then
-    echo "to-mp4: still $(human_mb "$out_size") MB after ${max_attempts} attempts (target ${max_mb} MB)" >&2
+    echo "video: still $(human_mb "$out_size") MB after ${max_attempts} attempts (target ${max_mb} MB)" >&2
     exit 1
   fi
 
@@ -173,6 +224,6 @@ while [[ "$attempt" -le "$max_attempts" ]]; do
       printf "%.0f", next_vk
     }
   ')
-  echo "to-mp4: $(human_mb "$out_size") MB over target, retrying at ${video_k} kbps" >&2
+  echo "video: $(human_mb "$out_size") MB over target, retrying at ${video_k} kbps" >&2
   attempt=$((attempt + 1))
 done

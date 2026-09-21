@@ -59,9 +59,9 @@ in
         sd
         ffmpeg
         (writeShellApplication {
-          name = "to-mp4";
+          name = "video";
           runtimeInputs = [ ffmpeg ];
-          text = builtins.readFile ./scripts/to-mp4.sh;
+          text = builtins.readFile ./scripts/video.sh;
         })
         (writeShellApplication {
           name = "ssh-path";
