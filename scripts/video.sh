@@ -3,10 +3,10 @@
 # Usage: video [-s FACTOR] <input> <max-mb> [output.mp4]
 
 usage() {
-  echo "Usage: video [-s FACTOR] <input> <max-mb> [output.mp4]" >&2
-  echo "  Encode INPUT as H.264/AAC MP4 no larger than MAX-MB megabytes." >&2
-  echo "  -s, --scale FACTOR  Scale resolution by FACTOR (e.g. 1/2, 0.5, 2)." >&2
-  echo "  Default output: <stem>-<max-mb>mb.mp4 next to the input." >&2
+  echo "使い方: video [-s 倍率] <入力> <最大MB> [出力.mp4]" >&2
+  echo "  入力を H.264/AAC の MP4 に変換し、最大MBバイト以下に収めます。" >&2
+  echo "  -s, --scale 倍率  解像度を倍率で拡大縮小します (例: 1/2, 0.5, 2)。" >&2
+  echo "  出力省略時: 入力と同じ場所に <ファイル名>-<最大MB>mb.mp4。" >&2
   exit 2
 }
 
