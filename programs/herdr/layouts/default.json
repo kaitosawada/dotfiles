@@ -5,7 +5,7 @@
   "first": {
     "type": "pane",
     "label": "claude",
-    "command": ["zsh", "-c", "cursor-agent"]
+    "command": ["zsh", "-c", "opencode"]
   },
   "second": {
     "type": "split",

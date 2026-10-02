@@ -3,14 +3,14 @@
 # keeps &columns/&lines of the whole terminal. Splits resize the PTY correctly.
 #
 # Layout (same as sessionizer/config.toml and layouts/default.json):
-#   left cursor-agent (40%) | right nvim (70% height) over two term panes (30%)
+#   left opencode (40%) | right nvim (70% height) over two term panes (30%)
 # herdr --ratio is the share the *source* pane keeps (not the new pane).
 function herdr-apply-layout() {
   local root_pane="$1"
   local cwd="$2"
 
   herdr pane rename "$root_pane" claude >/dev/null || true
-  herdr pane run "$root_pane" cursor-agent >/dev/null || true
+  herdr pane run "$root_pane" opencode >/dev/null || true
 
   local nvim_pane term1_pane term2_pane
   nvim_pane="$(

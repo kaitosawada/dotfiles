@@ -18,7 +18,7 @@ label = "dev"
 [[tabs.dev.panes]]
 id = "claude"
 title = "claude"
-command = "cursor-agent"
+command = "claude"
 
 [[tabs.dev.panes]]
 id = "nvim"
