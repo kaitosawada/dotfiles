@@ -102,6 +102,9 @@
         settings.diagnostics.globals = [ "vim" ];
       };
 
+      # C / C++
+      clangd.enable = true;
+
       # Rust
       rust_analyzer = {
         enable = true;

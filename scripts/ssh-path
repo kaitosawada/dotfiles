@@ -27,7 +27,7 @@ case $host in
 gmktec)
   lan=
   netbird=gmktec.netbird.cloud
-  tunnel=gmktec.ssh.teinei.life
+  tunnel=gmktec.ozonehl.dev
   ;;
 em680)
   lan=192.168.11.30
