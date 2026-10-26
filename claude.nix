@@ -88,7 +88,6 @@ let
     env = {
       DISABLE_AUTOUPDATER = "1";
       EDITOR = "nvim-minimal";
-      GH_TOKEN = config.sops.placeholder."gh-token";
     };
     attribution = {
       commit = "";
@@ -169,10 +168,6 @@ let
 in
 {
   sops.age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
-
-  sops.secrets."gh-token" = {
-    sopsFile = ./secrets/home.yaml;
-  };
 
   sops.templates."claude-settings.json" = {
     content = builtins.toJSON claudeSettings;
