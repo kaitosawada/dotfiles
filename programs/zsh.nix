@@ -46,6 +46,8 @@ in
       ${builtins.readFile ../scripts/init-nix.sh}
       ${builtins.readFile ../scripts/switch-project.sh}
 
+      export PATH="$HOME/.local/bin:$PATH"
+
       # Run cline ephemerally: kanban auto-install (npm install -g) is sandboxed
       # to a tmp prefix and discarded on exit, so nothing leaks into the system.
       cline() {
