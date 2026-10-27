@@ -23,7 +23,7 @@
     # ./notmuch.nix
     ./nvim-minimal.nix
     # ./omp.nix
-    ./opencode.nix
+    ./opencode2.nix
     # ./pi
     ./rclone.nix
     ./ssh.nix

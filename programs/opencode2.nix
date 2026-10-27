@@ -16,26 +16,53 @@ let
 
   opencodeConfig = builtins.toJSON {
     "$schema" = "https://opencode.ai/config.json";
-    autoupdate = false;
+    update = "disable";
     share = "manual";
     compaction = {
       auto = true;
-      prune = false;
     };
-    permission = {
-      websearch = "allow";
-      webfetch = "allow";
-      question = "allow";
-      edit = {
-        "/nix/store/**" = "deny";
-      };
-      external_directory = {
-        "/tmp/**" = "allow";
-        "/private/tmp/**" = "allow";
-        "/var/folders/**" = "allow";
-        "/nix/store/**" = "allow";
-      };
-    };
+    permissions = [
+      {
+        action = "edit";
+        resource = "/nix/store/**";
+        effect = "deny";
+      }
+      {
+        action = "external_directory";
+        resource = "/nix/store/**";
+        effect = "allow";
+      }
+      {
+        action = "external_directory";
+        resource = "/private/tmp/**";
+        effect = "allow";
+      }
+      {
+        action = "external_directory";
+        resource = "/tmp/**";
+        effect = "allow";
+      }
+      {
+        action = "external_directory";
+        resource = "/var/folders/**";
+        effect = "allow";
+      }
+      {
+        action = "question";
+        resource = "*";
+        effect = "allow";
+      }
+      {
+        action = "webfetch";
+        resource = "*";
+        effect = "allow";
+      }
+      {
+        action = "websearch";
+        resource = "*";
+        effect = "allow";
+      }
+    ];
     watcher = {
       ignore = [
         "node_modules/**"
@@ -47,15 +74,10 @@ let
       ];
     };
   };
-  opencode = inputs.llm-agents.packages.${system}.opencode;
   opencode2 = inputs.llm-agents.packages.${system}.opencode2;
 in
 {
   home.packages = [
-    (pkgs.writeShellScriptBin "opencode" ''
-      export EDITOR="nvim-minimal"
-      exec ${opencode}/bin/opencode "$@"
-    '')
     (pkgs.writeShellScriptBin "opencode2" ''
       export EDITOR="nvim-minimal"
       exec ${opencode2}/bin/opencode2 "$@"
