@@ -48,12 +48,17 @@ let
     };
   };
   opencode = inputs.llm-agents.packages.${system}.opencode;
+  opencode2 = inputs.llm-agents.packages.${system}.opencode2;
 in
 {
   home.packages = [
     (pkgs.writeShellScriptBin "opencode" ''
       export EDITOR="nvim-minimal"
       exec ${opencode}/bin/opencode "$@"
+    '')
+    (pkgs.writeShellScriptBin "opencode2" ''
+      export EDITOR="nvim-minimal"
+      exec ${opencode2}/bin/opencode2 "$@"
     '')
   ];
 
