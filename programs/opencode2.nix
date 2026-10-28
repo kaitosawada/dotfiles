@@ -21,6 +21,14 @@ let
     compaction = {
       auto = true;
     };
+    mcp = {
+      servers = {
+        cloudflare = {
+          type = "remote";
+          url = "https://mcp.cloudflare.com/mcp";
+        };
+      };
+    };
     permissions = [
       {
         action = "edit";
