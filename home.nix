@@ -92,7 +92,7 @@ in
         cargo
 
         # js
-        nodejs
+        nodejs_26
         yarn
         pnpm
 
