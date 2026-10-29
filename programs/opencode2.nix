@@ -27,6 +27,10 @@ let
           type = "remote";
           url = "https://mcp.cloudflare.com/mcp";
         };
+        sentry = {
+          type = "remote";
+          url = "https://mcp.sentry.dev/mcp";
+        };
       };
     };
     permissions = [
