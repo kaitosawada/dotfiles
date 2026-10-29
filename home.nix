@@ -143,6 +143,7 @@ in
       d = "gh dash";
       unlock = "bw unlock --raw > ~/.bw_session";
       oc = "opencode2";
+      opencode = "opencode2";
       c = "cursor-agent";
     };
   };
