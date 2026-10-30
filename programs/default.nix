@@ -24,7 +24,6 @@
     ./nvim-minimal.nix
     # ./omp.nix
     ./opencode.nix
-    # ./pi
     ./rclone.nix
     ./ssh.nix
     ./starship.nix

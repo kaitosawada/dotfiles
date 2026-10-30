@@ -14,8 +14,9 @@ in
 {
   imports = [
     ./programs
-    ./claude.nix
   ];
+
+  sops.age.keyFile = "${homeDirectory}/.config/sops/age/keys.txt";
 
   # See <https://github.com/nix-community/home-manager/blob/master/modules/programs/mise.nix>
   programs.mise = {

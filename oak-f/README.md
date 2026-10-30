@@ -8,8 +8,12 @@ FTP サーバ `oak-f.co.jp` とのファイル同期用ディレクトリ。
 
 ```sh
 rclone config
-# n) new remote → 名前: oak-f.co.jp → Storage: ftp → host/user/pass/port 入力
+# n) new remote → 名前: oak-f.co.jp → Storage: sftp (または ftps) → host/user/pass/port 入力
 ```
+
+> [!NOTE]
+> oak-f は個人管理の静的サイト置き場でセキュリティ上の重要度は低い（気にしなくてよい）。
+> ただし認証情報が平文で流れる `ftp` は避け、可能な限り `sftp` / `ftps` を使うこと。
 
 ## コマンド
 
