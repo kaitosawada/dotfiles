@@ -16,8 +16,16 @@ let
 
   opencodeConfig = builtins.toJSON {
     "$schema" = "https://opencode.ai/config.json";
+    model = "opencode-go/deepseek-v4.1-flash";
     update = "disable";
     share = "manual";
+    agents = {
+      docs = {
+        description = "Writes and edits documentation: README, design docs, guides, and comments. Use this agent whenever the work is documentation rather than implementation.";
+        mode = "all";
+        model = "opencode-go/gemini-4-argon#high";
+      };
+    };
     compaction = {
       auto = true;
     };
