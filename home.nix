@@ -93,7 +93,7 @@ in
         cargo
 
         # js
-        nodejs
+        nodejs_26
         yarn
         pnpm
 
@@ -103,7 +103,6 @@ in
 
         # llm
         inputs.nix-claude-code.packages.${system}.claude
-        # inputs.opencode.packages.${system}.default
         inputs.llm-agents.packages.${system}.codex
         github-copilot-cli
         openspec
@@ -144,7 +143,8 @@ in
       zk = "zellij kill-all-sessions";
       d = "gh dash";
       unlock = "bw unlock --raw > ~/.bw_session";
-      oc = "opencode";
+      oc = "opencode2";
+      opencode = "opencode2";
       c = "cursor-agent";
     };
   };
