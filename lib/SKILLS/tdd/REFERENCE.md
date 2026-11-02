@@ -1,13 +1,17 @@
-# t.wada流 TDD - Reference Guide
+# t.wada流 TDD - Reference Guide（TypeScript / Vitest）
 
-テストデザインパターン、コマンド、テンプレートの詳細リファレンス。
+テストデザインパターン、Vitest コマンド、モック、テンプレートの詳細リファレンス。
 
 ## Table of Contents
 
 - [Test Design Patterns](#test-design-patterns)
 - [Test Structure Template](#test-structure-template)
+- [Mocking](#mocking)
+- [React コンポーネント](#react-コンポーネント)
+- [Hono ルートハンドラ](#hono-ルートハンドラ)
 - [Commands](#commands)
-- [pytest Configuration](#pytest-configuration)
+- [Vitest Configuration](#vitest-configuration)
+- [Additional Resources](#additional-resources)
 
 ---
 
@@ -17,118 +21,149 @@
 
 境界値とその前後をテストすることで、エッジケースを見つける手法。
 
-#### 基本パターン
+```ts
+import { describe, expect, it } from "vitest";
+import { validateAge } from "./validate-age";
 
-```python
-# 数値の境界
-def test_最小値():
-    assert validate_age(0) == True
-
-def test_最小値マイナス1():
-    assert validate_age(-1) == False
-
-def test_最大値():
-    assert validate_age(120) == True
-
-def test_最大値プラス1():
-    assert validate_age(121) == False
+describe("validateAge", () => {
+  it("最小値(0)は有効", () => expect(validateAge(0)).toBe(true));
+  it("最小値の1つ下(-1)は無効", () => expect(validateAge(-1)).toBe(false));
+  it("最大値(120)は有効", () => expect(validateAge(120)).toBe(true));
+  it("最大値の1つ上(121)は無効", () => expect(validateAge(121)).toBe(false));
+});
 ```
 
-#### リストの境界
+#### 配列の境界
 
-```python
-def test_空のリスト():
-    assert process([]) == []
-
-def test_1要素のリスト():
-    assert process([1]) == [1]
-
-def test_2要素のリスト():
-    assert process([1, 2]) == [1, 2]
+```ts
+it("空の配列", () => expect(process([])).toEqual([]));
+it("1要素の配列", () => expect(process([1])).toEqual([1]));
+it("2要素の配列", () => expect(process([1, 2])).toEqual([1, 2]));
 ```
 
 #### 文字列の境界
 
-```python
-def test_空文字列():
-    assert process("") == ""
-
-def test_1文字():
-    assert process("a") == "a"
-
-def test_最大長():
-    assert process("a" * 100) == "a" * 100
-
-def test_最大長プラス1_で例外():
-    with pytest.raises(ValueError):
-        process("a" * 101)
+```ts
+it("空文字", () => expect(process("")).toBe(""));
+it("1文字", () => expect(process("a")).toBe("a"));
+it("最大長", () => expect(process("a".repeat(100))).toHaveLength(100));
+it("最大長+1で例外", () => expect(() => process("a".repeat(101))).toThrow());
 ```
 
 ### 等価クラス分割（Equivalence Partitioning）
 
 入力空間を等価クラスに分割し、各クラスから代表値を選んでテスト。
 
-```python
-# 有効な年齢の代表値
-def test_有効な年齢_子供():
-    assert validate_age(10) == True  # 0-17の代表値
+```ts
+// 有効な年齢の代表値
+it("有効な年齢_子供", () => expect(validateAge(10)).toBe(true)); // 0-17 の代表値
+it("有効な年齢_大人", () => expect(validateAge(30)).toBe(true)); // 18-120 の代表値
 
-def test_有効な年齢_大人():
-    assert validate_age(30) == True  # 18-120の代表値
+// 無効な年齢の代表値
+it("無効な年齢_負の数", () => expect(validateAge(-5)).toBe(false));
+it("無効な年齢_超過", () => expect(validateAge(150)).toBe(false));
+```
 
-# 無効な年齢の代表値
-def test_無効な年齢_負の数():
-    assert validate_age(-5) == False
+### テーブル駆動テスト（`it.each`）
 
-def test_無効な年齢_超過():
-    assert validate_age(150) == False
+同じ振る舞いを複数の入力で確かめるときは `it.each` を使う（重複を避け、追加が容易）。
+
+```ts
+import { describe, expect, it } from "vitest";
+
+describe("square", () => {
+  it.each([
+    [0, 0],
+    [1, 1],
+    [2, 4],
+    [3, 9],
+    [-2, 4],
+  ])("square(%i) は %i", (input, expected) => {
+    expect(square(input)).toBe(expected);
+  });
+});
+
+// 名前付きケース
+it.each([
+  { label: "最小値", age: 0, expected: true },
+  { label: "中間値", age: 50, expected: true },
+  { label: "最大値", age: 120, expected: true },
+  { label: "負の数", age: -1, expected: false },
+  { label: "超過", age: 121, expected: false },
+])("年齢検証: $label", ({ age, expected }) => {
+  expect(validateAge(age)).toBe(expected);
+});
 ```
 
 ### 状態遷移テスト
 
 状態を持つオブジェクトの遷移をテスト。
 
-```python
-def test_状態遷移_初期状態():
-    order = Order()
-    assert order.status == "pending"
+```ts
+import { describe, expect, it } from "vitest";
+import { Order, InvalidStateTransitionError } from "./order";
 
-def test_状態遷移_確認済み():
-    order = Order()
-    order.confirm()
-    assert order.status == "confirmed"
+describe("Order", () => {
+  it("初期状態は pending", () => {
+    expect(new Order().status).toBe("pending");
+  });
 
-def test_状態遷移_発送済み():
-    order = Order()
-    order.confirm()
-    order.ship()
-    assert order.status == "shipped"
+  it("confirm で confirmed になる", () => {
+    const order = new Order();
+    order.confirm();
+    expect(order.status).toBe("confirmed");
+  });
 
-def test_不正な遷移で例外():
-    order = Order()
-    with pytest.raises(InvalidStateTransition):
-        order.ship()  # confirmせずにshipはできない
+  it("confirm せずに ship はできない", () => {
+    const order = new Order();
+    expect(() => order.ship()).toThrow(InvalidStateTransitionError);
+  });
+});
 ```
 
 ### 例外のテスト
 
-```python
-# 基本パターン
-def test_不正な入力で例外():
-    with pytest.raises(ValueError):
-        parse_date("invalid")
+```ts
+// 基本パターン
+it("不正な入力で例外", () => {
+  expect(() => parseDate("invalid")).toThrow();
+});
 
-# 例外メッセージの検証
-def test_不正な入力で例外_メッセージ確認():
-    with pytest.raises(ValueError) as exc_info:
-        parse_date("invalid")
-    assert "日付形式が不正" in str(exc_info.value)
+// 例外メッセージの検証
+it("不正な入力で例外_メッセージ確認", () => {
+  expect(() => parseDate("invalid")).toThrow("日付形式が不正");
+});
 
-# 特定の例外タイプ
-def test_ファイルが存在しない():
-    with pytest.raises(FileNotFoundError):
-        read_file("nonexistent.txt")
+// 特定の例外クラス
+it("ファイルが存在しない", () => {
+  expect(() => readFile("nonexistent.txt")).toThrow(FileNotFoundError);
+});
 ```
+
+### 非同期のテスト
+
+```ts
+// 成功
+it("ユーザーを取得できる", async () => {
+  await expect(fetchUser("123")).resolves.toEqual({ id: "123" });
+});
+
+// 失敗（rejects）
+it("存在しないユーザーで例外", async () => {
+  await expect(fetchUser("missing")).rejects.toThrow("not found");
+});
+
+// タイマー
+it("3秒後にタイムアウトする", async () => {
+  vi.useFakeTimers();
+  const promise = withTimeout(task, 3000);
+  vi.advanceTimersByTime(3000);
+  await expect(promise).rejects.toThrow("timeout");
+  vi.useRealTimers();
+});
+```
+
+> 非同期のアサーションは `expect(promise).resolves/rejects` を使う。`await` を忘れるとテストが常にパスするので注意。
 
 ---
 
@@ -136,146 +171,264 @@ def test_ファイルが存在しない():
 
 ### 基本テンプレート
 
-```python
-"""
-{モジュール名}のテスト
+```ts
+import { describe, expect, it } from "vitest";
+import { TargetClass } from "./target-class";
 
-テスト対象: {クラス名/関数名}
-"""
-import pytest
-from src.module import TargetClass
+describe("TargetClass", () => {
+  // ========== 正常系 ==========
 
+  it("基本的な使用方法", () => {
+    // Arrange
+    const target = new TargetClass();
 
-class TestTargetClass:
-    """TargetClassの振る舞いテスト"""
+    // Act
+    const result = target.doSomething("input");
 
-    # ========== 正常系 ==========
+    // Assert
+    expect(result).toBe("expected");
+  });
 
-    def test_基本的な使用方法(self):
-        """最も一般的なユースケース"""
-        # Arrange
-        target = TargetClass()
+  // ========== 境界値 ==========
 
-        # Act
-        result = target.do_something("input")
+  it("空入力", () => {
+    const target = new TargetClass();
+    expect(target.doSomething("")).toBe("");
+  });
 
-        # Assert
-        assert result == "expected"
+  it("最大長入力", () => {
+    const target = new TargetClass();
+    expect(target.doSomething("a".repeat(1000))).toHaveLength(1000);
+  });
 
-    def test_別のユースケース(self):
-        """別の使用パターン"""
-        target = TargetClass()
-        result = target.do_something("other_input")
-        assert result == "other_expected"
+  // ========== 異常系 ==========
 
-    # ========== 境界値 ==========
-
-    def test_空入力(self):
-        """空の入力を処理できる"""
-        target = TargetClass()
-        result = target.do_something("")
-        assert result == ""
-
-    def test_最大長入力(self):
-        """最大長の入力を処理できる"""
-        target = TargetClass()
-        result = target.do_something("a" * 1000)
-        assert len(result) == 1000
-
-    # ========== 異常系 ==========
-
-    def test_不正入力で例外(self):
-        """不正な入力はValueErrorを発生"""
-        target = TargetClass()
-        with pytest.raises(ValueError):
-            target.do_something(None)
-
-    def test_型不一致で例外(self):
-        """型が一致しない場合はTypeErrorを発生"""
-        target = TargetClass()
-        with pytest.raises(TypeError):
-            target.do_something(123)  # 文字列を期待
+  it("不正入力で例外", () => {
+    const target = new TargetClass();
+    expect(() => target.doSomething(undefined)).toThrow();
+  });
+});
 ```
 
-### Fixture活用テンプレート
+### セットアップと後始末（`beforeEach` / `afterEach`）
 
-```python
-import pytest
-from src.module import User, UserRepository
+```ts
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
+describe("UserRepository", () => {
+  let repo: UserRepository;
 
-@pytest.fixture
-def user_repo():
-    """テスト用リポジトリ"""
-    repo = UserRepository(in_memory=True)
-    yield repo
-    repo.cleanup()
+  beforeEach(() => {
+    repo = new UserRepository({ inMemory: true });
+  });
 
+  afterEach(() => {
+    repo.cleanup();
+  });
 
-@pytest.fixture
-def sample_user():
-    """テスト用ユーザー"""
-    return User(id="test-123", name="Test User", email="test@example.com")
+  it("保存して取得できる", () => {
+    const user = { id: "test-123", name: "Test User" };
+    repo.save(user);
+    expect(repo.get(user.id)).toEqual(user);
+  });
 
-
-class TestUserRepository:
-    """UserRepositoryの振る舞いテスト"""
-
-    def test_保存と取得(self, user_repo, sample_user):
-        """ユーザーを保存して取得できる"""
-        # Arrange
-        # (fixtures で準備済み)
-
-        # Act
-        user_repo.save(sample_user)
-        retrieved = user_repo.get(sample_user.id)
-
-        # Assert
-        assert retrieved == sample_user
-
-    def test_存在しないユーザーはNone(self, user_repo):
-        """存在しないユーザーはNoneを返す"""
-        result = user_repo.get("nonexistent-id")
-        assert result is None
+  it("存在しないユーザーは undefined", () => {
+    expect(repo.get("nonexistent-id")).toBeUndefined();
+  });
+});
 ```
 
-### Parametrized Test Template
+### テストデータのファクトリ（ヘルパー）
 
-```python
-import pytest
+テストごとに必要な最小データだけを渡せるようにする。オブジェクトリテラルの散在を防ぐ。
 
+```ts
+type Row = { id: string; category: string; subcategory: string };
 
-@pytest.mark.parametrize(
-    "input_value,expected",
-    [
-        (0, 0),
-        (1, 1),
-        (2, 4),
-        (3, 9),
-        (-2, 4),
-    ],
-)
-def test_平方計算(input_value, expected):
-    """様々な入力で平方を計算"""
-    result = square(input_value)
-    assert result == expected
+const row = (id: string, category = "A", subcategory = "a1"): Row => ({
+  id,
+  category,
+  subcategory,
+});
 
+const ids = (rows: Row[]) => rows.map((r) => r.id);
 
-@pytest.mark.parametrize(
-    "age,expected",
-    [
-        pytest.param(0, True, id="最小値"),
-        pytest.param(50, True, id="中間値"),
-        pytest.param(120, True, id="最大値"),
-        pytest.param(-1, False, id="負の数"),
-        pytest.param(121, False, id="超過"),
-    ],
-)
-def test_年齢検証(age, expected):
-    """年齢の妥当性を検証"""
-    result = validate_age(age)
-    assert result == expected
+it("下へ動かすと移動先の位置に入る", () => {
+  const rows = [row("1"), row("2"), row("3")];
+  expect(ids(moveItem(rows, (r) => r.id, "1", "2"))).toEqual(["2", "1", "3"]);
+});
 ```
+
+---
+
+## Mocking
+
+Vitest のモック API。**外部I/Oだけをモックする**のが原則。
+
+### `vi.fn`（モック関数）
+
+```ts
+import { expect, it, vi } from "vitest";
+
+it("コールバックが呼ばれる", () => {
+  const onSave = vi.fn();
+  save({ name: "Alice" }, onSave);
+  expect(onSave).toHaveBeenCalledOnce();
+  expect(onSave).toHaveBeenCalledWith({ name: "Alice" });
+});
+```
+
+### `vi.mock`（モジュールのモック）
+
+リポジトリや外部サービスのモジュールを差し替える。
+
+```ts
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+const { homepageMock } = vi.hoisted(() => ({
+  homepageMock: {
+    findById: vi.fn(),
+    renameQuestionCategories: vi.fn(),
+  },
+}));
+
+vi.mock("../../lib/repositories/homepage", () => ({
+  homepageRepository: homepageMock,
+}));
+
+describe("PATCH /categories", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    homepageMock.findById.mockResolvedValue({ id: 7, organizationId: 4 });
+  });
+
+  it("from と to を渡すと一括リネームする", async () => {
+    // ...
+    expect(homepageMock.renameQuestionCategories).toHaveBeenCalledWith(7, [
+      { from: "A", to: "B" },
+    ]);
+  });
+});
+```
+
+> `vi.mock` は巻き上げ（hoist）されるため、ファクトリが参照する変数は `vi.hoisted` で定義する。
+
+### `vi.spyOn`（既存オブジェクトの一部だけ差し替え）
+
+```ts
+import { afterEach, expect, it, vi } from "vitest";
+
+afterEach(() => vi.restoreAllMocks());
+
+it("送信に失敗したらログを出す", async () => {
+  const spy = vi.spyOn(mailer, "send").mockRejectedValue(new Error("boom"));
+  await sendNotification();
+  expect(spy).toHaveBeenCalled();
+});
+```
+
+### モックの境界（判断基準）
+
+| 対象 | 方針 |
+| ---- | ---- |
+| 純関数・計算・整形 | モックしない（実物を呼ぶ） |
+| DB / リポジトリ | モックする |
+| 外部API（メール・AI・ストレージ） | モックする |
+| 時刻・乱数 | `vi.useFakeTimers()` / `vi.setSystemTime()` |
+
+- `toHaveBeenCalledWith` は**下位への契約**を確かめるときだけ使う。内部の呼び出し順・回数はリファクタで壊れやすいので目的化しない。
+- モックが増えすぎたら、テストではなく設計（依存の持ち方・関数の分割）を見直す。
+
+---
+
+## React コンポーネント
+
+`@testing-library/react` で「ユーザーから見た振る舞い」をテストする。実装（state 変数名・内部関数）ではなく、表示と操作を検証する。
+
+```ts
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
+import { SaveButton } from "./save-button";
+
+describe("SaveButton", () => {
+  it("クリックすると onSave が呼ばれる", async () => {
+    const onSave = vi.fn();
+    const user = userEvent.setup();
+
+    render(<SaveButton onSave={onSave} />);
+
+    await user.click(screen.getByRole("button", { name: "保存" }));
+
+    expect(onSave).toHaveBeenCalledOnce();
+  });
+
+  it("保存中は非活性になる", () => {
+    render(<SaveButton onSave={vi.fn()} disabled />);
+    expect(screen.getByRole("button", { name: "保存" })).toBeDisabled();
+  });
+});
+```
+
+- クエリは `getByRole` / `getByLabelText` を優先（実装に依存しにくい）。
+- `userEvent` を使う（`fireEvent` より実際の操作に近い）。
+- 実装詳細を確かめたいときだけ `container` や `data-testid` を使う。
+
+---
+
+## Hono ルートハンドラ
+
+ハンドラを直接呼ばず、**実ルーターに HTTP リクエストを通す**。リポジトリなど外部I/Oだけモックする。
+
+```ts
+import { Hono } from "hono";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+const { orgMock } = vi.hoisted(() => ({
+  orgMock: { findById: vi.fn(), update: vi.fn() },
+}));
+vi.mock("../../lib/repositories/organization", () => ({
+  organizationRepository: orgMock,
+}));
+
+const { default: router } = await import("./organizations");
+
+const app = new Hono();
+app.route("/organizations", router);
+
+describe("PUT /organizations/:id", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    orgMock.findById.mockResolvedValue({ id: 4, displayName: "サンプル健保" });
+  });
+
+  it("有効な insurerNumber を保存する", async () => {
+    const res = await app.request("/organizations/4", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ displayName: "サンプル健保", insurerNumber: "12345678" }),
+    });
+
+    expect(res.status).toBe(200);
+    expect(orgMock.update).toHaveBeenCalledWith(4, expect.objectContaining({
+      insurerNumber: "12345678",
+    }));
+  });
+
+  it("不正な insurerNumber は 400", async () => {
+    const res = await app.request("/organizations/4", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ displayName: "サンプル健保", insurerNumber: "123456789" }),
+    });
+
+    expect(res.status).toBe(400);
+    expect(orgMock.update).not.toHaveBeenCalled();
+  });
+});
+```
+
+> ステータスコードとレスポンス本文で「外から見た振る舞い」を確かめる。リポジトリへの引数検証は契約の範囲にとどめる。
 
 ---
 
@@ -284,266 +437,100 @@ def test_年齢検証(age, expected):
 ### 基本的なテスト実行
 
 ```bash
-# すべてのテストを実行
-uv run pytest
+# すべてのテストを実行（1回）
+npx vitest run
 
-# 特定ディレクトリのテストのみ
-uv run pytest tests/unit
+# 特定ファイル
+npx vitest run src/lib/sort.test.ts
 
-# 特定ファイルのテストのみ
-uv run pytest tests/unit/test_user.py
+# 名前でフィルタ（部分一致）
+npx vitest run -t "空のリスト"
 
-# 特定テスト関数のみ
-uv run pytest tests/unit/test_user.py::test_ユーザー作成
+# Watch モード
+npx vitest
 
-# 特定クラスのテストのみ
-uv run pytest tests/unit/test_user.py::TestUser
-
-# Verbose モード
-uv run pytest -v
-
-# 非常に詳細な出力
-uv run pytest -vv
+# Vite+ モノレポ
+vp test
+vp test --root admin-hono
+vp test --root admin-hono -t "空のリスト"
 ```
 
-### テスト実行の制御
+### 失敗への対応
 
 ```bash
 # 失敗したテストで停止
-uv run pytest -x
+npx vitest run --bail=1
 
-# 最初の2つの失敗で停止
-uv run pytest --maxfail=2
-
-# 最後に失敗したテストから再実行
-uv run pytest --lf
-
-# 前回失敗したテストを先に実行
-uv run pytest --ff
-
-# キーワードでフィルタ
-uv run pytest -k "test_user"
-
-# マーカーでフィルタ
-uv run pytest -m "slow"
+# 最後に失敗したテストだけ再実行
+npx vitest run --changed
 ```
 
-### カバレッジ測定
+### カバレッジ
 
 ```bash
-# カバレッジ付きで実行
-uv run pytest --cov=src
+# カバレッジ付き
+npx vitest run --coverage
 
-# カバレッジレポート（不足行を表示）
-uv run pytest --cov=src --cov-report=term-missing
-
-# HTML レポート生成
-uv run pytest --cov=src --cov-report=html
-
-# カバレッジ80%未満で失敗
-uv run pytest --cov=src --cov-fail-under=80
-```
-
-### TDD向けWatch Mode
-
-```bash
-# ファイル変更時に自動実行
-uv run ptw -- tests/unit -v
-
-# 特定ディレクトリを監視
-uv run ptw -- tests/unit --patterns="*.py"
-
-# 失敗したテストのみ再実行
-uv run ptw -- tests/unit --lf
+# HTML レポート
+npx vitest run --coverage --coverage.reporter=html
 ```
 
 ### デバッグ
 
 ```bash
-# 標準出力を表示（print文が見える）
-uv run pytest -s
+# 詳細レポート（ファイル単位）
+npx vitest run --reporter=verbose
 
-# pdbデバッガで停止
-uv run pytest --pdb
-
-# 最初の失敗でpdbに入る
-uv run pytest -x --pdb
-
-# トレースバックを長く表示
-uv run pytest --tb=long
-```
-
-### その他の便利なオプション
-
-```bash
-# テストの実行時間を表示
-uv run pytest --durations=10
-
-# 並列実行（pytest-xdist必要）
-uv run pytest -n auto
-
-# ランダムな順序で実行（pytest-randomly必要）
-uv run pytest --randomly-seed=12345
-
-# テスト一覧を表示（実行しない）
-uv run pytest --collect-only
+# 対象ファイルだけ watch
+npx vitest src/lib/sort.test.ts
 ```
 
 ---
 
-## pytest Configuration
+## Vitest Configuration
 
-### pyproject.toml設定例
+### vite.config.ts（test ブロック）
 
-```toml
-[tool.pytest.ini_options]
-# テストディレクトリ
-testpaths = ["tests"]
+```ts
+import { defineConfig } from "vitest/config";
 
-# テストファイルのパターン
-python_files = ["test_*.py"]
-python_classes = ["Test*"]
-python_functions = ["test_*"]
-
-# デフォルトオプション
-addopts = [
-    "--verbose",              # 詳細表示
-    "--strict-markers",       # 未定義マーカーでエラー
-    "--tb=short",            # 短いトレースバック
-    "--cov=src",             # カバレッジ測定
-    "--cov-report=term-missing",  # 不足行を表示
-]
-
-# マーカー定義
-markers = [
-    "slow: 実行に時間がかかるテスト",
-    "integration: 統合テスト",
-    "unit: ユニットテスト",
-]
-
-# カバレッジ設定
-[tool.coverage.run]
-source = ["src"]
-omit = [
-    "*/tests/*",
-    "*/__pycache__/*",
-    "*/migrations/*",
-]
-
-[tool.coverage.report]
-exclude_lines = [
-    "pragma: no cover",
-    "def __repr__",
-    "raise AssertionError",
-    "raise NotImplementedError",
-    "if __name__ == .__main__.:",
-    "if TYPE_CHECKING:",
-    "class .*\\bProtocol\\):",
-    "@(abc\\.)?abstractmethod",
-]
-
-# カバレッジ目標
-fail_under = 80
+export default defineConfig({
+  test: {
+    environment: "node", // React をテストする場合は "jsdom"
+    globals: false, // describe/it/expect を import する場合は false
+    clearMocks: true, // 各テスト前にモックをクリア
+    include: ["src/**/*.{test,spec}.{ts,tsx}"],
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "html"],
+      include: ["src/**"],
+      exclude: ["src/**/*.test.{ts,tsx}", "src/**/*.d.ts"],
+      thresholds: { lines: 80, functions: 80, branches: 70 },
+    },
+  },
+});
 ```
 
-### カスタムマーカーの使用
+### React をテストする場合
 
-```python
-import pytest
-
-
-@pytest.mark.slow
-def test_時間がかかる処理():
-    """このテストは実行に時間がかかる"""
-    result = heavy_computation()
-    assert result == expected
-
-
-@pytest.mark.integration
-def test_データベース統合():
-    """データベースを使用する統合テスト"""
-    db = connect_to_db()
-    result = db.query("SELECT 1")
-    assert result == 1
+```ts
+test: {
+  environment: "jsdom",
+  setupFiles: ["./src/test/setup.ts"],
+}
 ```
 
-```bash
-# slowマーカーを除外して実行
-uv run pytest -m "not slow"
-
-# integrationマーカーのみ実行
-uv run pytest -m integration
-```
-
----
-
-## Fixture Best Practices
-
-### Scope活用
-
-```python
-import pytest
-
-
-@pytest.fixture(scope="function")  # デフォルト: 各テスト関数で実行
-def temp_data():
-    return {"key": "value"}
-
-
-@pytest.fixture(scope="class")  # クラスごとに1回
-def db_connection():
-    conn = connect_to_db()
-    yield conn
-    conn.close()
-
-
-@pytest.fixture(scope="module")  # モジュールごとに1回
-def app_config():
-    return load_config("test_config.yaml")
-
-
-@pytest.fixture(scope="session")  # セッションごとに1回
-def docker_services():
-    start_docker()
-    yield
-    stop_docker()
-```
-
-### Autouse Fixture
-
-```python
-@pytest.fixture(autouse=True)
-def reset_database():
-    """各テスト前に自動的にDBをリセット"""
-    db.reset()
-    yield
-    # テスト後の処理
-```
-
-### Fixture Chain
-
-```python
-@pytest.fixture
-def user():
-    return User(name="Test")
-
-
-@pytest.fixture
-def user_with_posts(user):
-    """userフィクスチャを使用"""
-    user.posts = [Post("First post")]
-    return user
-
-
-def test_ユーザーの投稿(user_with_posts):
-    assert len(user_with_posts.posts) == 1
+```ts
+// src/test/setup.ts
+import "@testing-library/jest-dom/vitest";
 ```
 
 ---
 
 ## Additional Resources
 
-- [pytest公式ドキュメント](https://docs.pytest.org/)
-- [pytest-cov](https://pytest-cov.readthedocs.io/)
-- [pytest-watch](https://github.com/joeyespo/pytest-watch)
+- [Vitest 公式ドキュメント](https://vitest.dev/)
+- [Vitest: Mocking](https://vitest.dev/guide/mocking)
+- [Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+- [Hono: Testing](https://hono.dev/docs/guides/testing)
 - [t.wadaのTDD講演資料](https://t-wada.hatenablog.jp/)

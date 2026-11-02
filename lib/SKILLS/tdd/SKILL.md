@@ -1,8 +1,9 @@
 ---
 name: tdd-twada
 description: >
-  t.wada流テスト駆動開発。Red-Green-Refactorサイクルで機能を実装。トリガー:
-  「TDDで実装して」「テスト駆動で」「テストファーストで」「TDD」「Red-Green-Refactor」。TypeScript/JavaScript向け。Python向けTDDにはプロジェクトローカルのtdd-wada-styleスキルを使用。
+  t.wada流テスト駆動開発（TypeScript/JavaScript・Vitest）。Red-Green-Refactorサイクルで機能を実装。トリガー:
+  「TDDで実装して」「テスト駆動で」「テストファーストで」「TDD」「Red-Green-Refactor」。Vitest / @testing-library 前提。
+  Python向けTDDにはプロジェクトローカルのtdd-wada-styleスキルを使用。
 
 ---
 
@@ -10,7 +11,7 @@ description: >
 
 ## Overview
 
-和田卓人氏（t.wada）のTDD哲学に基づき、テストファーストで機能を実装するスキル。
+和田卓人氏（t.wada）のTDD哲学に基づき、テストファーストで機能を実装するスキル。TypeScript / JavaScript と **Vitest** を前提とする。
 
 > 「テストとは、動くことを証明するものではない。間違いを見つけるためのものだ。」
 > — t.wada
@@ -30,7 +31,7 @@ description: >
 
 ## When to Use This Skill
 
-Claude should use this skill when:
+Use this skill when:
 - Implementing new features with TDD approach
 - Writing tests before implementation code
 - Applying Red-Green-Refactor cycle
@@ -58,21 +59,27 @@ Claude should use this skill when:
 
 **目的**: 次に実装する振る舞いを明確にする
 
-- 失敗することを**確認**してから次へ進む
+- 失敗することを**必ず確認**してから次へ進む（Red を見ずに Green へ行かない）
 - テスト名は「何をテストするか」を日本語で明確に
 - Arrange-Act-Assert（AAA）パターンで構造化
 
 **例**:
-```python
-def test_空のリストを渡すと空のリストを返す():
-    # Arrange（準備）
-    input_list = []
+```ts
+import { describe, expect, it } from "vitest";
+import { sortNumbers } from "./sort";
 
-    # Act（実行）
-    result = sort_numbers(input_list)
+describe("sortNumbers", () => {
+  it("空のリストを渡すと空のリストを返す", () => {
+    // Arrange（準備）
+    const input: number[] = [];
 
-    # Assert（検証）
-    assert result == []
+    // Act（実行）
+    const result = sortNumbers(input);
+
+    // Assert（検証）
+    expect(result).toEqual([]);
+  });
+});
 ```
 
 ### 🟢 Green（最小実装）
@@ -84,10 +91,11 @@ def test_空のリストを渡すと空のリストを返す():
 - 過度な一般化はしない（YAGNI）
 
 **例**:
-```python
-# 最初は仮実装でもOK
-def sort_numbers(numbers):
-    return []  # まずこれでテストを通す
+```ts
+// 最初は仮実装でもOK
+export function sortNumbers(numbers: number[]): number[] {
+  return []; // まずこれでテストを通す
+}
 ```
 
 ### 🔵 Refactor（リファクタリング）
@@ -119,23 +127,24 @@ def sort_numbers(numbers):
 □ 負の数を含んでも正しくソートされる
 ```
 
-**Use TodoWrite tool to track test cases.**
+**Use the todo/task tool to track test cases.**
 
 ### Step 2: TDDサイクルの実行
 
 各テストケースに対して Red → Green → Refactor を実行:
 
 1. **🔴 Red**: 失敗するテストを書く
-   - `pytest` を実行して失敗を確認
+   - `vitest` を実行して失敗を確認（例: `npx vitest run -t "空のリスト"`）
+   - 失敗理由が「未実装」であること（アサーションの取り違えで落ちていないこと）を確認
    - テスト名から振る舞いが理解できることを確認
 
 2. **🟢 Green**: 最小実装
    - テストを通す最小限のコードを書く
-   - `pytest` を実行してパスを確認
+   - `vitest` を実行してパスを確認
 
 3. **🔵 Refactor**: 改善
    - テストをグリーンに保ちながらリファクタリング
-   - 各変更後に `pytest` を実行
+   - 各変更後に `vitest` を実行
 
 4. 次のテストケースへ
 
@@ -151,18 +160,20 @@ def sort_numbers(numbers):
 
 ### Do's ✅
 
-1. **1テスト1振る舞い**: 1つのテストで1つの振る舞いのみ検証
+1. **1テスト1振る舞い**: 1つの `it` で1つの振る舞いのみ検証
 2. **AAA構造**: Arrange-Act-Assert を明確に分離
-3. **日本語テスト名**: `test_空のリストを渡すと空のリストを返す()`
-4. **独立性**: 各テストが他のテストに依存しない
+3. **日本語テスト名**: `it("空のリストを渡すと空のリストを返す", ...)`
+4. **独立性**: 各テストが他のテストに依存しない（`beforeEach` で状態をリセット）
 5. **小さなステップ**: Red-Green-Refactor を短いサイクルで
+6. **型を活かす**: テストデータは対象の型に合わせ、`as const` / `satisfies` で補強する
 
 ### Don'ts ❌
 
-1. **実装詳細をテストしない**: 振る舞いをテスト
+1. **実装詳細をテストしない**: 振る舞いをテスト（private な内部状態・呼び出し回数そのものが目的化していないか）
 2. **テスト間の依存を作らない**: 各テストが独立
-3. **過度なモックは避ける**: 外部依存のみモック化
+3. **過度なモックは避ける**: 外部I/Oのみモック化
 4. **巨大なテストは避ける**: 1テスト1振る舞い
+5. **テストを通すためだけのモックを増やさない**: モックが増えたら設計（依存の持ち方）を見直す
 
 詳細は [EXAMPLES.md](EXAMPLES.md#anti-patterns) を参照。
 
@@ -172,8 +183,8 @@ def sort_numbers(numbers):
 
 境界値とその前後をテスト:
 - 0, 1, -1
-- 空、最小、最大
-- null/None
+- 空配列・空文字、最小、最大
+- `null` / `undefined`
 
 ### 等価クラス分割
 
@@ -183,20 +194,44 @@ def sort_numbers(numbers):
 
 詳細は [REFERENCE.md](REFERENCE.md#test-design-patterns) を参照。
 
+## モックの境界（重要）
+
+「どこまでモックするか」がテストの寿命を決める。原則は **外部I/Oだけモックし、純粋なロジックはモックしない**。
+
+| 対象 | 方針 | 例 |
+| ---- | ---- | ---- |
+| 純関数・計算・整形 | モックしない | `reorder`, `formatSummary`, `buildQuickAccessItems` |
+| DB / リポジトリ | モックする | `vi.mock("../repositories/homepage")` |
+| 外部API（メール・AI・ストレージ） | モックする | `vi.mock("@kenpo-web/mail")` |
+| HTTPルート | 実ルーターを通す | Hono の `app.request(...)` |
+| React コンポーネント | 実物を描画 | `@testing-library/react` |
+
+- **`toHaveBeenCalledWith` は「契約」のときだけ**。下位のリポジトリへ渡す引数が対外契約なら検証してよい。内部の呼び出し順・回数の検証はリファクタで壊れやすいので避ける。
+- モックが 5 つを超えたら、テストではなく**設計**を疑う。
+
+詳細は [REFERENCE.md](REFERENCE.md#mocking) を参照。
+
 ## Commands
 
+Vite+ のモノレポでは `vp test`、素の Vitest では `npx vitest`。
+
 ```bash
-# テスト実行
-uv run pytest tests/unit -v
+# 全テスト実行（1回）
+npx vitest run
+vp test                       # Vite+ モノレポ
 
-# 特定テスト実行
-uv run pytest tests/unit/test_xxx.py::test_関数名 -v
+# パッケージを指定（Vite+）
+vp test --root admin-hono
 
-# カバレッジ付き
-uv run pytest tests/unit --cov=src --cov-report=term-missing
+# 特定のテストだけ（TDDのRed確認に必須）
+npx vitest run -t "空のリストを渡すと空のリストを返す"
+vp test --root admin-hono -t "空のリスト"
 
-# Watch mode（TDD向け）
-uv run ptw -- tests/unit -v
+# Watch mode（TDD向け・推奨）
+npx vitest
+
+# カバレッジ
+npx vitest run --coverage
 ```
 
 詳細なコマンドは [REFERENCE.md](REFERENCE.md#commands) を参照。
@@ -206,25 +241,28 @@ uv run ptw -- tests/unit -v
 When providing TDD guidance:
 
 1. **要件を振る舞いで整理**: 「〜したとき、〜となる」形式
-2. **テストケースリストを TodoWrite**: 進捗を可視化
+2. **テストケースリストを todo で管理**: 進捗を可視化
 3. **Red-Green-Refactorを明示**: 各ステップで何をするか説明
 4. **テストコードを先に書く**: 実装コードより前に
-5. **リファクタリングを忘れない**: Greenで終わらない
+5. **Red を実際に確認**: 落ちることを確かめてから実装する
+6. **リファクタリングを忘れない**: Greenで終わらない
 
 ## References
 
-- [REFERENCE.md](REFERENCE.md) - テストパターン、コマンド、テンプレート
-- [EXAMPLES.md](EXAMPLES.md) - 実用例、アンチパターン、AAA構造
+- [REFERENCE.md](REFERENCE.md) - テストパターン、Vitest コマンド、モック、テンプレート
+- [EXAMPLES.md](EXAMPLES.md) - 実用例、アンチパターン、AAA構造、ルート/コンポーネントの例
 
 ## Success Criteria
 
 TDD実践が成功したと言える基準:
 
 - [ ] テストファーストで実装できた
+- [ ] Red（失敗）を実際に確認した
 - [ ] すべてのテストがパス
 - [ ] 各テストが独立している
 - [ ] テスト名から振る舞いが理解できる
 - [ ] AAA構造が明確
 - [ ] 境界値・異常系がカバーされている
 - [ ] 実装詳細ではなく振る舞いをテスト
+- [ ] モックは外部I/Oに限定されている
 - [ ] リファクタリングで設計が改善された
