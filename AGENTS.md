@@ -38,6 +38,7 @@ Do NOT run `home-manager switch` — the user handles that manually.
 - `secrets/` — SOPS-encrypted secrets, decrypted at build time
 - `scripts/` — utility scripts (switch-project.sh, tmux-session-name.sh, etc.)
 - `lib/` — Nix helper functions (e.g., `skkeleton.nix` for SKK dictionary)
+- `lib/SKILLS/<name>/` — agent skills (each directory holds `SKILL.md`); `programs/skills.nix` links every skill into `~/.claude/skills/<name>` and `~/.config/opencode/skills/<name>`
 
 ## Platform conventions
 
