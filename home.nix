@@ -76,6 +76,15 @@ in
           name = "lazygit-editor";
           text = builtins.readFile ./scripts/lazygit-editor.sh;
         })
+        (writeShellApplication {
+          name = "ci-status";
+          runtimeInputs = [
+            curl
+            gh
+            jq
+          ];
+          text = builtins.readFile ./scripts/ci-status.sh;
+        })
         imagemagick
         tree-sitter # for nixvim swift grammar
         ni # @antfu/ni

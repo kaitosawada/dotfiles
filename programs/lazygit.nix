@@ -10,6 +10,13 @@
           description = "Commit changes using git editor";
           output = "terminal";
         }
+        {
+          key = "I";
+          context = "commits";
+          command = "ci-status {{.SelectedCommit.Hash}}";
+          description = "Show CI status for selected commit";
+          output = "terminal";
+        }
       ];
       git = {
         autoDetectExternalChanges = true;
