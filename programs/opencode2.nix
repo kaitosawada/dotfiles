@@ -5,6 +5,17 @@
   ...
 }:
 let
+  agentsMd = ''
+    # Git 運用
+
+    - 基本的に `develop` ブランチへ直接コミットする。作業ブランチを切るのは、ユーザーが明示的に指示した場合のみにする。
+    - `develop` が存在しないリポジトリでは、そのリポジトリの既定ブランチに従う。
+    - 実装が終わったら、実装範囲の変更を必ずコミットする。未コミットのまま作業を終えない。
+    - コミットには実装範囲の変更だけを含め、無関係な変更や整形だけの差分を混ぜない。
+    - コミット前に、そのリポジトリの AGENTS.md / CLAUDE.md に書かれた build・lint・format を実行する。
+    - コミットメッセージは、そのリポジトリの既存のスタイルに合わせる。
+  '';
+
   tuiConfig = builtins.toJSON {
     "$schema" = "https://opencode.ai/tui.json";
     keybinds = {
@@ -103,6 +114,8 @@ in
       exec ${opencode2}/bin/opencode2 "$@"
     '')
   ];
+
+  xdg.configFile."opencode/AGENTS.md".text = agentsMd;
 
   xdg.configFile."opencode/tui.json".text = tuiConfig;
 
