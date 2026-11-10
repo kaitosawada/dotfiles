@@ -7,7 +7,7 @@ export NIXPKGS_ALLOW_UNFREE = 1
 .PHONY: switch build fmt update check sops-edit
 
 switch:
-	home-manager switch --flake "$(FLAKE_TARGET)" --impure
+	home-manager switch --flake "$(FLAKE_TARGET)" --impure -b backup
 	exec $$SHELL -l
 
 build:
