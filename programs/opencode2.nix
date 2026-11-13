@@ -34,8 +34,9 @@ let
       docs = {
         description = "Writes and edits documentation: README, design docs, guides, and comments. Use this agent whenever the work is documentation rather than implementation.";
         mode = "all";
-        model = "opencode-go/gemini-4-argon#high";
+        model = "opencode-go/gemini-3.8-flash";
       };
+    
     };
     compaction = {
       auto = true;
