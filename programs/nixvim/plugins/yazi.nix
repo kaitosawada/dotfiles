@@ -11,7 +11,7 @@
         "v"
       ];
       key = "-";
-      action = "<CMD>Yazi<CR>";
+      action = "<CMD>Yazi cwd<CR>";
       options = {
         desc = "Yazi: Open at cwd";
         noremap = true;
