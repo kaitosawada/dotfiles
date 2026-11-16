@@ -11,19 +11,9 @@
         "v"
       ];
       key = "-";
-      action = "<CMD>Yazi cwd<CR>";
-      options = {
-        desc = "Yazi: Open at cwd";
-        noremap = true;
-        silent = true;
-      };
-    }
-    {
-      mode = "n";
-      key = "<leader>u";
       action = "<CMD>Yazi<CR>";
       options = {
-        desc = "Yazi: Open";
+        desc = "Yazi: Open at cwd";
         noremap = true;
         silent = true;
       };
