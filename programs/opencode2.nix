@@ -36,7 +36,7 @@ let
         mode = "all";
         model = "opencode-go/gemini-3.8-flash";
       };
-    
+
     };
     compaction = {
       auto = true;
