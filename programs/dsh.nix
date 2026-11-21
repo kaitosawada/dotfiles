@@ -9,9 +9,8 @@
 let
   dsh = inputs.llm-agents.packages.${system}.dsh;
 
-  # Reuse the OpenCode Go subscription credential unless the environment
-  # already provides one.
-  opencodeAuthFile = "${config.xdg.dataHome}/opencode/auth.json";
+  # OpenCode Go subscription key, managed by `make edit-secrets`.
+  opencodeKeyFile = config.sops.secrets."opencode-api-key".path;
 
   # Seeded into the web profile's user layer on the first switch only.
   # Everything here stays editable from Settings -> Models in the Web UI.
@@ -44,17 +43,18 @@ let
   '';
 in
 {
+  sops.secrets."opencode-api-key" = {
+    sopsFile = ../secrets/home.yaml;
+  };
+
   home.packages = [
     (pkgs.writeShellScriptBin "dsh" ''
       export EDITOR="nvim-minimal"
       export VISUAL="nvim-minimal"
 
-      if [ -z "''${OPENCODE_API_KEY:-}" ] && [ -r "${opencodeAuthFile}" ]; then
-        key=$(${lib.getExe pkgs.jq} -r '."opencode-go".key // empty' "${opencodeAuthFile}" 2>/dev/null) || key=
-        if [ -n "$key" ]; then
-          OPENCODE_API_KEY="$key"
-          export OPENCODE_API_KEY
-        fi
+      if [ -z "''${OPENCODE_API_KEY:-}" ] && [ -r ${lib.escapeShellArg opencodeKeyFile} ]; then
+        OPENCODE_API_KEY=$(cat ${lib.escapeShellArg opencodeKeyFile})
+        export OPENCODE_API_KEY
       fi
 
       exec ${lib.getExe dsh} "$@"
